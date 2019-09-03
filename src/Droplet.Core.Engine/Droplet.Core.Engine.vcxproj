@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Swmm5Src\climate.c" />
+    <ClCompile Include="src\Swmm5Src\controls.c" />
+    <ClCompile Include="src\Swmm5Src\culvert.c" />
+    <ClCompile Include="src\Swmm5Src\datetime.c" />
+    <ClCompile Include="src\Swmm5Src\dwflow.c" />
+    <ClCompile Include="src\Swmm5Src\dynwave.c" />
+    <ClCompile Include="src\Swmm5Src\error.c" />
+    <ClCompile Include="src\Swmm5Src\exfil.c" />
+    <ClCompile Include="src\Swmm5Src\findroot.c" />
+    <ClCompile Include="src\Swmm5Src\flowrout.c" />
+    <ClCompile Include="src\Swmm5Src\forcmain.c" />
+    <ClCompile Include="src\Swmm5Src\gage.c" />
+    <ClCompile Include="src\Swmm5Src\gwater.c" />
+    <ClCompile Include="src\Swmm5Src\hash.c" />
+    <ClCompile Include="src\Swmm5Src\hotstart.c" />
+    <ClCompile Include="src\Swmm5Src\iface.c" />
+    <ClCompile Include="src\Swmm5Src\infil.c" />
+    <ClCompile Include="src\Swmm5Src\inflow.c" />
+    <ClCompile Include="src\Swmm5Src\input.c" />
+    <ClCompile Include="src\Swmm5Src\inputrpt.c" />
+    <ClCompile Include="src\Swmm5Src\keywords.c" />
+    <ClCompile Include="src\Swmm5Src\kinwave.c" />
+    <ClCompile Include="src\Swmm5Src\landuse.c" />
+    <ClCompile Include="src\Swmm5Src\lid.c" />
+    <ClCompile Include="src\Swmm5Src\lidproc.c" />
+    <ClCompile Include="src\Swmm5Src\link.c" />
+    <ClCompile Include="src\Swmm5Src\main.c" />
+    <ClCompile Include="src\Swmm5Src\massbal.c" />
+    <ClCompile Include="src\Swmm5Src\mathexpr.c" />
+    <ClCompile Include="src\Swmm5Src\mempool.c" />
+    <ClCompile Include="src\Swmm5Src\node.c" />
+    <ClCompile Include="src\Swmm5Src\odesolve.c" />
+    <ClCompile Include="src\Swmm5Src\output.c" />
+    <ClCompile Include="src\Swmm5Src\project.c" />
+    <ClCompile Include="src\Swmm5Src\qualrout.c" />
+    <ClCompile Include="src\Swmm5Src\rain.c" />
+    <ClCompile Include="src\Swmm5Src\rdii.c" />
+    <ClCompile Include="src\Swmm5Src\report.c" />
+    <ClCompile Include="src\Swmm5Src\roadway.c" />
+    <ClCompile Include="src\Swmm5Src\routing.c" />
+    <ClCompile Include="src\Swmm5Src\runoff.c" />
+    <ClCompile Include="src\Swmm5Src\shape.c" />
+    <ClCompile Include="src\Swmm5Src\snow.c" />
+    <ClCompile Include="src\Swmm5Src\stats.c" />
+    <ClCompile Include="src\Swmm5Src\statsrpt.c" />
+    <ClCompile Include="src\Swmm5Src\subcatch.c" />
+    <ClCompile Include="src\Swmm5Src\surfqual.c" />
+    <ClCompile Include="src\Swmm5Src\swmm5.c" />
+    <ClCompile Include="src\Interop\SwmmInterop.c" />
+    <ClCompile Include="src\Swmm5Src\table.c" />
+    <ClCompile Include="src\Swmm5Src\toposort.c" />
+    <ClCompile Include="src\Swmm5Src\transect.c" />
+    <ClCompile Include="src\Swmm5Src\treatmnt.c" />
+    <ClCompile Include="src\Swmm5Src\xsect.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Swmm5Src\consts.h" />
+    <ClInclude Include="src\Swmm5Src\datetime.h" />
+    <ClInclude Include="src\Swmm5Src\enums.h" />
+    <ClInclude Include="src\Swmm5Src\error.h" />
+    <ClInclude Include="src\Swmm5Src\exfil.h" />
+    <ClInclude Include="src\Swmm5Src\findroot.h" />
+    <ClInclude Include="src\Swmm5Src\funcs.h" />
+    <ClInclude Include="src\Swmm5Src\globals.h" />
+    <ClInclude Include="src\Swmm5Src\hash.h" />
+    <ClInclude Include="src\Swmm5Src\headers.h" />
+    <ClInclude Include="src\Swmm5Src\infil.h" />
+    <ClInclude Include="src\Swmm5Src\keywords.h" />
+    <ClInclude Include="src\Swmm5Src\lid.h" />
+    <ClInclude Include="src\Swmm5Src\macros.h" />
+    <ClInclude Include="src\Swmm5Src\mathexpr.h" />
+    <ClInclude Include="src\Swmm5Src\mempool.h" />
+    <ClInclude Include="src\Swmm5Src\objects.h" />
+    <ClInclude Include="src\Swmm5Src\odesolve.h" />
+    <ClInclude Include="src\Swmm5Src\swmm5.h" />
+    <ClInclude Include="src\Interop\SwmmInterop.h" />
+    <ClInclude Include="src\Swmm5Src\text.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Readme.txt" />
+    <Text Include="Roadmap.txt" />
+    <Text Include="src\Swmm5Src\Readme.txt" />
+    <Text Include="src\Swmm5Src\Roadmap.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\Swmm5Src\xsect.dat" />
+    <None Include="swmm5.def" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{A550B803-BB90-4E94-9E7E-4FA535D8F5AE}</ProjectGuid>
+    <RootNamespace>VS2017DLL</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Droplet.Core.Engine</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>Droplet.Core.Engine</TargetName>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\$(PlatformShortName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>Droplet.Core.Engine</TargetName>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\$(PlatformShortName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>Droplet.Core.Engine</TargetName>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\$(PlatformShortName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>Droplet.Core.Engine</TargetName>
+    <OutDir>$(ProjectDir)bin\$(Configuration)\$(PlatformShortName)\</OutDir>
+    <IntDir>$(ProjectDir)obj\$(Configuration)\$(PlatformShortName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <CompileAs>CompileAsC</CompileAs>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <OpenMPSupport>true</OpenMPSupport>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>swmm5.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
