@@ -7,17 +7,15 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Esri.ArcGISRuntime" Version="100.6.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Droplet.Core\Droplet.Core.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Esri.ArcGISRuntime.WPF" Version="100.6.0" />
-  </ItemGroup>
-
-
 
 </Project>
