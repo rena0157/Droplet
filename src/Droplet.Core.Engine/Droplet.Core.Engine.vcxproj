@@ -98,12 +98,11 @@
     <ClInclude Include="src\Swmm5Src\text.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Readme.txt" />
-    <Text Include="Roadmap.txt" />
     <Text Include="src\Swmm5Src\Readme.txt" />
     <Text Include="src\Swmm5Src\Roadmap.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="README.md" />
     <None Include="src\Swmm5Src\xsect.dat" />
     <None Include="swmm5.def" />
   </ItemGroup>
