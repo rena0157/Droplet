@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Esri.ArcGISRuntime.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,9 @@ namespace Droplet.WindowsApp
         public MainWindow()
         {
             InitializeComponent();
+            var myMap = new Map();
+            myMap.Basemap = Basemap.CreateDarkGrayCanvasVector();
+            myMapView.Map = myMap;
         }
     }
 }
