@@ -5,19 +5,22 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Droplet.Core.Inp", "src\Droplet.Core.Inp\Droplet.Core.Inp.csproj", "{D9EB4005-283C-46FC-BC80-C9ED15B6AD44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Droplet.Core", "src\Droplet.Core\Droplet.Core.csproj", "{78F13640-31C7-448B-BE58-D6B57A073C61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Droplet.Core", "src\Droplet.Core\Droplet.Core.csproj", "{78F13640-31C7-448B-BE58-D6B57A073C61}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A550B803-BB90-4E94-9E7E-4FA535D8F5AE} = {A550B803-BB90-4E94-9E7E-4FA535D8F5AE}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Droplet.WindowsApp", "src\Droplet.WindowsApp\Droplet.WindowsApp.csproj", "{FDEAC81F-4CC1-4A79-B49C-ECA728F26516}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Droplet.WindowsApp", "src\Droplet.WindowsApp\Droplet.WindowsApp.csproj", "{FDEAC81F-4CC1-4A79-B49C-ECA728F26516}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8362A7A8-8FBE-4898-991F-E5A886EBAEB1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Droplet.Core.Engine", "src\Droplet.Core.Engine\Droplet.Core.Engine.vcxproj", "{A550B803-BB90-4E94-9E7E-4FA535D8F5AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Droplet.Core.Inp.Tests", "tests\Droplet.Core.Inp.Tests\Droplet.Core.Inp.Tests.csproj", "{F7BE4860-5FAE-439A-B4CC-8B88525703C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Droplet.Core.Inp.Tests", "tests\Droplet.Core.Inp.Tests\Droplet.Core.Inp.Tests.csproj", "{F7BE4860-5FAE-439A-B4CC-8B88525703C8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B2FCC2D7-A142-4F25-847D-78C9D19F7945}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Droplet.Core.Tests", "tests\Droplet.Core.Tests\Droplet.Core.Tests.csproj", "{D5EC3130-E7BE-40A0-900E-D4638215B8A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Droplet.Core.Tests", "tests\Droplet.Core.Tests\Droplet.Core.Tests.csproj", "{D5EC3130-E7BE-40A0-900E-D4638215B8A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

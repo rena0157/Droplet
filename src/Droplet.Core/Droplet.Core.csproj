@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Droplet.Core.Engine\Droplet.Core.Engine.vcxproj" />
     <ProjectReference Include="..\Droplet.Core.Inp\Droplet.Core.Inp.csproj" />
   </ItemGroup>
 
