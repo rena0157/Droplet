@@ -9,6 +9,9 @@ using Xunit.Abstractions;
 
 namespace InpLibTests.Entities
 {
+    /// <summary>
+    /// Tests for the <see cref="Outfall"/> class
+    /// </summary>
     public class OutfallTests : InpFileTests
     {
         #region Constructors
