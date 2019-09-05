@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit.Abstractions;
 
-namespace InpLibTests
+namespace Droplet.Core.Inp.Tests
 {
     /// <summary>
     /// Base class for all test classes

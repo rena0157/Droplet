@@ -17,7 +17,7 @@ using Droplet.Core.Inp.Parsers;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace InpLibTests.Entities
+namespace Droplet.Core.Inp.Tests
 {
     /// <summary>
     /// Public Test class for the <see cref="Aquifer"/> class
@@ -34,27 +34,6 @@ namespace InpLibTests.Entities
         }
 
         #region Tests
-
-        /// <summary>
-        /// Testing the parsing of the <see cref="Aquifer"/> class
-        /// </summary>
-        /// <param name="inpString">An inp string that comes from an inp file and contains an <see cref="Aquifer"/></param>
-        /// <param name="expectedAquifer">The expected <see cref="Aquifer"/> that the parser should match</param>
-        [Theory]
-        [ClassData(typeof(ParserData))]
-        public void ParserTests(string inpString, Aquifer expectedAquifer)
-        {
-            // Place the inpString into the fileStrings
-            FileLinesFromString(inpString);
-
-            // Create and read the project
-            var project = new InpProject();
-            var parser = new InpTableSection(project, "AQUIFERS");
-            parser.ReadSection(this);
-
-            // The Aquifer that the parser reads should be equal to the expected aquifer
-            Assert.Equal(expectedAquifer, project.Entities.FirstOrDefault(e => e is Aquifer));
-        }
 
         /// <summary>
         /// Testing the <see cref="InpEntity.ToInpString"/> method as implemented for
@@ -78,7 +57,7 @@ namespace InpLibTests.Entities
             var inpString = aquifer.ToInpString() + "\n";
 
             // Set the inp string as the file lines variable
-            FileLinesFromString(inpString);
+            // FileLinesFromString(inpString);
 
             // Create, read and parse the project including the Aquifer
             // string that was created above.

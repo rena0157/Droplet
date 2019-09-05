@@ -8,31 +8,25 @@ using Droplet.Core.Inp.IO;
 using Xunit;
 using Xunit.Abstractions;
 using Droplet.Core.Inp.Parsers;
+using Droplet.Core.Inp.Entities;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
 
-namespace InpLibTests
+namespace Droplet.Core.Inp.Tests
 {
     /// <summary>
     /// A testing class that inherits from <see cref="IInpReader"/> so that
     /// it can be passed to the <see cref="InpParser"/> and the contents
     /// of the filelines can be read
     /// </summary>
-    public class InpFileTests : TestBase, IInpReader
+    public class InpFileTests : TestBase
     {
         /// <summary>
-        /// The filelines that will be read by the <see cref="InpParser"/>
+        /// The reader that can be used to read strings
+        /// from an inp file and simulates the <see cref="InpReader"/> class
         /// </summary>
-        protected string[] FileLines;
-
-        /// <summary>
-        /// The line pointer that points to the current index of the
-        /// <see cref="InpFileTests.FileLines"/>
-        /// </summary>
-        private int _linePointer;
-
-        /// <summary>
-        /// The root folder for test files
-        /// </summary>
-        private const string _rootFolder = @".\TestFiles\";
+        protected InpStringReader Reader { get; set; }
 
         /// <summary>
         /// The default constructor for the <see cref="InpFileTests"/> class
@@ -40,55 +34,135 @@ namespace InpLibTests
         /// <param name="logger">The logger that is passed for Xunit</param>
         public InpFileTests(ITestOutputHelper logger) : base(logger)
         {
+            Reader = new InpStringReader();
         }
 
         /// <summary>
-        /// Read a file from the file name provided
+        /// Base test method for testing <see cref="InpEntity"/> classes
+        /// parsing from inp files
         /// </summary>
-        /// <param name="filename">The filename provided that will be read</param>
-        protected void ReadFile(string filename)
+        /// <param name="inpString">The inp string of an entity</param>
+        /// <param name="expectedEntity">The expected entity that should be created from the string</param>
+        public void EntityParserTests(string inpString, InpEntity expectedEntity)
         {
-            var path = Path.Combine(_rootFolder, filename);
-            Assert.True(File.Exists(Path.Combine(_rootFolder, filename)));
-            FileLines = File.ReadAllLines(path);
-            _linePointer = 0;
+            var project = new InpProject();
+            var parser = new InpTableSection(project, expectedEntity.InpTableName);
+            Reader.SetData(inpString);
+            parser.ReadSection(Reader);
+
+            var entity = project.Entities.FirstOrDefault();
+
+            Assert.Equal(expectedEntity, entity);
         }
 
-        /// <summary>
-        /// Populate the <see cref="FileLines"/> field from a string
-        /// </summary>
-        /// <param name="s">The string that will be used to populate the filelines array</param>
-        protected void FileLinesFromString(string s)
-            => FileLines = s.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+        #region Test Data
 
         /// <summary>
-        /// Returns True if the stream has reached its end
+        /// Test data for <see cref="EntityParserTests(string, InpEntity)"/> tests
         /// </summary>
-        public bool EndOfStream => _linePointer >= FileLines.Length;
-
-        /// <summary>
-        /// Peek a line without advancing the stream
-        /// </summary>
-        /// <returns>Returns: A string</returns>
-        public string PeekLine()
+        private class EntityParserTestData : IEnumerable<object[]>
         {
-            if (_linePointer < FileLines.Length && FileLines.Length > 0)
-                return FileLines[_linePointer];
-            else
-                return "";
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                // Aquifer Test Data
+                yield return new object[]
+                {
+                    // Aqifer as taken from an inp file
+                    // ;;Name           Por    WP     FC     Ksat   Kslope Tslope ETu    ETs    Seep   Ebot   Egw    Umc    ETupat 
+                    "Test             0.5    0.15   0.30   5.0    10.0   15.0   0.35   14.0   0.002  0.0    10.0   0.30         \n",
+                    
+                    // The expected aquifer from the above string
+                    new Aquifer
+                    {
+                        Name = "Test",
+                        Porosity = 0.5,
+                        WiltingPoint = 0.15,
+                        FieldCapacity = 0.3,
+                        Conductivity = 5.0,
+                        ConductivitySlope = 10.0,
+                        TensionSlope = 15.0,
+                        UpperEvaportationFraction = 0.35,
+                        LowerEvaporationDepth = 14.0,
+                        LowerGroundWaterLossRate = 0.002,
+                        BottomElevation = 0.0,
+                        WaterTableElevation = 10,
+                        UnsaturatedZoneMoisture = 0.3,
+                        Description = ""
+                    }
+                };
+
+                // Groundwater Test Data
+                yield return new object[]
+                {
+                    // ;;Subcatchment   Aquifer          Node             Esurf  A1     B1     A2     B2     A3     Dsw    Egwt   Ebot   Wgr    Umc   
+                    "1                Test             *                0      0      0      0      0      0      0      *     \n",
+
+                    // Expected Groundwater from the inp string above
+                    new Groundwater
+                    {
+                        ReferencedEntityNames = new List<string> {"3", "Test", "*"},
+                        SurfaceElevation = 0.0,
+                        InfluenceMultiplier = 0.0,
+                        InfluenceExponent = 0.0,
+                        TailWaterInfluenceMultiplier = 0.0,
+                        TailWaterInfluenceExponent = 0.0,
+                        CombinedMultiplier = 0.0,
+                        SurfaceWaterDepth = 0.0,
+                        MinWaterTableElevation = 0.0,
+                        ElevationOfAquiferBottom = 0.0,
+                        UnsaturatedZoneMoisture = 0.0
+                    }
+                };
+
+                // Outfall Test Data
+                yield return new object[] 
+                {
+                    // The string below represents an outfall from an inp file
+                    // ;;Name           Elevation  Type       Stage Data       Gated    Route To        
+                    "2                0          FIXED      1                NO       1               \n",
+
+                    // The outfall that should be generated from
+                    // the string above
+                    new Outfall
+                    {
+                        Name = "2",
+                        InvertElevation = 0,
+                        BoundaryCondition = OutfallBoundaryConditions.Fixed,
+                        WaterElevationFixed = 1,
+                        TideGate = false,
+                        SubcatchmentNameRoutedTo = "1"
+                    }
+                };
+
+                //
+                yield return new object[]
+                {
+                    @";;Name           Rain Gage        Outlet           Area     %Imperv  Width    %Slope   CurbLen  SnowPack        
+;;-------------- ---------------- ---------------- -------- -------- -------- -------- -------- ----------------
+;My Subcatchment
+1                *                myStorage        5        25       500      0.5      0                        ",
+
+                    new Subcatchment
+                    {
+                        Name = "1",
+                        Description = "My Subcatchment" + Environment.NewLine,
+                        RainGaugeName = "*",
+                        OutletName = "myStorage",
+                        Area = 5,
+                        PercentImpervious = 25,
+                        Width = 500,
+                        Slope = 0.5,
+                        CurbLength = 0,
+                    }
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
         }
 
-        /// <summary>
-        /// Read the next line
-        /// </summary>
-        /// <returns>Returns: The next line in the stream</returns>
-        public string ReadLine()
-        {
-            if (_linePointer < FileLines.Length && FileLines.Length > 0)
-                return FileLines[_linePointer++];
-            else
-                return null;
-        }
-
+        #endregion
     }
 }
