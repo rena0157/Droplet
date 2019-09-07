@@ -2,14 +2,14 @@
 // By: Adam Renaud
 // Created: 2019-08-21
 
-using System;
-using Xunit;
-using Xunit.Abstractions;
+using Droplet.Core.Inp;
 using Droplet.Core.Inp.Entities;
 using Droplet.Core.Inp.Parsers;
-using System.Collections.Generic;
+using Droplet.Core.Inp.Tests;
 using System.Collections;
-using Droplet.Core.Inp;
+using System.Collections.Generic;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace InpLibTests.Entities
 {
@@ -37,7 +37,7 @@ namespace InpLibTests.Entities
         [ClassData(typeof(ParserTestData))]
         public void ParserTests(string s, SubArea expectedSubArea)
         {
-            FileLinesFromString(s);
+            Reader.SetData(s);
             var project = new InpProject();
             var subcatchment = new Subcatchment()
             {
@@ -46,7 +46,7 @@ namespace InpLibTests.Entities
             project.Entities.Add(subcatchment);
 
             var parser = new InpTableSection(project, "SUBAREAS");
-            parser.ReadSection(this);
+            parser.ReadSection(Reader);
 
             Assert.Equal(expectedSubArea, subcatchment.SubArea);
         }

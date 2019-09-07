@@ -8,12 +8,11 @@
 // 
 // ============================================================
 
+using Droplet.Core.Inp.Entities;
+using Droplet.Core.Inp.Parsers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Droplet.Core.Inp;
-using Droplet.Core.Inp.Entities;
-using Droplet.Core.Inp.Parsers;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -57,13 +56,13 @@ namespace Droplet.Core.Inp.Tests
             var inpString = aquifer.ToInpString() + "\n";
 
             // Set the inp string as the file lines variable
-            // FileLinesFromString(inpString);
+            Reader.SetData(inpString);
 
             // Create, read and parse the project including the Aquifer
             // string that was created above.
             var project = new InpProject();
             var parser = new InpTableSection(project, "AQUIFERS");
-            parser.ReadSection(this);
+            parser.ReadSection(Reader);
 
             // Get the aquifer that was created from the inp string
             var aqiferFromString = project.Entities.FirstOrDefault(e => e is Aquifer);

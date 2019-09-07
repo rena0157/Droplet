@@ -2,17 +2,17 @@
 // By: Adam Renaud
 // Created: 2019-08-10
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Droplet.Core.Inp;
 using Droplet.Core.Inp.Options;
 using Droplet.Core.Inp.Options.Extensions;
 using Droplet.Core.Inp.Parsers;
+using Droplet.Core.Inp.Tests;
+using System.Collections;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace InpLibTests.Options
+namespace Droplet.Core.Inp.Tests.Options
 {
     public class InfiltrationMethodsTests : InpFileTests
     {
@@ -51,14 +51,14 @@ namespace InpLibTests.Options
         public void ParserTest(string s, InfiltrationMethods expectedMethod)
         {
             // Fill out the File lines strings
-            FileLinesFromString(s);
+            Reader.SetData(s);
 
             // Create a project and a parser
             var project = new InpProject();
             var parser = new InpOptionsSection(project);
 
             // Make the parser read the section
-            parser.ReadSection(this);
+            parser.ReadSection(Reader);
 
             // Assert that the results are equal to the expected results
             Assert.Equal(expectedMethod, project.InfiltrationMethod);

@@ -30,12 +30,6 @@ namespace Droplet.Core.Inp.Tests
         /// </summary>
         protected int LineIndex { get; set; }
 
-        /// <summary>
-        /// The queue that is used to store a line that
-        /// is peeked but not read
-        /// </summary>
-        protected Queue<string> LineQueue { get; set; }
-
         #endregion
 
         #region Constructors
@@ -48,7 +42,6 @@ namespace Droplet.Core.Inp.Tests
         {
             // Setting the default values for the
             // properties of this class
-            LineQueue = new Queue<string>();
             LineIndex = 0;
         }
 
@@ -69,7 +62,7 @@ namespace Droplet.Core.Inp.Tests
         /// <summary>
         /// Returns true if the end of the stream has been reached
         /// </summary>
-        public bool EndOfStream => !(LineIndex < StringLines.Length);
+        public bool EndOfStream => LineIndex >= StringLines.Length;
 
         #endregion
 
@@ -96,16 +89,12 @@ namespace Droplet.Core.Inp.Tests
             // If reading the next line would be out of bounds
             // of the array then let the user know
             if (EndOfStream)
-                throw new ArgumentOutOfRangeException("Reading past the end of the stream " +
-                    $"Trying to read the index {LineIndex + 1} " +
-                    $"value of an array of length {StringLines.Length}");
+                return null;
 
             // Get the next line from the StringLines Array
             // but do not increment the line index
             var line = StringLines[LineIndex];
 
-            // Enqueue the line for future use and then return it
-            LineQueue.Enqueue(line);
             return line;
         }
 
@@ -115,11 +104,6 @@ namespace Droplet.Core.Inp.Tests
         /// <returns>Returns: the next line from the stream</returns>
         public string ReadLine()
         {
-            // If there is a line that is queued then
-            // read that line and return
-            if (LineQueue.Count != 0)
-                return LineQueue.Dequeue();
-
             // If we are trying to read past the end of the array
             // will throw the following exception
             if (EndOfStream)

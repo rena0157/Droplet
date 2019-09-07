@@ -84,6 +84,6 @@ namespace Droplet.Core.Inp.Parsers
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        private static bool EndOfSection(string line) => line.StartsWith("[");
+        private static bool EndOfSection(string line) => line == null || line.StartsWith("[");
     }
 }

@@ -2,17 +2,15 @@
 // By: Adam Renaud
 // Created: 2019-08-10
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Droplet.Core.Inp;
-using Xunit;
 using Droplet.Core.Inp.Options;
 using Droplet.Core.Inp.Options.Extensions;
 using Droplet.Core.Inp.Parsers;
+using System.Collections;
+using System.Collections.Generic;
+using Xunit;
 using Xunit.Abstractions;
 
-namespace InpLibTests.Options
+namespace Droplet.Core.Inp.Tests.Options
 {
     public class FlowUnitsTests : InpFileTests
     {
@@ -47,10 +45,10 @@ namespace InpLibTests.Options
         [ClassData(typeof(FlowUnitsTestData))]
         public void FlowUnitsParsingTest(string s, FlowUnits expectedFlowUnits)
         {
-            FileLinesFromString(s);
+            Reader.SetData(s);
             var project = new InpProject();
             var optionsParser = new InpOptionsSection(project);
-            optionsParser.ReadSection(this);
+            optionsParser.ReadSection(Reader);
 
             Assert.Equal(expectedFlowUnits, project.FlowUnits);
         }

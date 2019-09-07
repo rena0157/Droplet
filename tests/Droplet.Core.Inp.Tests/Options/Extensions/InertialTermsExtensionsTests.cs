@@ -14,7 +14,7 @@ using Droplet.Core.Inp.Options.Extensions;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace InpLibTests.Options.Extensions
+namespace Droplet.Core.Inp.Tests.Options.Extensions
 {
     public class InertialTermsExtensionsTests : TestBase
     {

@@ -6,7 +6,7 @@ using Droplet.Core.Inp;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace InpLibTests
+namespace Droplet.Core.Inp.Tests
 {
     /// <summary>
     /// Test class that holds a reader method for reading

@@ -2,6 +2,7 @@
 using Droplet.Core.Inp.Entities;
 using Droplet.Core.Inp.Options;
 using Droplet.Core.Inp.Parsers;
+using Droplet.Core.Inp.Tests;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace InpLibTests.Entities
         public void InfiltrationParserTests(string fileString, InfiltrationData expected, InfiltrationMethods method)
         {
             // Set the file lines for this tester
-            FileLinesFromString(fileString);
+            Reader.SetData(fileString);
 
             // Create the project and set the infiltration method
             var project = new InpProject
@@ -54,7 +55,7 @@ namespace InpLibTests.Entities
 
             // Read and parse the section
             var parser = new InpTableSection(project, "INFILTRATION");
-            parser.ReadSection(this);
+            parser.ReadSection(Reader);
 
             // Asser that the correct entity was parsed
             Assert.Equal(expected, subcatchment.InfiltrationOptions);

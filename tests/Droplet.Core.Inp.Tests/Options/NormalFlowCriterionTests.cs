@@ -9,15 +9,14 @@
 // 
 // ============================================================
 
-using System.Collections;
-using System.Collections.Generic;
-using Droplet.Core.Inp;
 using Droplet.Core.Inp.Options;
 using Droplet.Core.Inp.Parsers;
+using System.Collections;
+using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace InpLibTests.Options
+namespace Droplet.Core.Inp.Tests.Options
 {
     public class NormalFlowCriterionTests : InpFileTests
     {
@@ -35,11 +34,11 @@ namespace InpLibTests.Options
         [ClassData(typeof(ParserData))]
         public void ParserTests(string s, NormalFlowCriterion expected)
         {
-            FileLinesFromString(s);
+            Reader.SetData(s);
             var project = new InpProject();
             var parser = new InpOptionsSection(project);
 
-            parser.ReadSection(this);
+            parser.ReadSection(Reader);
 
             Assert.Equal(expected, project.NormalFlowOption);
         }

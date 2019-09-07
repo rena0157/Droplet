@@ -2,13 +2,12 @@
 // By: Adam Renaud
 // Created: 2019-08-10
 
-using System;
-using Xunit;
 using Droplet.Core.Inp.Options;
 using Droplet.Core.Inp.Options.Extensions;
+using Xunit;
 using Xunit.Abstractions;
 
-namespace InpLibTests.Options
+namespace Droplet.Core.Inp.Tests.Options
 {
     public class LinkOffsetsTests : TestBase
     {
