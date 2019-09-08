@@ -63,25 +63,41 @@ namespace Droplet.Core.Inp.IO
         /// The queue that holds the previous line if a line was
         /// peeked
         /// </summary>
-        protected Queue<string> LineQueue { get; }
+        protected Queue<string> LineQueue { get; } = new Queue<string>();
 
         /// <summary>
         /// Peek the next line without consuming the position
-        /// of the stream
+        /// of the stream. Note that if the end of the stream has been
+        /// reached then this will return null.
         /// </summary>
-        /// <returns>Returns: The next line of the stream</returns>
+        /// <returns>Returns: The next line of the stream or null if the end of the
+        /// stream has been reached</returns>
         public string PeekLine()
         {
-            throw new NotImplementedException();
+            // If we have reached the end of the
+            // stream then this should return null
+            if (EndOfStream) return null;
+
+            // Read the line, place it into the queue
+            // and return it to the user
+            var line = ReadLine();
+            LineQueue.Enqueue(line);
+            return line;
         }
 
         /// <summary>
         /// Read the next line of the stream
         /// </summary>
-        /// <returns>Returns: </returns>
+        /// <returns>Returns: A string that is the next line in the stream</returns>
         public override string ReadLine()
         {
-            throw new NotImplementedException();
+            // If the queue is not empty then
+            // return the first item in the queue
+            if (LineQueue.Count > 0)
+                return LineQueue.Dequeue();
+
+            // Otherwise return the next line
+            return base.ReadLine();
         }
     }
 }
