@@ -1,4 +1,5 @@
-﻿using Droplet.Core.Inp.Entities;
+﻿using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Entities;
 using System.Collections.Generic;
 
 namespace Droplet.Core.Inp
@@ -26,6 +27,6 @@ namespace Droplet.Core.Inp
         /// <summary>
         /// The entities in this project
         /// </summary>
-        List<IInpEntity> Entities { get; }
+        IInpDatabase Database { get; }
     }
 }
