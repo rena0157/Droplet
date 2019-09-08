@@ -21,7 +21,7 @@ namespace Droplet.Core.Inp
         /// <summary>
         /// The options in this project
         /// </summary>
-        List<IInpOption> Options { get; }
+        // List<IInpOption> Options { get; }
 
         /// <summary>
         /// The entities in this project
