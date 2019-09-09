@@ -1,4 +1,5 @@
-﻿using Xunit.Abstractions;
+﻿using Xunit;
+using Xunit.Abstractions;
 
 namespace Droplet.Core.Inp.Tests
 {
@@ -19,6 +20,12 @@ namespace Droplet.Core.Inp.Tests
         public TestBase(ITestOutputHelper logger)
         {
             Logger = logger;
+        }
+
+        [Fact]
+        public void ReaderTest()
+        {
+            var project = new InpProject(@"C:\Dev\Droplet\tests\Droplet.Core.Inp.Tests\TestFiles\test.inp");
         }
     }
 }

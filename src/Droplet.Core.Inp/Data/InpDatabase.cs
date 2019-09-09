@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Droplet.Core.Inp.Options;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Droplet.Core.Inp.Data
@@ -17,10 +19,8 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         private Dictionary<Guid, IInpDbObject> _objectDictionary;
 
-        /// <summary>
-        /// Tables from the inp file
-        /// </summary>
-        private List<InpTable> _tables;
+
+        private List<IInpTable> _inpTables { get; }
 
         #endregion
 
@@ -41,6 +41,7 @@ namespace Droplet.Core.Inp.Data
         /// <param name="tables">The tables that will be used to build the database</param>
         public InpDatabase(List<IInpTable> tables) : this()
         {
+            _inpTables = tables;
             UpdateDatabase(tables);
         }
 
@@ -61,6 +62,15 @@ namespace Droplet.Core.Inp.Data
                 throw new ArgumentOutOfRangeException($"The object with id {id} could not be found");
 
             return _objectDictionary[id];
+        }
+
+        public T GetOption<T>()
+        {
+            foreach(var o in _objectDictionary.Values)
+                if (o is T)
+                    return (T)o;
+
+            throw new ArgumentOutOfRangeException("The value could not be found");
         }
 
         /// <summary>

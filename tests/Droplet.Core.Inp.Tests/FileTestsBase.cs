@@ -45,5 +45,6 @@ namespace Droplet.Core.Inp.Tests
         {
             ((IDisposable)MemoryStream).Dispose();
         }
+
     }
 }

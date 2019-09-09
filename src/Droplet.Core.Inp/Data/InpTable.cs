@@ -21,9 +21,9 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         public InpTable()
         {
-            Rows = new List<ITableRow>();
             Headers = "";
             Name = "";
+            _tableDictionary = new Dictionary<string, ITableRow>();
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Droplet.Core.Inp.Data
         /// <summary>
         /// The rows associated with the table
         /// </summary>
-        public List<ITableRow> Rows { get; }
+        public IEnumerable<ITableRow> Rows => _tableDictionary.Values;
 
         /// <summary>
         /// The headers for the table

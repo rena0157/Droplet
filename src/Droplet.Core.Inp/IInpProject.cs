@@ -1,6 +1,5 @@
 ﻿using Droplet.Core.Inp.Data;
-using Droplet.Core.Inp.Entities;
-using System.Collections.Generic;
+using Droplet.Core.Inp.Options;
 
 namespace Droplet.Core.Inp
 {
@@ -22,7 +21,7 @@ namespace Droplet.Core.Inp
         /// <summary>
         /// The options in this project
         /// </summary>
-        // List<IInpOption> Options { get; }
+        ProjectOptions Options { get; }
 
         /// <summary>
         /// The entities in this project

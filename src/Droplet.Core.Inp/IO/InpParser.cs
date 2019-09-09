@@ -25,6 +25,11 @@ namespace Droplet.Core.Inp.IO
         /// </summary>
         protected List<IInpTable> InpTables { get; set;}
 
+        public InpParser()
+        {
+            InpTables = new List<IInpTable>();
+        }
+
         /// <summary>
         /// Parse the file supplied with the reader and construct the
         /// project

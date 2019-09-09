@@ -5,6 +5,7 @@
 using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.Entities;
 using Droplet.Core.Inp.IO;
+using Droplet.Core.Inp.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -78,6 +79,12 @@ namespace Droplet.Core.Inp
 
         #endregion
 
+        #region Options
+
+        public FlowUnits FlowUnits;
+
+        #endregion  
+
         #region IInpProject Implementation
 
         /// <summary>
@@ -91,6 +98,8 @@ namespace Droplet.Core.Inp
         public string ProjectName { get; }
 
         public IInpDatabase Database => throw new NotImplementedException();
+
+        public ProjectOptions Options => throw new NotImplementedException();
 
         #endregion
     }

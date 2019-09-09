@@ -20,7 +20,7 @@ namespace Droplet.Core.Inp.Data
         /// <summary>
         /// A list of the rows in the table
         /// </summary>
-        List<ITableRow> Rows { get; }
+        IEnumerable<ITableRow> Rows { get; }
 
         /// <summary>
         /// Add a row to the table
