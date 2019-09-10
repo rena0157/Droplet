@@ -3,7 +3,7 @@
 
 [OPTIONS]
 ;;Option             Value
-FLOW_UNITS           MLD
+FLOW_UNITS           CMS
 INFILTRATION         GREEN_AMPT
 FLOW_ROUTING         DYNWAVE
 LINK_OFFSETS         ELEVATION
@@ -107,7 +107,7 @@ myStorage        0        0          0          FUNCTIONAL 1000      0         0
 [DWF]
 ;;Node           Constituent      Baseline   Patterns  
 ;;-------------- ---------------- ---------- ----------
-2                FLOW             4          "test" ""
+2                FLOW             4          "test"
 
 [PATTERNS]
 ;;Name           Type       Multipliers

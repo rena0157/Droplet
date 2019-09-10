@@ -25,6 +25,10 @@ namespace Droplet.Core.Inp.IO
         /// </summary>
         protected List<IInpTable> InpTables { get; set;}
 
+        /// <summary>
+        /// Default Constructor that initializes the values for this
+        /// class
+        /// </summary>
         public InpParser()
         {
             InpTables = new List<IInpTable>();
@@ -56,6 +60,7 @@ namespace Droplet.Core.Inp.IO
                 InpTables.Add(BuildTable(reader, sectionName));
             }
 
+            // Update the database from the tables created above
             inpProject.Database.UpdateDatabase(InpTables);
         }
 

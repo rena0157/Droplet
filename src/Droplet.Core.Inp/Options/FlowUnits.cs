@@ -95,7 +95,7 @@ namespace Droplet.Core.Inp.Options
 
         CubicMetersPerSecond,
 
-        MilltionLitersPerDay
+        MillionLitersPerDay
     }
 
     /// <summary>
@@ -123,7 +123,7 @@ namespace Droplet.Core.Inp.Options
             "CMS" => FlowUnits.CubicMetersPerSecond,
             "CFS" => FlowUnits.CubicFeetPerSecond,
             "GPM" => FlowUnits.GallonsPerMinute,
-            "MLD" => FlowUnits.MilltionLitersPerDay,
+            "MLD" => FlowUnits.MillionLitersPerDay,
             "MGD" => FlowUnits.MillionGallonsPerDay,
 
             _ => throw new ArgumentOutOfRangeException($"The string {s} could not be matched to a flow unts")
@@ -141,7 +141,7 @@ namespace Droplet.Core.Inp.Options
             FlowUnits.CubicFeetPerSecond => "CFS",
             FlowUnits.GallonsPerMinute => "GPM",
             FlowUnits.MillionGallonsPerDay => "MGD",
-            FlowUnits.MilltionLitersPerDay => "MLD",
+            FlowUnits.MillionLitersPerDay => "MLD",
 
             _ => throw new ArgumentOutOfRangeException()
         };
