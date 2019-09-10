@@ -1,4 +1,8 @@
-﻿using Droplet.Core.Inp.Data;
+﻿// InpParser.cs
+// Created: 2019-09-10
+// By: Adam Renaud
+
+using Droplet.Core.Inp.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -121,6 +125,6 @@ namespace Droplet.Core.Inp.IO
         /// <param name="line">The line that will be tested</param>
         /// <returns>Returns: True if the line contains a comment</returns>
         protected virtual bool IsComment(string line)
-            => line.StartsWith(";;");
+            => line.StartsWith(";") && !line.Contains(";;");
     }
 }

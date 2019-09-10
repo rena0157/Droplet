@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// IInpParser.cs
+// Created: 2019-09-10
+// By: Adam Renaud
 
 namespace Droplet.Core.Inp.IO
 {
@@ -16,7 +16,5 @@ namespace Droplet.Core.Inp.IO
         /// <param name="inpProject">The project that will be updated</param>
         /// <param name="reader">The reader that will be used to read the file</param>
         void ParseFile(IInpProject inpProject, IInpReader reader);
-
-
     }
 }

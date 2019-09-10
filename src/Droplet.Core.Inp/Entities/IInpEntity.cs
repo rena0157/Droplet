@@ -1,4 +1,8 @@
-﻿using Droplet.Core.Inp.Data;
+﻿// IInpEntity.cs
+// Created: 2019-09-10
+// By: Adam Renaud
+
+using Droplet.Core.Inp.Data;
 
 namespace Droplet.Core.Inp.Entities
 {

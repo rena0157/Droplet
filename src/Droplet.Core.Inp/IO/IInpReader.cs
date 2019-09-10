@@ -1,7 +1,11 @@
-﻿namespace Droplet.Core.Inp.IO
+﻿// IInpReader.cs
+// Created: 2019-09-10
+// By: Adam Renaud
+
+namespace Droplet.Core.Inp.IO
 {
     /// <summary>
-    /// Interface for the Inp Readers
+    /// Interface for Inp Readers
     /// </summary>
     public interface IInpReader
     {
