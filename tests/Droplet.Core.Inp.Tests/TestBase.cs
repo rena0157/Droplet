@@ -1,24 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Droplet.Core.Inp.Options;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace Droplet.Core.Inp.Tests
 {
     /// <summary>
-    /// Base class for all test classes
+    /// A Base class for all tests in this library
     /// </summary>
     public class TestBase
     {
         /// <summary>
-        /// Default Logger for TestBase
+        /// A logger that can be used to log to the test console
         /// </summary>
-        protected ITestOutputHelper Logger;
+        protected ITestOutputHelper Logger { get; }
 
         /// <summary>
-        /// Default Constructor for the test base class
+        /// Default Constructor for the test class
         /// </summary>
-        /// <param name="logger">A logger that is passed from XUnit</param>
-        public TestBase(ITestOutputHelper logger) { Logger = logger; }
+        /// <param name="logger">The logger that is passed from XUnit</param>
+        public TestBase(ITestOutputHelper logger)
+        {
+            Logger = logger;
+        }
+
+        [Fact]
+        public void ReaderTest()
+        {
+            var project = new InpProject(@"C:\Dev\Droplet\tests\Droplet.Core.Inp.Tests\TestFiles\test.inp");
+        }
     }
 }

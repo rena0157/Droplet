@@ -1,109 +1,63 @@
-﻿// InpLib
-// InpEntity.cs
-// 
-// ============================================================
-// 
-// Created: 2019-08-11
-// Last Updated: 2019-08-11-01:04 PM
+﻿// InpEntity.cs
+// Created: 2019-09-10
 // By: Adam Renaud
-// 
-// ============================================================
 
+using Droplet.Core.Inp.Data;
 using System;
-using Droplet.Core.Inp.Parsers;
 
 namespace Droplet.Core.Inp.Entities
 {
     /// <summary>
-    /// Abstract class that defines an InpEntity
+    /// Base class for all entities
     /// </summary>
-    public abstract class InpEntity : IInpTableParseable
+    public class InpEntity : IInpEntity
     {
+
         #region Constructors
 
         /// <summary>
-        /// Default Constructor that will initialize the
-        /// InpEntity
+        /// Default Constructor that initializes this entity
         /// </summary>
         public InpEntity()
         {
-            SetPropertyMappings();
-            Name = "";
-            Description = "";
-            Tag = "";
+            ID = Guid.NewGuid();
+        }
+
+        /// <summary>
+        /// Initializes this entity from a table row and
+        /// a database.
+        /// </summary>
+        /// <param name="row">The row that will be used to initialize this entity</param>
+        /// <param name="database">The database that will be used to initialize this entity</param>
+        public InpEntity(IInpTableRow row, IInpDatabase database) : this()
+        {
         }
 
         #endregion
 
-        #region Inp Attributes
+        /// <summary>
+        /// The name of the entity
+        /// </summary>
+        public virtual string Name { get; protected set; }
 
         /// <summary>
-        /// The name/ID of the entity
+        /// The description of the entity
         /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The Description that was given to the entity
-        /// </summary>
-        public string Description { get; set; }
+        public string Description { get; protected set;}
 
         /// <summary>
         /// The Tag of the entity
         /// </summary>
-        public string Tag { get; set; }
-
-        #endregion
-
-        #region Public Properties
+        public string Tag { get; protected set; }
 
         /// <summary>
-        /// The property mappings for inp entities
+        /// The ID of the <see cref="IInpDatabase"/> object
         /// </summary>
-        public abstract Action<string>[] PropertyMappings { get; protected set; }
+        public Guid ID { get; protected set; }
 
         /// <summary>
-        /// The name of the table that this entity belongs to
+        /// The <see cref="IInpDatabase"/> that this entity belongs to
         /// </summary>
-        public abstract string InpTableName { get; }
-
-        #endregion
-
-        #region Public Methods
-
-        /// <summary>
-        /// Build this entity from an Inp Table data string
-        /// </summary>
-        /// <param name="data">The data string</param>
-        public virtual void BuildFromTable(string[] data)
-        {
-            for (var i = 0; i < data.Length && i < PropertyMappings.Length; i++)
-                PropertyMappings[i](data[i]);
-        }
-
-        /// <summary>
-        /// Add Entity Data
-        /// </summary>
-        /// <param name="entityData">The entity data that will be added</param>
-        public abstract void AddEntityData(InpEntityData entityData);
-
-        /// <summary>
-        /// Setting the property mappings from a passed in mappings array
-        /// </summary>
-        /// <param name="mappings">The array that will be set</param>
-        public void SetPropertyMappings(Action<string>[] mappings) => PropertyMappings = mappings;
-
-        /// <summary>
-        /// Abstract SetProperty mappings method
-        /// </summary>
-        public abstract void SetPropertyMappings();
-
-        /// <summary>
-        /// Write this entity to an inp string. That is formatted
-        /// to be added to an inp table
-        /// </summary>
-        /// <returns>Returns: A formatted InpString</returns>
-        public abstract string ToInpString();
-
-        #endregion
+        public IInpDatabase Database {get; protected set; } 
     }
 }

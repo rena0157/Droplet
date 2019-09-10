@@ -1,32 +1,30 @@
 ﻿// IInpReader.cs
+// Created: 2019-09-10
 // By: Adam Renaud
-// Created: 2019-08-17
 
 namespace Droplet.Core.Inp.IO
 {
     /// <summary>
-    /// Interface for an InpReader
+    /// Interface for Inp Readers
     /// </summary>
     public interface IInpReader
     {
         /// <summary>
-        /// Read a line from the file
+        /// Returns true if the reader has reached the end of the stream
         /// </summary>
-        /// <returns>Returns a line from the file</returns>
+        bool EndOfStream { get; }
+
+        /// <summary>
+        /// Reads the next line in the inp stream
+        /// </summary>
+        /// <returns>Returns: The Next line in the Inp Stream</returns>
         string ReadLine();
 
         /// <summary>
-        /// Peek a line from the file. This does not advance
-        /// stream
+        /// Peeks the next line in the inp stream
         /// </summary>
-        /// <returns>Returns: The next line the in the file</returns>
+        /// <returns>Returns: The next line in the inp stream without consuming
+        /// the current index</returns>
         string PeekLine();
-
-        /// <summary>
-        /// Returns true if this inp reader has reached
-        /// the end of the stream that it is reading from
-        /// </summary>
-        bool EndOfStream { get; }
     }
-
 }

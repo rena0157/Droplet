@@ -1,119 +1,113 @@
-// FlowUnitsTests.cs
-// By: Adam Renaud
-// Created: 2019-08-10
-
+﻿using Droplet.Core.Inp.IO;
 using Droplet.Core.Inp.Options;
-using Droplet.Core.Inp.Options.Extensions;
-using Droplet.Core.Inp.Parsers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Droplet.Core.Inp.Tests.Options
 {
-    public class FlowUnitsTests : InpFileTests
+    public class FlowUnitsTests : FileTestsBase
     {
         public FlowUnitsTests(ITestOutputHelper logger) : base(logger)
         {
-
+            
         }
 
         #region Tests
 
         /// <summary>
-        /// Testing the FlowUnits from string extension Method
+        /// Testing the parsing of <see cref="FlowUnitsOption"/> from
+        /// a mock INPFile
         /// </summary>
-        /// <param name="value">The string value that is passed to the method</param>
+        /// <param name="value">A substring from an inp file that
+        /// contains the option and its value</param>
         /// <param name="expectedValue">The expected value</param>
         [Theory]
-        [InlineData("CMS", FlowUnits.CubicMetersPerSecond)]
-        [InlineData("CFS", FlowUnits.CubicFeetPerSecond)]
-        [InlineData("GPM", FlowUnits.GallonsPerMinute)]
-        [InlineData("MGD", FlowUnits.MillionGallonsPerDay)]
-        [InlineData("MLD", FlowUnits.MilltionLitersPerDay)]
-        public void FromStringExtensionTest(string value, FlowUnits expectedValue)
+        [ClassData(typeof(ParserTestData))]
+        public void ParserTests(string value, FlowUnits expectedValue)
         {
-            var units = FlowUnits.CubicFeetPerSecond;
-            var (result, flowUnits) = units.FromInpString(value);
-            Assert.True(result);
-            units = flowUnits;
-            Assert.Equal(expectedValue, units);
-        }
-
-        [Theory]
-        [ClassData(typeof(FlowUnitsTestData))]
-        public void FlowUnitsParsingTest(string s, FlowUnits expectedFlowUnits)
-        {
-            Reader.SetData(s);
+            Initialize(value);
+            using var reader = new InpFileReader(MemoryStream);
+            var parser = new InpParser();
             var project = new InpProject();
-            var optionsParser = new InpOptionsSection(project);
-            optionsParser.ReadSection(Reader);
+            parser.ParseFile(project, reader);
 
-            Assert.Equal(expectedFlowUnits, project.FlowUnits);
+            var option = (FlowUnits)project.Database.GetOption<FlowUnitsOption>().Value;
+
+            Assert.Equal(expectedValue, option);
         }
 
         #endregion
 
-        #region ClassData
+        #region Test Data
 
         /// <summary>
-        /// Test data for flow units
+        /// Class that contains the test data for all of the possible combos for
+        /// Flow Units
         /// </summary>
-        private class FlowUnitsTestData : IEnumerable<object[]>
+        private class ParserTestData : IEnumerable<object[]>
         {
             public IEnumerator<object[]> GetEnumerator()
             {
-                // Liters per second
+                // Cubic Feet Per Second
                 yield return new object[]
                 {
-                    @"FLOW_UNITS           LPS
-                     ",
-                    FlowUnits.LitersPerSecond
+                    @"[OPTIONS]
+FLOW_UNITS           CFS
+",
+                    FlowUnits.CubicFeetPerSecond
                 };
 
-                // Cubic feet per second
+                // liters per second
                 yield return new object[]
                 {
-                    @"FLOW_UNITS           CFS
-                     ",
-                    FlowUnits.CubicFeetPerSecond
+                    @"[OPTIONS]
+FLOW_UNITS           LPS
+",
+                    FlowUnits.LitersPerSecond
                 };
 
                 // Gallons per min
                 yield return new object[]
                 {
-                    @"FLOW_UNITS           GPM
-                     ",
+                    @"[OPTIONS]
+FLOW_UNITS           GPM
+",
                     FlowUnits.GallonsPerMinute
                 };
 
-                // Million gallons per day
+                // Million Gallons per day
                 yield return new object[]
                 {
-                    @"FLOW_UNITS           MGD
-                     ",
+                    @"[OPTIONS]
+FLOW_UNITS           MGD
+",
                     FlowUnits.MillionGallonsPerDay
                 };
 
-                // Cubic meters per second
+                // Gallons per min
                 yield return new object[]
                 {
-                    @"FLOW_UNITS           CMS
-                     ",
+                    @"[OPTIONS]
+FLOW_UNITS           CMS
+",
                     FlowUnits.CubicMetersPerSecond
                 };
 
-                // Million liters per day
+                // Gallons per min
                 yield return new object[]
                 {
-                    @"FLOW_UNITS           MLD
-                     ",
-                    FlowUnits.MilltionLitersPerDay
+                    @"[OPTIONS]
+FLOW_UNITS           MLD
+",
+                    FlowUnits.MillionLitersPerDay
                 };
             }
 
-            IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
         #endregion
