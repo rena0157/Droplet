@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Droplet.Core.Inp.Data
@@ -60,10 +61,14 @@ namespace Droplet.Core.Inp.Data
         public void AddRow(ITableRow row)
         {
             // Check to see if the table already contains this 
-            // entry and if it does then throw an exception
+            // entry and if it does then append the values to it
+            // Note that we don't readd the key value to the values array
             if (_tableDictionary.ContainsKey(row.Key))
-                throw new ArgumentException($"The row {row} with key {row.Key} already exists" +
-                    $" in this table");
+            {
+                // Using the range 1..^0 grabs the second value to the last value
+                _tableDictionary[row.Key].Values.AddRange(row.Values.ToArray()[1..^0]);
+                return;
+            }
 
             // Else add this item to the table
             _tableDictionary.Add(row.Key, row);

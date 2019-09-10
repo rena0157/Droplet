@@ -19,11 +19,6 @@ namespace Droplet.Core.Inp
         string ProjectName { get; }
 
         /// <summary>
-        /// The options in this project
-        /// </summary>
-        ProjectOptions Options { get; }
-
-        /// <summary>
         /// The entities in this project
         /// </summary>
         IInpDatabase Database { get; }

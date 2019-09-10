@@ -28,6 +28,7 @@ namespace Droplet.Core.Inp
         {
             InpFile = "<NO FILE PROVIDED>";
             ProjectName = "<NO NAME PROVIDED>";
+            Database = new InpDatabase();
         }
 
         /// <summary>
@@ -79,12 +80,6 @@ namespace Droplet.Core.Inp
 
         #endregion
 
-        #region Options
-
-        public FlowUnits FlowUnits;
-
-        #endregion  
-
         #region IInpProject Implementation
 
         /// <summary>
@@ -97,9 +92,11 @@ namespace Droplet.Core.Inp
         /// </summary>
         public string ProjectName { get; }
 
-        public IInpDatabase Database => throw new NotImplementedException();
-
-        public ProjectOptions Options => throw new NotImplementedException();
+        /// <summary>
+        /// The database that contains all of the projects
+        /// entities
+        /// </summary>
+        public IInpDatabase Database { get; }
 
         #endregion
     }

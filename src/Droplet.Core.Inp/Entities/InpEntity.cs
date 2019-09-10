@@ -12,10 +12,10 @@ namespace Droplet.Core.Inp.Entities
 
         public InpEntity()
         {
-
+            ID = Guid.NewGuid();
         }
 
-        public InpEntity(ITableRow row, IInpDatabase database)
+        public InpEntity(ITableRow row, IInpDatabase database) : this()
         {
 
         }
@@ -23,7 +23,7 @@ namespace Droplet.Core.Inp.Entities
         /// <summary>
         /// The name of the entity
         /// </summary>
-        public string Name { get; protected set; }
+        public virtual string Name { get; protected set; }
 
         /// <summary>
         /// The description of the entity

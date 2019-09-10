@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Entities;
 
-namespace Droplet.Core.Inp.Entities
+namespace Droplet.Core.Inp.Options
 {
     /// <summary>
     /// A class that holds the Option Data for an inp option
@@ -18,7 +19,7 @@ namespace Droplet.Core.Inp.Entities
         /// <summary>
         /// The value of the option
         /// </summary>
-        public object Value { get; }
+        public virtual object Value { get; protected set; }
 
         /// <summary>
         /// Default Constructor for the options type
@@ -36,6 +37,7 @@ namespace Droplet.Core.Inp.Entities
         public InpOption(ITableRow row, IInpDatabase database) : base(row, database)
         {
             Value = row.Values[1];
+            Database = database;
         }
     }
 }

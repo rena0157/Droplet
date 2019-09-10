@@ -1,4 +1,5 @@
-﻿using Droplet.Core.Inp.Options;
+﻿using Droplet.Core.Inp.Entities;
+using Droplet.Core.Inp.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,13 +65,31 @@ namespace Droplet.Core.Inp.Data
             return _objectDictionary[id];
         }
 
-        public T GetOption<T>()
-        {
-            foreach(var o in _objectDictionary.Values)
-                if (o is T)
-                    return (T)o;
+        /// <summary>
+        /// Return an option from the database given the <see cref="InpOption"/> derived
+        /// type
+        /// </summary>
+        /// <typeparam name="T">The option type that will be returned</typeparam>
+        /// <returns>Returns: An option from the database</returns>
+        public T GetOption<T>() where T : InpOption 
+            => _objectDictionary.Values.FirstOrDefault(o => o is T) as T;
 
-            throw new ArgumentOutOfRangeException("The value could not be found");
+        /// <summary>
+        /// Get all entities of the type <typeparamref name="T"/>
+        /// from the database.
+        /// </summary>
+        /// <typeparam name="T">The type must be an <see cref="IInpEntity"/> implementor</typeparam>
+        /// <returns>Returns: An <see cref="IInpEntity"/> list</returns>
+        public List<T> GetAllEntities<T>() where T : IInpEntity
+        {
+            var returnList = new List<T>();
+            foreach(var e in _objectDictionary.Values)
+            {
+                if (e is T et)
+                    returnList.Add(et);
+            }
+
+            return returnList;
         }
 
         /// <summary>
