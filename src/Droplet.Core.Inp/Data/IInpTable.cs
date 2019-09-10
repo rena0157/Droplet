@@ -20,12 +20,12 @@ namespace Droplet.Core.Inp.Data
         /// <summary>
         /// A list of the rows in the table
         /// </summary>
-        IEnumerable<ITableRow> Rows { get; }
+        IEnumerable<IInpTableRow> Rows { get; }
 
         /// <summary>
         /// Add a row to the table
         /// </summary>
         /// <param name="row"></param>
-        void AddRow(ITableRow row);
+        void AddRow(IInpTableRow row);
     }
 }

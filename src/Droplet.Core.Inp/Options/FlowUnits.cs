@@ -33,7 +33,7 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">The row that will be used to create this option</param>
         /// <param name="database">The database that this option will belong to</param>
-        public FlowUnitsOption(ITableRow row, IInpDatabase database) : base(row, database)
+        public FlowUnitsOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
         }
 

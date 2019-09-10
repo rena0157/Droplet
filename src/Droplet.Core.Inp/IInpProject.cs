@@ -1,5 +1,4 @@
 ﻿using Droplet.Core.Inp.Data;
-using Droplet.Core.Inp.Options;
 
 namespace Droplet.Core.Inp
 {
@@ -9,17 +8,18 @@ namespace Droplet.Core.Inp
     public interface IInpProject
     {
         /// <summary>
-        /// The name of the InpFile
+        /// The full path to the inp that this project
+        /// is reading
         /// </summary>
         string InpFile { get; }
 
         /// <summary>
-        /// The name of the InpProject
+        /// The name of the InpProject, which is the same as the filename
         /// </summary>
         string ProjectName { get; }
 
         /// <summary>
-        /// The entities in this project
+        /// The context database for the inp file
         /// </summary>
         IInpDatabase Database { get; }
     }

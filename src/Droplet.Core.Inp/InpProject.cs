@@ -3,17 +3,14 @@
 // Created: 2019-08-09
 
 using Droplet.Core.Inp.Data;
-using Droplet.Core.Inp.Entities;
 using Droplet.Core.Inp.IO;
-using Droplet.Core.Inp.Options;
-using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Droplet.Core.Inp
 {
     /// <summary>
-    /// The main Project class for an Inp Project
+    /// Class that represents an inp project or the entire
+    /// context of an inp file
     /// </summary>
     public class InpProject : IInpProject
     {
@@ -22,7 +19,7 @@ namespace Droplet.Core.Inp
         /// <summary>
         /// Default Constructor that
         /// initializes all objects in the class to their
-        /// default values. All other constructors will class this class
+        /// default values. All other constructors will call this class
         /// </summary>
         public InpProject()
         {
@@ -32,10 +29,10 @@ namespace Droplet.Core.Inp
         }
 
         /// <summary>
-        /// Constructor that reads a file that is supplied from the
-        /// <paramref name="inpfile"/> path
+        /// Constructor that reads a file that is supplied from the path that is
+        /// from the parameter: <paramref name="inpfile"/>
         /// </summary>
-        /// <param name="inpfile">The supplied path to the file</param>
+        /// <param name="inpfile">The supplied path to the file that will be used</param>
         public InpProject(string inpfile) : this()
         {
             // Validate that this file exits and set the full path
@@ -88,7 +85,8 @@ namespace Droplet.Core.Inp
         public string InpFile { get; }
 
         /// <summary>
-        /// The name of the inp project
+        /// The name of the inp project, this is the same
+        /// as the file name of the inp file
         /// </summary>
         public string ProjectName { get; }
 

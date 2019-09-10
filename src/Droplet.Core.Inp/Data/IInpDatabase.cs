@@ -1,10 +1,17 @@
-﻿using Droplet.Core.Inp.Entities;
+﻿// IInpDatabase.cs
+// Created: 2019-09-10
+// By: Adam Renaud
+
+using Droplet.Core.Inp.Entities;
 using Droplet.Core.Inp.Options;
 using System;
 using System.Collections.Generic;
 
 namespace Droplet.Core.Inp.Data
 {
+    /// <summary>
+    /// Interface for an inp database object
+    /// </summary>
     public interface IInpDatabase
     {
         /// <summary>

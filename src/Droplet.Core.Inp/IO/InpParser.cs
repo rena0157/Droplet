@@ -93,7 +93,7 @@ namespace Droplet.Core.Inp.IO
                 // add them to the table
                 var tokens = GetTokens(line);
                 if (tokens.Length > 0) 
-                    table.AddRow(new TableRow(tokens[0], tokens, comments.ToString(), table));
+                    table.AddRow(new InpTableRow(tokens[0], tokens, comments.ToString(), table));
             }
 
             return table;

@@ -14,7 +14,7 @@ namespace Droplet.Core.Inp.Data
         /// <summary>
         /// The backing dictionary
         /// </summary>
-        protected Dictionary<string, ITableRow> _tableDictionary;
+        protected Dictionary<string, IInpTableRow> _tableDictionary;
 
         /// <summary>
         /// Default Constructor that will initialize the inptables
@@ -24,7 +24,7 @@ namespace Droplet.Core.Inp.Data
         {
             Headers = "";
             Name = "";
-            _tableDictionary = new Dictionary<string, ITableRow>();
+            _tableDictionary = new Dictionary<string, IInpTableRow>();
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Droplet.Core.Inp.Data
         /// <summary>
         /// The rows associated with the table
         /// </summary>
-        public IEnumerable<ITableRow> Rows => _tableDictionary.Values;
+        public IEnumerable<IInpTableRow> Rows => _tableDictionary.Values;
 
         /// <summary>
         /// The headers for the table
@@ -58,7 +58,7 @@ namespace Droplet.Core.Inp.Data
         /// This will throw if the row is already in the table
         /// </exception>
         /// <param name="row">The row that is to be added</param>
-        public void AddRow(ITableRow row)
+        public void AddRow(IInpTableRow row)
         {
             // Check to see if the table already contains this 
             // entry and if it does then append the values to it

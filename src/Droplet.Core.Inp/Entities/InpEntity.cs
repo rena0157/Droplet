@@ -15,7 +15,7 @@ namespace Droplet.Core.Inp.Entities
             ID = Guid.NewGuid();
         }
 
-        public InpEntity(ITableRow row, IInpDatabase database) : this()
+        public InpEntity(IInpTableRow row, IInpDatabase database) : this()
         {
 
         }

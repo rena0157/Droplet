@@ -1,12 +1,17 @@
-﻿using Droplet.Core.Inp.Entities;
+﻿// ITableRow.cs
+// By: Adam Renaud
+// Created: 2019-09-10
+
+
+using Droplet.Core.Inp.Entities;
 using System.Collections.Generic;
 
 namespace Droplet.Core.Inp.Data
 {
     /// <summary>
-    /// An row from the table.
+    /// A row that belongs to an <see cref="IInpTable"/>
     /// </summary>
-    public interface ITableRow
+    public interface IInpTableRow
     {
         /// <summary>
         /// The key for the table
