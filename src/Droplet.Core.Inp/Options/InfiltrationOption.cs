@@ -18,6 +18,11 @@ namespace Droplet.Core.Inp.Options
         private InfiltrationMethods _enumValue;
 
         /// <summary>
+        /// The name of the option
+        /// </summary>
+        public const string OptionName = "INFILTRATION";
+
+        /// <summary>
         /// Default Constructor for this option
         /// </summary>
         /// <param name="row"></param>
@@ -38,14 +43,17 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         public override object Value
         {
+            // Get the enum value
             get => _enumValue;
 
+            // Otherwise set the value
+            // If it is a string convert that string to an enum
             set
             {
                 if (value is InfiltrationMethods v)
                     _enumValue = v;
                 else if (value is string s)
-                    throw new NotImplementedException();
+                    _enumValue = _enumValue.FromInpString(s);
                 else
                     throw new ArgumentException($"The type for value should be either " +
                         $"{typeof(InfiltrationMethods)} or {typeof(string)}");
@@ -86,6 +94,10 @@ namespace Droplet.Core.Inp.Options
         public static InfiltrationMethods FromInpString(this InfiltrationMethods i, string inpString) => inpString switch
         {
             "HORTON" => InfiltrationMethods.Horton,
+            "MODIFIED_HORTON" => InfiltrationMethods.ModifiedHorton,
+            "GREEN_AMPT" => InfiltrationMethods.GreenAmpt,
+            "MODIFIED_GREEN_AMPT" => InfiltrationMethods.ModifiedGreenAmpt,
+            "CURVE_NUMBER" => InfiltrationMethods.CurveNumber,
             _ => throw new ArgumentException($"The string {inpString} is not a valid {typeof(InfiltrationMethods)}")
         };
     }
