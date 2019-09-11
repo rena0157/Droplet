@@ -78,6 +78,7 @@ namespace Droplet.Core.Inp.Data
         private InpOption GetOptionEntity(string optionName, IInpDatabase database) => optionName switch
         {
             FlowUnitsOption.OptionName => new FlowUnitsOption(this, database),
+            InfiltrationOption.OptionName => new InfiltrationOption(this, database),
 
             // TODO: Add exception here
             _ => new InpOption()
