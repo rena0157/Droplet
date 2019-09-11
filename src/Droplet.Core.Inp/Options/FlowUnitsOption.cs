@@ -53,7 +53,7 @@ namespace Droplet.Core.Inp.Options
         public override object Value
         {
             get => _enumValue;
-            protected set
+            set
             {
                 if (value is string)
                     _enumValue = _enumValue.FromInpString(value as string);
@@ -62,7 +62,6 @@ namespace Droplet.Core.Inp.Options
                 else
                     throw new ArgumentException($"The type for value should be either " +
                         $"{typeof(FlowUnits)} or {typeof(string)}");
-
             }
         }
 

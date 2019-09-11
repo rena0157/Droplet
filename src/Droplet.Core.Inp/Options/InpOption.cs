@@ -19,7 +19,7 @@ namespace Droplet.Core.Inp.Options
         /// <summary>
         /// The value of the option
         /// </summary>
-        public virtual object Value { get; protected set; }
+        public virtual object Value { get; set; }
 
         /// <summary>
         /// Default Constructor for the options type
