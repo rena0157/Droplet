@@ -77,8 +77,9 @@ namespace Droplet.Core.Inp.Data
         /// <returns>Returns: an option that is refered to by the option name that is passed</returns>
         private InpOption GetOptionEntity(string optionName, IInpDatabase database) => optionName switch
         {
-            FlowUnitsOption.OptionName => new FlowUnitsOption(this, database),
-            InfiltrationOption.OptionName => new InfiltrationOption(this, database),
+            FlowUnitsOption.OptionName => new FlowUnitsOption(row: this, database: database),
+            InfiltrationOption.OptionName => new InfiltrationOption(row: this, database: database),
+            FlowRoutingOption.OptionName => new FlowRoutingOption(row: this, database: database),
 
             // TODO: Add exception here
             _ => new InpOption()
