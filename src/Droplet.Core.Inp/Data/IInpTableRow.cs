@@ -28,6 +28,11 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         List<string> Values { get; }
 
+        /// <summary>
+        /// Indexer for the <see cref="Values"/> list
+        /// </summary>
+        /// <returns>Returns: a string from the index <see cref="Values"/> list</returns>
+        string this[int index] { get; }
 
         /// <summary>
         /// The table that this row belongs to

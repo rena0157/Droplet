@@ -40,6 +40,12 @@ namespace Droplet.Core.Inp.Data
         public List<string> Values { get; }
 
         /// <summary>
+        /// Get an indexed value from the <see cref="Values"/> list
+        /// </summary>
+        /// <returns>Returns: a string from the list at the index that is passed</returns>
+        string IInpTableRow.this[int index] => Values[index];
+
+        /// <summary>
         /// The comment for the row.
         /// </summary>
         public string Comment { get; }
@@ -77,8 +83,9 @@ namespace Droplet.Core.Inp.Data
         /// <returns>Returns: an option that is refered to by the option name that is passed</returns>
         private InpOption GetOptionEntity(string optionName, IInpDatabase database) => optionName switch
         {
-            FlowUnitsOption.OptionName => new FlowUnitsOption(this, database),
-            InfiltrationOption.OptionName => new InfiltrationOption(this, database),
+            FlowUnitsOption.OptionName => new FlowUnitsOption(row: this, database: database),
+            InfiltrationOption.OptionName => new InfiltrationOption(row: this, database: database),
+            FlowRoutingOption.OptionName => new FlowRoutingOption(row: this, database: database),
 
             // TODO: Add exception here
             _ => new InpOption()

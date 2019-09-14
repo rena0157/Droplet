@@ -20,7 +20,7 @@ namespace Droplet.Core.Inp.Options
         #region Constants
 
         /// <summary>
-        /// 
+        /// The name of the option
         /// </summary>
         public const string OptionName = "FLOW_UNITS";
 
@@ -35,6 +35,7 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that this option will belong to</param>
         public FlowUnitsOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
+            Value = row[1];
         }
 
         #endregion

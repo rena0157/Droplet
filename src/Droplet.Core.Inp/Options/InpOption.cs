@@ -36,7 +36,6 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that this object will be constructed from</param>
         public InpOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-            Value = row.Values[1];
             Database = database;
         }
     }

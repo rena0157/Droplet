@@ -5,7 +5,7 @@
 ;;Option             Value
 FLOW_UNITS           CMS
 INFILTRATION         GREEN_AMPT
-FLOW_ROUTING         DYNWAVE
+FLOW_ROUTING         KINWAVE
 LINK_OFFSETS         ELEVATION
 MIN_SLOPE            0.15
 ALLOW_PONDING        NO

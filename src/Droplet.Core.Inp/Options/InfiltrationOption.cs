@@ -29,6 +29,7 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database"></param>
         public InfiltrationOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
+            Value = row[1];
         }
 
         /// <summary>
