@@ -26,7 +26,6 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that this object belongs to</param>
         public FlowRoutingOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-            _enumValue = FlowRouting.SteadyFlow;
         }
 
         #endregion
