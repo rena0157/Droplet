@@ -4,7 +4,7 @@ Library that is used to read/write `*.inp` files.
 
 ## Installation and basic use
 
-The library is available on NuGet at:
+The library is available on NuGet at: [https://www.nuget.org/packages/Droplet.Core.Inp/](https://www.nuget.org/packages/Droplet.Core.Inp/)
 
 ## Change Log
 
