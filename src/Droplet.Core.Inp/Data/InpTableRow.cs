@@ -40,6 +40,12 @@ namespace Droplet.Core.Inp.Data
         public List<string> Values { get; }
 
         /// <summary>
+        /// Get an indexed value from the <see cref="Values"/> list
+        /// </summary>
+        /// <returns>Returns: a string from the list at the index that is passed</returns>
+        string IInpTableRow.this[int index] => Values[index];
+
+        /// <summary>
         /// The comment for the row.
         /// </summary>
         public string Comment { get; }
