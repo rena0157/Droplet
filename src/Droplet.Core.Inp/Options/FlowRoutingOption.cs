@@ -20,12 +20,14 @@ namespace Droplet.Core.Inp.Options
         #region Constructors
 
         /// <summary>
-        /// The Default Constructor
+        /// The Default Constructor. Note that the base constructor
+        /// will initialize the <see cref="Value"/> field.
         /// </summary>
         /// <param name="row">A row that this object will be created from</param>
         /// <param name="database">The database that this object belongs to</param>
         public FlowRoutingOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
+            Value = row.Values[1];
         }
 
         #endregion
