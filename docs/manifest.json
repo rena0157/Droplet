@@ -1,0 +1,582 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Dev/Droplet",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Conceptual",
+      "source_relative_path": "README.md",
+      "output": {
+        ".html": {
+          "relative_path": "README.html",
+          "hash": "GUAAK1S/HqLCAeh/q73UfQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Class1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Class1.html",
+          "hash": "Pww8Zu5ZC+Pyd0sUavC+MA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Data.IInpDatabase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Data.IInpDatabase.html",
+          "hash": "GL1Jh/MWVKOL4SRPRyymWA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Data.IInpDbObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Data.IInpDbObject.html",
+          "hash": "kEPvGudR15rbdoSEH6Cb4g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Data.IInpTable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Data.IInpTable.html",
+          "hash": "esuJPZLpkvekesnonlPIug=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Data.IInpTableRow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Data.IInpTableRow.html",
+          "hash": "x16KHfc/5KSH1egZJLC1PA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Data.InpDatabase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Data.InpDatabase.html",
+          "hash": "/xjcvbaIbQSl6Q1TGUrRbg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Data.InpTable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Data.InpTable.html",
+          "hash": "0yzwQBMspynBQcWhQ4hHqg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Data.InpTableRow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Data.InpTableRow.html",
+          "hash": "kapgSqwFtuLAQrfXaccDBA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Data.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Data.html",
+          "hash": "XDRjRF+PQsKaHr4JyDaCOQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Entities.IInpEntity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Entities.IInpEntity.html",
+          "hash": "dGioFK/XB86gCuZ4R3lFNw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Entities.InpEntity.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Entities.InpEntity.html",
+          "hash": "t2v9DkWfazUKtgG9oAu49g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Entities.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Entities.html",
+          "hash": "yLwMArryG01eIg+bq9t1yA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.IInpProject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.IInpProject.html",
+          "hash": "8MDl7ODBb7k4vvX+jCjVQA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.IO.IInpParser.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.IO.IInpParser.html",
+          "hash": "LsGtTU3G6XZ1hyQrH/ytlQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.IO.IInpReader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.IO.IInpReader.html",
+          "hash": "W0htqa8UZTMXLYGLjIgvBg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.IO.InpFileReader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.IO.InpFileReader.html",
+          "hash": "QjzWCAH4mApv71QCCZfUCQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.IO.InpParser.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.IO.InpParser.html",
+          "hash": "rew79QadBE8Qxb+TTLpKXQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.IO.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.IO.html",
+          "hash": "aAMB44FbGj+p3Otx3zkNJg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.InpProject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.InpProject.html",
+          "hash": "6mN7xo3GdorEMVWWpw1a6w=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.FlowRouting.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.FlowRouting.html",
+          "hash": "c6rnkK2EggmycWApY+N6bA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.FlowRoutingExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.FlowRoutingExtensions.html",
+          "hash": "c1GQvLKOwQZG0EbBGQ1T+Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.FlowRoutingOption.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.FlowRoutingOption.html",
+          "hash": "jPrBTwfWPqA+yQFud3rx8Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.FlowUnits.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.FlowUnits.html",
+          "hash": "5AoRMmM/D/hiiBuv/tznYw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.FlowUnitsExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.FlowUnitsExtensions.html",
+          "hash": "lX38BOhH9rIuiUCvhq8DOw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.FlowUnitsOption.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.FlowUnitsOption.html",
+          "hash": "ZrdlFEJ2TFNT49VGRFAIsA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.InfiltrationMethods.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.InfiltrationMethods.html",
+          "hash": "dIvncAqiE3Wu1SXPWPEtuA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.InfiltrationMethodsExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.InfiltrationMethodsExtensions.html",
+          "hash": "Qy2/Mpa//vxcw2jQkFZUfQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.InfiltrationOption.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.InfiltrationOption.html",
+          "hash": "5aaNXwnoojTx8aX48vvS0Q=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.InpOption.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.InpOption.html",
+          "hash": "sqI7QHfQN51GOeg8ydj+RQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.OptionsExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.OptionsExtensions.html",
+          "hash": "aMpfqqX+IPfFKCw5I4MSww=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.ProjectOptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.ProjectOptions.html",
+          "hash": "nCYBcQIl3/BZyrq5QOaHag=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.Options.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.Options.html",
+          "hash": "RC5m4W+0kV0X2nlJ/R5CXA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.Inp.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.Inp.html",
+          "hash": "anXTF8h6Laeu3z2I0oAlJg=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.Core.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.Core.html",
+          "hash": "ZW9kuQw1V4+Vc/b00oz/Og=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.WindowsApp.App.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.WindowsApp.App.html",
+          "hash": "Meo2tnNSJkKZuveWBMUSKw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.WindowsApp.MainWindow.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.WindowsApp.MainWindow.html",
+          "hash": "Xc83kA7Y8q5IGRN5fl9BWw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/Droplet.WindowsApp.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/Droplet.WindowsApp.html",
+          "hash": "zcOgYEFy9irooZ9bn18myQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "oS2XfrHJK15S/0Dt3BTLdA=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "4qS669lTwOMXLkDcI6U5fA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "9aNk9HaTJmV5uXFsNWf3pQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "t7iiFrmuYmrKWisdq+lN6Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "l24HXT/Ul+xvJnUq+n6uVw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "k+/dkjFuwAVS32HduMpmBw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 4,
+          "skipped_file_count": 3
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 37,
+          "skipped_file_count": 37
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
