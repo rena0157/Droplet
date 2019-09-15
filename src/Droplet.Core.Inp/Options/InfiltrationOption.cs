@@ -10,13 +10,8 @@ namespace Droplet.Core.Inp.Options
     /// <summary>
     /// The <see cref="InfiltrationMethods"/> option
     /// </summary>
-    public class InfiltrationOption : InpOption
+    public class InfiltrationOption : InpOption<InfiltrationMethods>
     {
-        /// <summary>
-        /// Backing field for the enumeration type for this option
-        /// </summary>
-        private InfiltrationMethods _enumValue;
-
         /// <summary>
         /// The name of the option
         /// </summary>
@@ -29,37 +24,13 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database"></param>
         public InfiltrationOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-            Value = row[1];
+            Value = Value.FromInpString(row[1]);
         }
 
         /// <summary>
         /// The name of this option
         /// </summary>
         public override string Name => "INFILTRATION";
-
-        /// <summary>
-        /// Public override of the <see cref="InpOption.Value"/> property
-        /// that is specific to this option. This value will return an <see cref="InfiltrationMethods"/>
-        /// enum value as an object that can be casted.
-        /// </summary>
-        public override object Value
-        {
-            // Get the enum value
-            get => _enumValue;
-
-            // Otherwise set the value
-            // If it is a string convert that string to an enum
-            set
-            {
-                if (value is InfiltrationMethods v)
-                    _enumValue = v;
-                else if (value is string s)
-                    _enumValue = _enumValue.FromInpString(s);
-                else
-                    throw new ArgumentException($"The type for value should be either " +
-                        $"{typeof(InfiltrationMethods)} or {typeof(string)}");
-            }
-        }
     }
 
     /// <summary>

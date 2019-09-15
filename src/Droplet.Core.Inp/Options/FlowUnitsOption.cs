@@ -6,17 +6,8 @@ namespace Droplet.Core.Inp.Options
     /// <summary>
     /// Options class for <see cref="FlowUnits"/>
     /// </summary>
-    public class FlowUnitsOption : InpOption
+    public class FlowUnitsOption : InpOption<FlowUnits>
     {
-        #region Private Members
-
-        /// <summary>
-        /// Backing enum value for this option
-        /// </summary>
-        private FlowUnits _enumValue;
-
-        #endregion
-
         #region Constants
 
         /// <summary>
@@ -35,7 +26,7 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that this option will belong to</param>
         public FlowUnitsOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-            Value = row[1];
+            Value = Value.FromInpString(row[1]);
         }
 
         #endregion
@@ -46,25 +37,6 @@ namespace Droplet.Core.Inp.Options
         /// Public Override of the Flow Units Option
         /// </summary>
         public override string Name => "FlowUnits";
-
-        /// <summary>
-        /// Sets the value of this option from either a string
-        /// that is an inp string or a <see cref="FlowUnits"/> enum
-        /// </summary>
-        public override object Value
-        {
-            get => _enumValue;
-            set
-            {
-                if (value is string)
-                    _enumValue = _enumValue.FromInpString(value as string);
-                else if (value is FlowUnits)
-                    _enumValue = (FlowUnits)value;
-                else
-                    throw new ArgumentException($"The type for value should be either " +
-                        $"{typeof(FlowUnits)} or {typeof(string)}");
-            }
-        }
 
         #endregion
     }

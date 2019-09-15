@@ -39,7 +39,7 @@ namespace Droplet.Core.Inp.Tests.Options
 
             var option = project.Database.GetOption<InfiltrationOption>();
 
-            Assert.Equal(method, (InfiltrationMethods)option.Value);
+            Assert.Equal(method, option.Value);
         }
 
         #endregion

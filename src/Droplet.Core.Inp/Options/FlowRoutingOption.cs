@@ -6,17 +6,8 @@ namespace Droplet.Core.Inp.Options
     /// <summary>
     /// The Flow Routing Option for an inp project.
     /// </summary>
-    public class FlowRoutingOption : InpOption
+    public class FlowRoutingOption : InpOption<FlowRouting>
     {
-        #region Private Members
-
-        /// <summary>
-        /// The backing enum value for this option
-        /// </summary>
-        private FlowRouting _enumValue;
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -27,7 +18,7 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that this object belongs to</param>
         public FlowRoutingOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-            Value = row.Values[1];
+            Value = Value.FromInpString(row[1]);
         }
 
         #endregion
@@ -38,41 +29,6 @@ namespace Droplet.Core.Inp.Options
         /// The name of this option
         /// </summary>
         public const string OptionName = "FLOW_ROUTING";
-
-        /// <summary>
-        /// Get the value of this option. Will return
-        /// a <see cref="object"/> that can be casted to
-        /// a <see cref="FlowRouting"/> value. Also, this property can
-        /// take a <see cref="string"/> and convert it to a <see cref="FlowRouting"/>
-        /// value.
-        /// </summary>
-        /// <exception cref="ArgumentException">
-        /// The property will throw this exception if a value is passed to the
-        /// setter that is not a <see cref="String"/> or a <see cref="FlowRouting"/>.
-        /// </exception>
-        public override object Value
-        {
-            // Get the enum value from the backing field
-            get => _enumValue;
-
-            // Set the backing field from the passed value
-            // this set method will convert a string to a flow routing value if required.
-            set
-            {
-                // if the value passed is string convert it to a flow routing
-                if (value is string s)
-                    _enumValue = _enumValue.FromInpString(s);
-                
-                // If the value passed is a flow routing just set the value
-                else if (value is FlowRouting f)
-                    _enumValue = f;
-
-                // If it is an unrecognized type then throw an exception
-                else
-                    throw new ArgumentException($"The value of {value.GetType()}" +
-                        $"is incompatible with the conversion to the type {typeof(FlowRouting)}");
-            }
-        }
 
         #endregion
     }
