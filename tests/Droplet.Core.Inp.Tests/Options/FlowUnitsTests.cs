@@ -1,9 +1,7 @@
 ﻿using Droplet.Core.Inp.IO;
 using Droplet.Core.Inp.Options;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -35,7 +33,7 @@ namespace Droplet.Core.Inp.Tests.Options
             var project = new InpProject();
             parser.ParseFile(project, reader);
 
-            var option = (FlowUnits)project.Database.GetOption<FlowUnitsOption>().Value;
+            var option = project.Database.GetOption<FlowUnitsOption>().Value;
 
             Assert.Equal(expectedValue, option);
         }

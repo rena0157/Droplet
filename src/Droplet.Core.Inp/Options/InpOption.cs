@@ -1,13 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Droplet.Core.Inp.Data;
+﻿using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.Entities;
 
 namespace Droplet.Core.Inp.Options
 {
     /// <summary>
     /// A class that holds the Option Data for an inp option
+    /// </summary>
+    public class InpOption<T> : InpOption
+    {
+        /// <summary>
+        /// Constructor that passes the arguments to the base class
+        /// </summary>
+        /// <param name="row">the row that will be used to construct the option</param>
+        /// <param name="database">the database that this option belongs to</param>
+        public InpOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        {
+        }
+
+        /// <summary>
+        /// The value of the option
+        /// </summary>
+        public virtual T Value { get; set; }
+    }
+
+    /// <summary>
+    /// Base class for the generic <see cref="InpOption{T}"/> class
     /// </summary>
     public class InpOption : InpEntity
     {
@@ -17,16 +34,10 @@ namespace Droplet.Core.Inp.Options
         public const string HeaderName = "OPTIONS";
 
         /// <summary>
-        /// The value of the option
-        /// </summary>
-        public virtual object Value { get; set; }
-
-        /// <summary>
         /// Default Constructor for the options type
         /// </summary>
         public InpOption() : base()
         {
-
         }
 
         /// <summary>

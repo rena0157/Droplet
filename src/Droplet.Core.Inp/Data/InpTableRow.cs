@@ -4,6 +4,7 @@
 
 using Droplet.Core.Inp.Entities;
 using Droplet.Core.Inp.Options;
+using System;
 using System.Collections.Generic;
 
 namespace Droplet.Core.Inp.Data
@@ -86,6 +87,7 @@ namespace Droplet.Core.Inp.Data
             FlowUnitsOption.OptionName => new FlowUnitsOption(row: this, database: database),
             InfiltrationOption.OptionName => new InfiltrationOption(row: this, database: database),
             FlowRoutingOption.OptionName => new FlowRoutingOption(row: this, database: database),
+            LinkOffsetOption.OptionName => new LinkOffsetOption(row: this, database: database),
 
             // TODO: Add exception here
             _ => new InpOption()

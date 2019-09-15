@@ -27,7 +27,7 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         /// <typeparam name="T">The <see cref="InpOption"/> type that will be returned</typeparam>
         /// <returns>Returns: An option with the type <typeparamref name="T"/></returns>
-        T GetOption<T>() where T : InpOption;
+        public T GetOption<T>() where T : InpOption;
 
         /// <summary>
         /// Get all entities of the type <typeparamref name="T"/>

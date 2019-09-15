@@ -88,8 +88,10 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         /// <typeparam name="T">The type of the option that will be returned</typeparam>
         /// <returns>Returns: An option from the database whose type matches <typeparamref name="T"/></returns>
-        public T GetOption<T>() where T : InpOption 
-            => _objectDictionary.Values.FirstOrDefault(o => o is T) as T;
+        public T GetOption<T>() where T: InpOption
+        {
+            return _objectDictionary.Values.FirstOrDefault(o => o is T) as T;
+        }
 
         /// <summary>
         /// Get all entities of the type <typeparamref name="T"/>
