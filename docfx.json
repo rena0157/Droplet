@@ -4,7 +4,7 @@
       "src": [
         {
           "files": [
-            "*.csproj"
+            "src/**.csproj"
           ]
         }
       ],
@@ -44,11 +44,11 @@
         ],
         "exclude": [
           "obj/**",
-          "Droplet.Core.Inp.Docs/**"
+          "_site/**"
         ]
       }
     ],
-    "dest": "Droplet.Core.Inp.Docs",
+    "dest": "_site",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
