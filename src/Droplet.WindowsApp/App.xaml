@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Droplet.WindowsApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="C:\Dev\Droplet\src\Droplet.WindowsApp\Secrets.xaml"></ResourceDictionary>
     </Application.Resources>
 </Application>

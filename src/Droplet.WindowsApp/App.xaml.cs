@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 using System.Windows;
 
 namespace Droplet.WindowsApp
@@ -13,5 +10,12 @@ namespace Droplet.WindowsApp
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            var apiKey = Current.Resources["AppCenterApi"] as string;
+            AppCenter.Start(apiKey,
+                   typeof(Analytics), typeof(Crashes), typeof(Analytics));
+        }
     }
 }

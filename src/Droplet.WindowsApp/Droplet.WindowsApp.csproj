@@ -1,21 +1,19 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Esri.ArcGISRuntime" Version="100.6.0" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.3.0-preview" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.3.0-preview" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Droplet.Core\Droplet.Core.csproj" />
   </ItemGroup>
-
 </Project>
