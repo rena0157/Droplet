@@ -13,9 +13,9 @@ namespace Droplet.WindowsApp
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var apiKey = Current.Resources["AppCenterApi"] as string;
-            AppCenter.Start(apiKey,
-                   typeof(Analytics), typeof(Crashes), typeof(Analytics));
+            if (Current.Resources["AppCenterApi"] is string apiKey)
+                AppCenter.Start(apiKey,
+                       typeof(Analytics), typeof(Crashes), typeof(Analytics));
         }
     }
 }
