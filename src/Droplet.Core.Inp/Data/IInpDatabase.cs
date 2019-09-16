@@ -30,6 +30,16 @@ namespace Droplet.Core.Inp.Data
         public T GetOption<T>() where T : InpOption;
 
         /// <summary>
+        /// Get an option of the type <paramref name="type"/> from
+        /// the database. Note that if the <paramref name="type"/> 
+        /// is not a derived type from the <see cref="InpOption"/> class
+        /// this will throw an exception.
+        /// </summary>
+        /// <param name="type">The type of the option that will be returned</param>
+        /// <returns>Returns: the specified option from the database</returns>
+        public InpOption GetOption(Type type);
+
+        /// <summary>
         /// Get all entities of the type <typeparamref name="T"/>
         /// from the database.
         /// </summary>

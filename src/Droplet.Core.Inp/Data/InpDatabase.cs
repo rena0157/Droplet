@@ -93,6 +93,21 @@ namespace Droplet.Core.Inp.Data
             return _objectDictionary.Values.FirstOrDefault(o => o is T) as T;
         }
 
+        /// <summary cref="IInpDatabase.GetOption(Type)">
+        /// </summary>
+        /// <exception cref="ArgumentException">
+        /// Will throw if the type is not an <see cref="InpOption"/>
+        /// </exception>
+        public InpOption GetOption(Type type)
+        {
+            // Throw an exception if the type is not an InpOption
+            if (type != typeof(InpOption))
+                throw new ArgumentException($"The type passed must be an inheritor of {typeof(InpOption)}");
+
+            // Returns the first type that matches
+            return _objectDictionary.Values.FirstOrDefault(o => o.GetType() == type) as InpOption;
+        }
+
         /// <summary>
         /// Get all entities of the type <typeparamref name="T"/>
         /// from the database.
