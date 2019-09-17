@@ -1,14 +1,20 @@
-﻿using Droplet.Core.Inp.IO;
+﻿// InpBoolOptionTests.cs
+// By: Adam Renaud
+// Created: 2019-09-16
+
+using Droplet.Core.Inp.IO;
 using Droplet.Core.Inp.Options;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace Droplet.Core.Inp.Tests.Options
 {
+    /// <summary>
+    /// Tests for <see cref="InpBoolOption"/> options
+    /// and inheritors
+    /// </summary>
     public class InpBoolOptionTests : FileTestsBase
     {
         /// <summary>
@@ -63,6 +69,10 @@ namespace Droplet.Core.Inp.Tests.Options
         /// </summary>
         private class AllowPondingTestData : IEnumerable<object[]>
         {
+            /// <summary>
+            /// Get the test data for the <see cref="AllowPondingTests"/>
+            /// </summary>
+            /// <returns></returns>
             public IEnumerator<object[]> GetEnumerator()
             {
                 // True
