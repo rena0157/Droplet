@@ -95,14 +95,16 @@ namespace Droplet.Core.Inp.Data
 
         /// <summary cref="IInpDatabase.GetOption(Type)">
         /// </summary>
-        /// <exception cref="ArgumentException">
-        /// Will throw if the type is not an <see cref="InpOption"/>
+        /// <exception cref="NullReferenceException">
+        /// Will throw if <paramref name="type"/> is <see cref="null"/>
         /// </exception>
         public InpOption GetOption(Type type)
         {
-            // Throw an exception if the type is not an InpOption
-            if (type != typeof(InpOption))
-                throw new ArgumentException($"The type passed must be an inheritor of {typeof(InpOption)}");
+            // If the type is null throw an exception
+            if (type == null)
+                throw new NullReferenceException("The type parameter passed was null");
+
+            // TODO: Find a way to throw an exception if the type is not an inheritor of InpOption
 
             // Returns the first type that matches
             return _objectDictionary.Values.FirstOrDefault(o => o.GetType() == type) as InpOption;

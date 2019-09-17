@@ -89,6 +89,7 @@ namespace Droplet.Core.Inp.Data
             FlowRoutingOption.OptionName => new FlowRoutingOption(row: this, database: database),
             LinkOffsetOption.OptionName => new LinkOffsetOption(row: this, database: database),
             MinSlopeOption.OptionName => new MinSlopeOption(row: this, database: database),
+            AllowPondingOption.OptionName => new AllowPondingOption(row: this, database: database),
 
             // TODO: Add exception here
             _ => new InpOption()
