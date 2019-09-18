@@ -49,5 +49,27 @@ namespace Droplet.Core.Inp.Options
         {
             Database = database;
         }
+
+        /// <summary>
+        /// Create an <see cref="InpOption"/> from the <paramref name="optionName"/>, a <see cref="IInpTableRow"/>,
+        /// and a <see cref="IInpDatabase"/> reference.
+        /// </summary>
+        /// <param name="optionName">The name of the option that will be created</param>
+        /// <param name="database">The <see cref="IInpDatabase"/> that the option will belong to</param>
+        /// <param name="row">The <see cref="IInpTableRow"/> that will be used to build the <see cref="InpOption"/></param>
+        /// <returns>Returns: an option that is refered to by the <paramref name="optionName"/> that is passed</returns>
+        internal static InpOption CreateFromOptionName(string optionName, IInpTableRow row, IInpDatabase database) => optionName switch
+        {
+            FlowUnitsOption.OptionName => new FlowUnitsOption(row: row, database: database),
+            InfiltrationOption.OptionName => new InfiltrationOption(row: row, database: database),
+            FlowRoutingOption.OptionName => new FlowRoutingOption(row: row, database: database),
+            LinkOffsetOption.OptionName => new LinkOffsetOption(row: row, database: database),
+            MinSlopeOption.OptionName => new MinSlopeOption(row: row, database: database),
+            AllowPondingOption.OptionName => new AllowPondingOption(row: row, database: database),
+            SkipSteadyStateOption.OptionName => new SkipSteadyStateOption(row: row, database: database),
+
+            // TODO: Add exception here
+            _ => new InpOption()
+        };
     }
 }
