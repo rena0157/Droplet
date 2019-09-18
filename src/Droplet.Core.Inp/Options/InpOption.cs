@@ -60,15 +60,15 @@ namespace Droplet.Core.Inp.Options
         /// <returns>Returns: an option that is refered to by the <paramref name="optionName"/> that is passed</returns>
         internal static InpOption CreateFromOptionName(string optionName, IInpTableRow row, IInpDatabase database) => optionName switch
         {
-            FlowUnitsOption.OptionName => new FlowUnitsOption(row: row, database: database),
-            InfiltrationOption.OptionName => new InfiltrationOption(row: row, database: database),
-            FlowRoutingOption.OptionName => new FlowRoutingOption(row: row, database: database),
-            LinkOffsetOption.OptionName => new LinkOffsetOption(row: row, database: database),
-            MinSlopeOption.OptionName => new MinSlopeOption(row: row, database: database),
-            AllowPondingOption.OptionName => new AllowPondingOption(row: row, database: database),
-            SkipSteadyStateOption.OptionName => new SkipSteadyStateOption(row: row, database: database),
+            FlowUnitsOption.OptionName => new FlowUnitsOption(row, database),
+            InfiltrationOption.OptionName => new InfiltrationOption(row, database),
+            FlowRoutingOption.OptionName => new FlowRoutingOption(row, database),
+            LinkOffsetOption.OptionName => new LinkOffsetOption(row, database),
+            MinSlopeOption.OptionName => new MinSlopeOption(row, database),
+            AllowPondingOption.OptionName => new AllowPondingOption(row, database),
+            SkipSteadyStateOption.OptionName => new SkipSteadyStateOption(row, database),
 
-            // TODO: Add exception here
+            // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };
     }
