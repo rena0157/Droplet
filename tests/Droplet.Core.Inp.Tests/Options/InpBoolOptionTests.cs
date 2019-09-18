@@ -103,16 +103,24 @@ ALLOW_PONDING        NO
         }
 
         /// <summary>
-        /// Test Data for
+        /// Test Data for <see cref="SkipSteadyStateParserTests(string, bool)"/>
+        /// tests
         /// </summary>
         private class SkipSteadyStateParserTestData : IEnumerable<object[]>
         {
+            /// <summary>
+            /// Returns: An inp String and the expected value that
+            /// should be parsed from it
+            /// </summary>
+            /// <returns></returns>
             public IEnumerator<object[]> GetEnumerator()
             {
                 // True
                 yield return new object[]
                 {
-                    @"",
+                    @"[OPTIONS]
+SKIP_STEADY_STATE    YES
+",
 
                     true
                 };
@@ -120,7 +128,9 @@ ALLOW_PONDING        NO
                 // False
                 yield return new object[]
                 {
-                    @"",
+                    @"[OPTIONS]
+SKIP_STEADY_STATE    NO
+",
 
                     false
                 };
