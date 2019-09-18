@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Droplet.Core.Inp.IO;
+using System;
 using System.IO;
 using Xunit.Abstractions;
 
@@ -36,6 +37,31 @@ namespace Droplet.Core.Inp.Tests
 
             // Reset the position of the stream
             MemoryStream.Position = 0;
+        }
+
+        /// <summary>
+        /// Set up a parser test. This method will <see cref="Initialize(string)"/>
+        /// the <paramref name="value"/> passed, read the value using an <see cref="InpFileReader"/>,
+        /// parse the file using an <see cref="InpParser"/> and then return the created
+        /// <see cref="InpProject"/>.
+        /// </summary>
+        /// <param name="value">The string that will be parsed</param>
+        protected virtual IInpProject SetupParserTest(string value)
+        {
+            // Initialize the project from the string passed to
+            // this method
+            Initialize(value);
+
+            // Initialize the project, reader and parser
+            var project = new InpProject();
+            var reader = new InpFileReader(MemoryStream);
+            var parser = new InpParser();
+
+            // Parse the file using the above project, reader and parser
+            parser.ParseFile(project, reader);
+
+            // return the project
+            return project;
         }
 
         /// <summary>

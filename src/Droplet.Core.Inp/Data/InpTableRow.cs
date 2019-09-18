@@ -4,7 +4,6 @@
 
 using Droplet.Core.Inp.Entities;
 using Droplet.Core.Inp.Options;
-using System;
 using System.Collections.Generic;
 
 namespace Droplet.Core.Inp.Data
@@ -70,29 +69,10 @@ namespace Droplet.Core.Inp.Data
         /// and the database</returns>
         private IInpEntity InitializeEntity(IInpDatabase database) => InpTable.Name switch
         {
-            InpOption.HeaderName => GetOptionEntity(Key, database),
+            InpOption.HeaderName => InpOption.CreateFromOptionName(Key, this, database),
 
             // TODO: Add exception here
             _                    => new InpEntity()
-        };
-
-        /// <summary>
-        /// Create the option that is associated with the option name <paramref name="optionName"/>
-        /// </summary>
-        /// <param name="optionName">The name of the option that will be created</param>
-        /// <param name="database">The <see cref="IInpDatabase"/> that the option will belong to</param>
-        /// <returns>Returns: an option that is refered to by the option name that is passed</returns>
-        private InpOption GetOptionEntity(string optionName, IInpDatabase database) => optionName switch
-        {
-            FlowUnitsOption.OptionName => new FlowUnitsOption(row: this, database: database),
-            InfiltrationOption.OptionName => new InfiltrationOption(row: this, database: database),
-            FlowRoutingOption.OptionName => new FlowRoutingOption(row: this, database: database),
-            LinkOffsetOption.OptionName => new LinkOffsetOption(row: this, database: database),
-            MinSlopeOption.OptionName => new MinSlopeOption(row: this, database: database),
-            AllowPondingOption.OptionName => new AllowPondingOption(row: this, database: database),
-
-            // TODO: Add exception here
-            _ => new InpOption()
         };
     }
 }
