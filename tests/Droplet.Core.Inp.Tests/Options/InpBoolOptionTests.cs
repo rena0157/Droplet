@@ -47,18 +47,21 @@ namespace Droplet.Core.Inp.Tests.Options
         [Theory]
         [ClassData(typeof(AllowPondingTestData))]
         public void AllowPondingTests(string value, bool expectedValue)
-        {
-            Initialize(value);
-            var project = new InpProject();
-            var parser = new InpParser();
-            var reader = new InpFileReader(MemoryStream);
-            parser.ParseFile(project, reader);
+            => Assert
+                .Equal(expectedValue, 
+                SetupParserTest(value).Database.GetOption<AllowPondingOption>().Value);
 
-            var option = project.Database.GetOption<AllowPondingOption>();
-
-            Assert.Equal(expectedValue, option.Value);
-        }
-
+        /// <summary>
+        /// Testing the parsing of the <see cref="SkipSteadyStateOption"/>
+        /// </summary>
+        /// <param name="value">A string from an inp file</param>
+        /// <param name="expectedValue">The expected option</param>
+        [Theory]
+        [ClassData(typeof(SkipSteadyStateParserTestData))]
+        public void SkipSteadyStateParserTests(string value, bool expectedValue)
+            => Assert
+            .Equal(expectedValue,
+                SetupParserTest(value).Database.GetOption<SkipSteadyStateOption>().Value);
 
         #endregion  
 
@@ -91,6 +94,33 @@ ALLOW_PONDING        YES
                     @"[OPTIONS]
 ALLOW_PONDING        NO
 ",
+
+                    false
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        /// <summary>
+        /// Test Data for
+        /// </summary>
+        private class SkipSteadyStateParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                // True
+                yield return new object[]
+                {
+                    @"",
+
+                    true
+                };
+
+                // False
+                yield return new object[]
+                {
+                    @"",
 
                     false
                 };
