@@ -1,5 +1,4 @@
-﻿using Droplet.Core.Inp.Options;
-using Xunit;
+﻿using Xunit;
 using Xunit.Abstractions;
 
 namespace Droplet.Core.Inp.Tests
