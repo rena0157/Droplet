@@ -1,5 +1,6 @@
 ﻿using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.Entities;
+using System;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -67,6 +68,12 @@ namespace Droplet.Core.Inp.Options
             MinSlopeOption.OptionName => new MinSlopeOption(row, database),
             AllowPondingOption.OptionName => new AllowPondingOption(row, database),
             SkipSteadyStateOption.OptionName => new SkipSteadyStateOption(row, database),
+
+            // Start Date Time, Sets the Start Date and Start Time
+            StartDateTimeOption.StartDateName => new StartDateTimeOption(row, database),
+            // Sets the time of the StartDateTime Option, if it is not null
+            StartDateTimeOption.StartTimeName => database.GetOption<StartDateTimeOption>()
+                                                         ?.AddTime(TimeSpan.Parse(row[1])),
 
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()

@@ -3,6 +3,7 @@
 // By: Adam Renaud
 
 using Droplet.Core.Inp.Entities;
+using Droplet.Core.Inp.Exceptions;
 using Droplet.Core.Inp.Options;
 using System;
 using System.Collections.Generic;
@@ -141,12 +142,22 @@ namespace Droplet.Core.Inp.Data
         /// <param name="tables">The tables that the database will be updated from</param>
         public void UpdateDatabase(List<IInpTable> tables)
         {
+            // Iterate through all tables
             foreach(var table in tables)
             {
+                // Iterate through all rows in this table
                 foreach (var row in table.Rows)
                 {
+                    // Create the entity from the row
                     var entity = row.ToInpEntity(this);
-                    _objectDictionary.Add(entity.ID, entity);
+
+                    // If the entity is null throw an exception
+                    if (entity == null)
+                        throw new InpParseException($"The entity with row {row.Key ?? "<OPTION NAME NOT FOUND>"} could not be created and is null");
+
+                    // Add the entity to the dictionary only if it is not already in it
+                    if (!_objectDictionary.ContainsKey(entity.ID))
+                        _objectDictionary.Add(entity.ID, entity);
                 }
             }
         }
