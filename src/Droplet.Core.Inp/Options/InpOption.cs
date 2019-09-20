@@ -75,6 +75,12 @@ namespace Droplet.Core.Inp.Options
             StartDateTimeOption.StartTimeName => database.GetOption<StartDateTimeOption>()
                                                          ?.AddTime(TimeSpan.Parse(row[1])),
 
+            // Report Start Date, Sets the Report Start Date
+            ReportStartDateTimeOption.DateOptionName => new ReportStartDateTimeOption(row, database),
+            // Report Start Time, Sets the Report Start Time
+            ReportStartDateTimeOption.TimeOptionName => database.GetOption<ReportStartDateTimeOption>()
+                                                                ?.AddTime(TimeSpan.Parse(row[1])),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };
