@@ -22,7 +22,6 @@ namespace Droplet.Core.Inp.Tests
             Logger = logger;
         }
 
-        [Fact]
         public void ReaderTest()
         {
             var project = new InpProject(@"C:\Dev\Droplet\tests\Droplet.Core.Inp.Tests\TestFiles\test.inp");
