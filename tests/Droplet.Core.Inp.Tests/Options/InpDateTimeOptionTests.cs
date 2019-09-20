@@ -30,7 +30,7 @@ namespace Droplet.Core.Inp.Tests.Options
 
         #endregion
 
-        #region Tests
+        #region Start DateTime Tests
 
         /// <summary>
         /// Testing the parsing of the <see cref="StartDateTimeOption"/>
@@ -54,6 +54,24 @@ namespace Droplet.Core.Inp.Tests.Options
         [InlineData("[OPTIONS]\nSTART_TIME           01:12:50\n")]
         public void StartDateTimeParserTests_WithoutStartDate(string value)
             => Assert.Throws<InpParseException>(() => SetupParserTest(value));
+
+        #endregion
+
+        #region Report StartDate Time Tests
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="ReportStartDateTimeOption"/>
+        /// class.
+        /// </summary>
+        /// <param name="value">A string from an inp file that holds the data to
+        /// the Report Start Date and Time</param>
+        /// <param name="expectedValue">The expected <see cref="DateTime"/> that the
+        /// Parser should create from the <paramref name="value"/> passed</param>
+        [Theory]
+        [ClassData(typeof(ReportStartDateTimeParserTestData))]
+        public void ReportStartDateTimeParserTests(string value, DateTime expectedValue)
+            => Assert.Equal(expectedValue,
+                SetupParserTest(value).Database.GetOption<ReportStartDateTimeOption>().Value);
 
         #endregion
 
@@ -93,6 +111,32 @@ START_DATE           07/28/2019
 
                     new DateTime(2019, 07, 28, 0, 0, 0)
 };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        /// <summary>
+        /// Test Data for the <see cref="ReportStartDateTimeParserTests(string, DateTime)"/> tests
+        /// </summary>
+        private class ReportStartDateTimeParserTestData : IEnumerable<object[]>
+        {
+            /// <summary>
+            /// Returns the <see cref="string"/> and expected <see cref="DateTime"/>
+            ///  for the test
+            /// </summary>
+            /// <returns>Returns: a string and a DateTime for the test</returns>
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+REPORT_START_DATE    07/28/2019
+REPORT_START_TIME    00:00:00
+",
+
+                    new DateTime(2019, 07, 28, 0, 0, 0)
+                };
             }
 
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
