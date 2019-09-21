@@ -75,6 +75,42 @@ namespace Droplet.Core.Inp.Tests.Options
 
         #endregion
 
+        #region EndDateTime Tests
+
+        /// <summary>
+        /// Tests the parsing of the <see cref="EndDateTimeOption"/> option
+        /// </summary>
+        /// <param name="value">A string from an inp file that represents a date and a time</param>
+        /// <param name="expectedDateTime">The expected date time</param>
+        [Theory]
+        [ClassData(typeof(EndDateTimeParserTesData))]
+        public void EndDateTimeParserTests(string value, DateTime expectedDateTime)
+            => Assert.Equal(expectedDateTime,
+                SetupParserTest(value).Database.GetOption<EndDateTimeOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="EndDateTimeParserTesData"/>
+        /// </summary>
+        private class EndDateTimeParserTesData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+END_DATE             07/28/2019
+END_TIME             06:00:00
+",
+
+                    new DateTime(2019, 07, 28, 6, 0, 0)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
+
         #region Test Data
 
         /// <summary>
