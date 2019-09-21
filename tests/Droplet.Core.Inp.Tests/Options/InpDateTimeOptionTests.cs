@@ -111,6 +111,44 @@ END_TIME             06:00:00
 
         #endregion
 
+        #region Sweeping Date Time Tests
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="SweepingStartDateTimeOption"/> 
+        /// Option
+        /// </summary>
+        /// <param name="value">A string from an inp file that contains the option</param>
+        /// <param name="expectedValue">The expected value from the option</param>
+        [Theory]
+        [ClassData(typeof(SweepingStartDateTimeParserTestData))]
+        public void SweepingStartDateTimeParserTests(string value, DateTime expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value)
+                .Database
+                .GetOption<SweepingStartDateTimeOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="SweepingStartDateTimeParserTests(string, DateTime)"/>
+        ///  tests
+        /// </summary>
+        private class SweepingStartDateTimeParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+SWEEP_START          01/01
+",
+
+                    new DateTime(DateTime.Now.Year, 1, 1)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
+
         #region Test Data
 
         /// <summary>

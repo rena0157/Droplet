@@ -87,6 +87,9 @@ namespace Droplet.Core.Inp.Options
             EndDateTimeOption.TimeOptionName => database.GetOption<EndDateTimeOption>()
                                                         ?.AddTime(TimeSpan.Parse(row[1])),
 
+            // Sweeping Start Option
+            SweepingStartDateTimeOption.OptionName => new SweepingStartDateTimeOption(row, database),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };
