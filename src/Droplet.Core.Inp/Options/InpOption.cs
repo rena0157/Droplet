@@ -22,6 +22,19 @@ namespace Droplet.Core.Inp.Options
         /// The value of the option
         /// </summary>
         public virtual T Value { get; set; }
+
+        /// <summary>
+        /// Parse the Row into the Value type
+        /// </summary>
+        /// <param name="row">The row that will be parsed</param>
+        /// <returns>Returns: the parsed value for <see cref="Value"/></returns>
+        internal protected virtual T ParseRow(IInpTableRow row)
+        {
+            // The base class cannot parse the value because
+            // it doesn't know what the value type is and needs to be overriden
+            // in derived classes
+            throw new NotImplementedException("The base class cannot parse options");
+        }
     }
 
     /// <summary>
@@ -90,6 +103,8 @@ namespace Droplet.Core.Inp.Options
             // Sweeping Start & End Options
             SweepingStartDateTimeOption.OptionName => new SweepingStartDateTimeOption(row, database),
             SweepingEndDateTimeOption.OptionName => new SweepingEndDateTimeOption(row, database),
+
+            DryDaysOption.OptionName => new DryDaysOption(row, database),
 
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
