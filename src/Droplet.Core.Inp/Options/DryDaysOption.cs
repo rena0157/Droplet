@@ -12,6 +12,8 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class DryDaysOption : InpTimeSpanOption
     {
+        #region Internal Members
+
         /// <summary>
         /// The internal constructor that will create the option from a <see cref="IInpTableRow"/> 
         /// and add this option to the <see cref="IInpDatabase"/>
@@ -24,6 +26,11 @@ namespace Droplet.Core.Inp.Options
         }
 
         /// <summary>
+        /// Const <see cref="string"/> that is the name of the option in inp files
+        /// </summary>
+        internal const string OptionName = "DRY_DAYS";
+
+        /// <summary>
         /// Override of the <see cref="InpTimeSpanOption.ParseRow(IInpTableRow)"/> option
         /// that parses the <see cref="IInpTableRow"/> into a <see cref="TimeSpan"/> using the
         /// <see cref="TimeSpan.FromDays(double)"/> method.
@@ -33,5 +40,7 @@ namespace Droplet.Core.Inp.Options
         internal protected override TimeSpan ParseRow(IInpTableRow row)
             // Return the value from days
             => TimeSpan.FromDays(double.Parse(row[1]));
+
+        #endregion
     }
 }

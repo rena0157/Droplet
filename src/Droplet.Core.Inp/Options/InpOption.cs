@@ -104,6 +104,8 @@ namespace Droplet.Core.Inp.Options
             SweepingStartDateTimeOption.OptionName => new SweepingStartDateTimeOption(row, database),
             SweepingEndDateTimeOption.OptionName => new SweepingEndDateTimeOption(row, database),
 
+            DryDaysOption.OptionName => new DryDaysOption(row, database),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };
