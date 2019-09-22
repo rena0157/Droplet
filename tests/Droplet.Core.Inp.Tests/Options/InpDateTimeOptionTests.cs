@@ -55,64 +55,6 @@ namespace Droplet.Core.Inp.Tests.Options
         public void StartDateTimeParserTests_WithoutStartDate(string value)
             => Assert.Throws<InpParseException>(() => SetupParserTest(value));
 
-        #endregion
-
-        #region Report StartDate Time Tests
-
-        /// <summary>
-        /// Testing the parsing of the <see cref="ReportStartDateTimeOption"/>
-        /// class.
-        /// </summary>
-        /// <param name="value">A string from an inp file that holds the data to
-        /// the Report Start Date and Time</param>
-        /// <param name="expectedValue">The expected <see cref="DateTime"/> that the
-        /// Parser should create from the <paramref name="value"/> passed</param>
-        [Theory]
-        [ClassData(typeof(ReportStartDateTimeParserTestData))]
-        public void ReportStartDateTimeParserTests(string value, DateTime expectedValue)
-            => Assert.Equal(expectedValue,
-                SetupParserTest(value).Database.GetOption<ReportStartDateTimeOption>().Value);
-
-        #endregion
-
-        #region EndDateTime Tests
-
-        /// <summary>
-        /// Tests the parsing of the <see cref="EndDateTimeOption"/> option
-        /// </summary>
-        /// <param name="value">A string from an inp file that represents a date and a time</param>
-        /// <param name="expectedDateTime">The expected date time</param>
-        [Theory]
-        [ClassData(typeof(EndDateTimeParserTesData))]
-        public void EndDateTimeParserTests(string value, DateTime expectedDateTime)
-            => Assert.Equal(expectedDateTime,
-                SetupParserTest(value).Database.GetOption<EndDateTimeOption>().Value);
-
-        /// <summary>
-        /// Test data for the <see cref="EndDateTimeParserTesData"/>
-        /// </summary>
-        private class EndDateTimeParserTesData : IEnumerable<object[]>
-        {
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                yield return new object[]
-                {
-                    @"[OPTIONS]
-END_DATE             07/28/2019
-END_TIME             06:00:00
-",
-
-                    new DateTime(2019, 07, 28, 6, 0, 0)
-                };
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
-
-        #endregion
-
-        #region Test Data
-
         /// <summary>
         /// Test Data for the <see cref="StartDateTimeParserTests(string, DateTime)"/> tests
         /// </summary>
@@ -152,6 +94,24 @@ START_DATE           07/28/2019
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
+        #endregion
+
+        #region Report StartDate Time Tests
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="ReportStartDateTimeOption"/>
+        /// class.
+        /// </summary>
+        /// <param name="value">A string from an inp file that holds the data to
+        /// the Report Start Date and Time</param>
+        /// <param name="expectedValue">The expected <see cref="DateTime"/> that the
+        /// Parser should create from the <paramref name="value"/> passed</param>
+        [Theory]
+        [ClassData(typeof(ReportStartDateTimeParserTestData))]
+        public void ReportStartDateTimeParserTests(string value, DateTime expectedValue)
+            => Assert.Equal(expectedValue,
+                SetupParserTest(value).Database.GetOption<ReportStartDateTimeOption>().Value);
+
         /// <summary>
         /// Test Data for the <see cref="ReportStartDateTimeParserTests(string, DateTime)"/> tests
         /// </summary>
@@ -178,6 +138,116 @@ REPORT_START_TIME    00:00:00
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
+
         #endregion
+
+        #region EndDateTime Tests
+
+        /// <summary>
+        /// Tests the parsing of the <see cref="EndDateTimeOption"/> option
+        /// </summary>
+        /// <param name="value">A string from an inp file that represents a date and a time</param>
+        /// <param name="expectedDateTime">The expected date time</param>
+        [Theory]
+        [ClassData(typeof(EndDateTimeParserTesData))]
+        public void EndDateTimeParserTests(string value, DateTime expectedDateTime)
+            => Assert.Equal(expectedDateTime,
+                SetupParserTest(value).Database.GetOption<EndDateTimeOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="EndDateTimeParserTesData"/>
+        /// </summary>
+        private class EndDateTimeParserTesData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+END_DATE             07/28/2019
+END_TIME             06:00:00
+",
+
+                    new DateTime(2019, 07, 28, 6, 0, 0)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
+
+        #region Sweeping Date Time Tests
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="SweepingStartDateTimeOption"/> 
+        /// Option
+        /// </summary>
+        /// <param name="value">A string from an inp file that contains the option</param>
+        /// <param name="expectedValue">The expected value from the option</param>
+        [Theory]
+        [ClassData(typeof(SweepingStartDateTimeParserTestData))]
+        public void SweepingStartDateTimeParserTests(string value, DateTime expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value)
+                .Database
+                .GetOption<SweepingStartDateTimeOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="SweepingStartDateTimeParserTests(string, DateTime)"/>
+        ///  tests
+        /// </summary>
+        private class SweepingStartDateTimeParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+SWEEP_START          01/01
+",
+
+                    new DateTime(DateTime.Now.Year, 1, 1)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="SweepingEndDateTimeOption"/> 
+        /// </summary>
+        /// <param name="value">A <see cref="string"/> from an inp file that
+        /// contains a <see cref="SweepingEndDateTimeOption"/> that will be parsed</param>
+        /// <param name="expectedValue">The expected <see cref="DateTime"/> that the parser should 
+        /// produced from the <paramref name="value"/></param>
+        [Theory]
+        [ClassData(typeof(SweepingEndDateTimeParserTestData))]
+        public void SweepingEndDateTimeParserTests(string value, DateTime expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database
+                                                                 .GetOption<SweepingEndDateTimeOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="SweepingEndDateTimeParserTests(string, DateTime)"/> 
+        /// tests
+        /// </summary>
+        private class SweepingEndDateTimeParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+SWEEP_END            12/31
+",
+
+                    new DateTime(DateTime.Now.Year, 12, 31)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
+
     }
 }
