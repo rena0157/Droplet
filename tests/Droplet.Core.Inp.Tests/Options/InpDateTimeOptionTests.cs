@@ -55,6 +55,45 @@ namespace Droplet.Core.Inp.Tests.Options
         public void StartDateTimeParserTests_WithoutStartDate(string value)
             => Assert.Throws<InpParseException>(() => SetupParserTest(value));
 
+        /// <summary>
+        /// Test Data for the <see cref="StartDateTimeParserTests(string, DateTime)"/> tests
+        /// </summary>
+        private class StartDateTimeParserTestData : IEnumerable<object[]>
+        {
+
+            /// <summary>
+            /// A string from an inp file
+            /// and the expected <see cref="DateTime"/> that the
+            /// parser should create
+            /// </summary>
+            /// <returns></returns>
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                // With start time
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+START_DATE           07/28/2019
+START_TIME           01:12:50
+",
+
+                    new DateTime(2019, 07, 28, 1, 12, 50)
+                };
+
+                // Without start time
+                yield return new object[]
+{
+                    @"[OPTIONS]
+START_DATE           07/28/2019
+",
+
+                    new DateTime(2019, 07, 28, 0, 0, 0)
+};
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
         #endregion
 
         #region Report StartDate Time Tests
@@ -72,6 +111,33 @@ namespace Droplet.Core.Inp.Tests.Options
         public void ReportStartDateTimeParserTests(string value, DateTime expectedValue)
             => Assert.Equal(expectedValue,
                 SetupParserTest(value).Database.GetOption<ReportStartDateTimeOption>().Value);
+
+        /// <summary>
+        /// Test Data for the <see cref="ReportStartDateTimeParserTests(string, DateTime)"/> tests
+        /// </summary>
+        private class ReportStartDateTimeParserTestData : IEnumerable<object[]>
+        {
+            /// <summary>
+            /// Returns the <see cref="string"/> and expected <see cref="DateTime"/>
+            ///  for the test
+            /// </summary>
+            /// <returns>Returns: a string and a DateTime for the test</returns>
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+REPORT_START_DATE    07/28/2019
+REPORT_START_TIME    00:00:00
+",
+
+                    new DateTime(2019, 07, 28, 0, 0, 0)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
 
         #endregion
 
@@ -147,69 +213,34 @@ SWEEP_START          01/01
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
-        #endregion
-
-        #region Test Data
+        /// <summary>
+        /// Testing the parsing of the <see cref="SweepingEndDateTimeOption"/> 
+        /// </summary>
+        /// <param name="value">A <see cref="string"/> from an inp file that
+        /// contains a <see cref="SweepingEndDateTimeOption"/> that will be parsed</param>
+        /// <param name="expectedValue">The expected <see cref="DateTime"/> that the parser should 
+        /// produced from the <paramref name="value"/></param>
+        [Theory]
+        [ClassData(typeof(SweepingEndDateTimeParserTestData))]
+        public void SweepingEndDateTimeParserTests(string value, DateTime expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database
+                                                                 .GetOption<SweepingEndDateTimeOption>().Value);
 
         /// <summary>
-        /// Test Data for the <see cref="StartDateTimeParserTests(string, DateTime)"/> tests
+        /// Test data for the <see cref="SweepingEndDateTimeParserTests(string, DateTime)"/> 
+        /// tests
         /// </summary>
-        private class StartDateTimeParserTestData : IEnumerable<object[]>
+        private class SweepingEndDateTimeParserTestData : IEnumerable<object[]>
         {
-
-            /// <summary>
-            /// A string from an inp file
-            /// and the expected <see cref="DateTime"/> that the
-            /// parser should create
-            /// </summary>
-            /// <returns></returns>
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                // With start time
-                yield return new object[]
-                {
-                    @"[OPTIONS]
-START_DATE           07/28/2019
-START_TIME           01:12:50
-",
-
-                    new DateTime(2019, 07, 28, 1, 12, 50)
-                };
-
-                // Without start time
-                yield return new object[]
-{
-                    @"[OPTIONS]
-START_DATE           07/28/2019
-",
-
-                    new DateTime(2019, 07, 28, 0, 0, 0)
-};
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
-
-        /// <summary>
-        /// Test Data for the <see cref="ReportStartDateTimeParserTests(string, DateTime)"/> tests
-        /// </summary>
-        private class ReportStartDateTimeParserTestData : IEnumerable<object[]>
-        {
-            /// <summary>
-            /// Returns the <see cref="string"/> and expected <see cref="DateTime"/>
-            ///  for the test
-            /// </summary>
-            /// <returns>Returns: a string and a DateTime for the test</returns>
             public IEnumerator<object[]> GetEnumerator()
             {
                 yield return new object[]
                 {
                     @"[OPTIONS]
-REPORT_START_DATE    07/28/2019
-REPORT_START_TIME    00:00:00
+SWEEP_END            12/31
 ",
 
-                    new DateTime(2019, 07, 28, 0, 0, 0)
+                    new DateTime(DateTime.Now.Year, 12, 31)
                 };
             }
 
@@ -217,5 +248,6 @@ REPORT_START_TIME    00:00:00
         }
 
         #endregion
+
     }
 }
