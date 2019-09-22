@@ -17,7 +17,7 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">The row that will be used to construct the option</param>
         /// <param name="database">The database that the option will belong to</param>
-        public SweepingEndDateTimeOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal SweepingEndDateTimeOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
         }
 

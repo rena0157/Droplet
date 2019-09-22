@@ -17,7 +17,7 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">The row that the option will be created from</param>
         /// <param name="database">The database that the option will belong to</param>
-        public EndDateTimeOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal EndDateTimeOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
             // Everthing is constructed in the base class
         }
