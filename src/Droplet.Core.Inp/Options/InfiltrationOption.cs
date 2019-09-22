@@ -15,22 +15,17 @@ namespace Droplet.Core.Inp.Options
         /// <summary>
         /// The name of the option
         /// </summary>
-        public const string OptionName = "INFILTRATION";
+        internal const string OptionName = "INFILTRATION";
 
         /// <summary>
         /// Default Constructor for this option
         /// </summary>
         /// <param name="row"></param>
         /// <param name="database"></param>
-        public InfiltrationOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal InfiltrationOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
             Value = Value.FromInpString(row[1]);
         }
-
-        /// <summary>
-        /// The name of this option
-        /// </summary>
-        public override string Name => "INFILTRATION";
     }
 
     /// <summary>

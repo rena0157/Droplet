@@ -8,27 +8,21 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class LinkOffsetOption : InpOption<LinkOffset>
     {
-
         /// <summary>
         /// The option name
         /// </summary>
-        public const string OptionName = "LINK_OFFSETS";
+        internal const string OptionName = "LINK_OFFSETS";
 
         /// <summary>
         /// Default Constructor
         /// </summary>
         /// <param name="row">The row that this option will be built from</param>
         /// <param name="database">The database that this option belongs to</param>
-        public LinkOffsetOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal LinkOffsetOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
             // Set the value of the option
             Value = Value.FromInpString(row[1]);
         }
-
-        /// <summary>
-        /// Returns the name of the option <see cref="OptionName"/>
-        /// </summary>
-        public override string Name => OptionName;
     }
 
     /// <summary>

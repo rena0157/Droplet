@@ -13,7 +13,7 @@ namespace Droplet.Core.Inp.Options
         /// <summary>
         /// The name of the option
         /// </summary>
-        public const string OptionName = "FLOW_UNITS";
+        internal const string OptionName = "FLOW_UNITS";
 
         #endregion
 
@@ -24,19 +24,10 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">The row that will be used to create this option</param>
         /// <param name="database">The database that this option will belong to</param>
-        public FlowUnitsOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal FlowUnitsOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
             Value = Value.FromInpString(row[1]);
         }
-
-        #endregion
-
-        #region Overriden Base Members
-
-        /// <summary>
-        /// Public Override of the Flow Units Option
-        /// </summary>
-        public override string Name => "FlowUnits";
 
         #endregion
     }
