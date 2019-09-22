@@ -18,7 +18,7 @@ namespace Droplet.Core.Inp.Options
         /// <param name="row">The row that will be used to construct the
         ///  option</param>
         /// <param name="database">The database that the option will belong to</param>
-        public SweepingStartDateTimeOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal SweepingStartDateTimeOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
             // Construction will happen in the base class
         }

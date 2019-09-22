@@ -21,7 +21,7 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">The row that will be used to create the value</param>
         /// <param name="database">The database that the option belongs to</param>
-        public InpTimeSpanOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal InpTimeSpanOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
             Value = ParseRow(row);
         }

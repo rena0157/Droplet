@@ -20,7 +20,7 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">The row that will construct the value for this option</param>
         /// <param name="database">The database that this option belongs to</param>
-        public ReportStartDateTimeOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal ReportStartDateTimeOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
         }
 

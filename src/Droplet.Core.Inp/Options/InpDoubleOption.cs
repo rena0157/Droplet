@@ -15,12 +15,23 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row"></param>
         /// <param name="database"></param>
-        public InpDoubleOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal InpDoubleOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        {
+            Value = ParseRow(row);
+        }
+
+        /// <summary>
+        /// Protected internal override of the <see cref="InpOption{T}.ParseRow(IInpTableRow)"/> Method
+        ///  that parses a <see cref="double"/>
+        /// </summary>
+        /// <param name="row">The row that will be parsed</param>
+        /// <returns>Returns: a <see cref="double"/> that is parsed from the row</returns>
+        protected internal override double ParseRow(IInpTableRow row)
         {
             // Try to parse the row
-            if (double.TryParse(row[1], out var slope))
+            if (double.TryParse(row[1], out var value))
                 // If it suceeds then assign the value of the parsing
-                Value = slope;
+                return value;
             // If it is not sucessful throw an new exception
             else
                 throw new InpParseException($"The parsing of {this} was unsucessful due to a double" +

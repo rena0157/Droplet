@@ -16,19 +16,32 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">A row that this object will be created from</param>
         /// <param name="database">The database that this object belongs to</param>
-        public FlowRoutingOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal FlowRoutingOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-            Value = Value.FromInpString(row[1]);
+            // Parse the row
+            Value = ParseRow(row);
         }
 
         #endregion
 
-        #region Public Members
+        #region Internal Members
 
         /// <summary>
         /// The name of this option
         /// </summary>
-        public const string OptionName = "FLOW_ROUTING";
+        internal const string OptionName = "FLOW_ROUTING";
+
+        /// <summary>
+        /// Protected internal override fo the <see cref="InpOption{T}.ParseRow(IInpTableRow)"/> Method 
+        /// that parses the row and returns a <see cref="FlowRouting"/> option
+        /// </summary>
+        /// <param name="row">The row that will be parsed</param>
+        /// <returns>Returns: The parsed <see cref="FlowRouting"/> value</returns>
+        protected internal override FlowRouting ParseRow(IInpTableRow row)
+        {
+            // Return the from inp string value
+            return FlowRouting.SteadyFlow.FromInpString(row[1]);
+        }
 
         #endregion
     }

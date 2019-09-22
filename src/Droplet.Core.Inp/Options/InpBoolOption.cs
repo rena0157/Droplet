@@ -14,19 +14,28 @@ namespace Droplet.Core.Inp.Options
     public class InpBoolOption : InpOption<bool>
     {
 
-        #region Constructors
+        #region Internal Members
 
         /// <summary>
         /// Build the option from an <see cref="IInpTableRow"/> and an <see cref="IInpDatabase"/>
         /// </summary>
         /// <param name="row">The row that the <see cref="InpOption{T}"/> will be built from</param>
         /// <param name="database">The database that the option belongs to</param>
-        public InpBoolOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal InpBoolOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
             // Set the value from the helper method
-            Value = FromInpString(row[1]);
+            Value = ParseRow(row);
         }
 
+
+        /// <summary>
+        /// Protected internal override the <see cref="InpOption{T}.ParseRow(IInpTableRow)"/> method 
+        /// that will convert this <see cref="IInpTableRow"/> to a <see cref="bool"/>
+        /// </summary>
+        /// <param name="row">The row that will be converted</param>
+        /// <returns>Returns: a <see cref="bool"/> that is created from the row</returns>
+        protected internal override bool ParseRow(IInpTableRow row) => FromInpString(row[1]);
+        
         #endregion
 
         #region Public Static Helpers

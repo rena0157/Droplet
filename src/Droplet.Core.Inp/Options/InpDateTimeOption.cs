@@ -20,12 +20,19 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">The row that will be used to construct the value</param>
         /// <param name="database">The database that the date time belongs to</param>
-        public InpDateTimeOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal InpDateTimeOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
             // Convert the row into a DateTime and
             // store it in the value property
             Value = DateTime.Parse(row[1]);
         }
+
+        /// <summary>
+        /// Parse the <see cref="IInpTableRow"/> that is passed and return it.
+        /// </summary>
+        /// <param name="row">The row that will be parsed an returned</param>
+        /// <returns>Returns: The <see cref="DateTime"/> that is parsed from the row</returns>
+        protected internal override DateTime ParseRow(IInpTableRow row) => DateTime.Parse(row[1]);
 
         /// <summary>
         /// Internal Method that is used to add a <see cref="TimeSpan"/>
