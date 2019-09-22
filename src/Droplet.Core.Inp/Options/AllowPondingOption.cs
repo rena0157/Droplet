@@ -16,19 +16,13 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">The row that will be used to construct the option</param>
         /// <param name="database">The database that the option belongs to</param>
-        public AllowPondingOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal AllowPondingOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
         }
 
         /// <summary>
         /// The name of the option as defined in inp files
         /// </summary>
-        public const string OptionName = "ALLOW_PONDING";
-
-        /// <summary>
-        /// Public override of the name property that returns
-        /// the <see cref="OptionName"/> constant
-        /// </summary>
-        public override string Name => OptionName;
+        internal const string OptionName = "ALLOW_PONDING";
     }
 }
