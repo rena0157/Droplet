@@ -119,6 +119,9 @@ namespace Droplet.Core.Inp.Options
             // Routing Time Step Option
             RoutingStepOption.OptionName => new RoutingStepOption(row, database),
 
+            // Control Rule Time Step Option
+            ControlRuleStepOption.OptionName => new ControlRuleStepOption(row, database),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };

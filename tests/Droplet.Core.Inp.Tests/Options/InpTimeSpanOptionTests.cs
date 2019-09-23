@@ -209,5 +209,40 @@ ROUTING_STEP         0:00:30
         }
 
         #endregion
+
+        #region Rule Step Option
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="ControlRuleStepOption"/> class
+        /// </summary>
+        /// <param name="value">The inp string that will be tested</param>
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that 
+        /// the parser should produce</param>
+        [Theory]
+        [ClassData(typeof(ControlRuleStepOptionParserTestData))]
+        public void ControlRuleStepOptionParserTests(string value, TimeSpan expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<ControlRuleStepOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="ControlRuleStepOptionParserTests(string, TimeSpan)"/> tests
+        /// </summary>
+        private class ControlRuleStepOptionParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+RULE_STEP            00:00:00
+",
+
+                    new TimeSpan()
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
     }
 }
