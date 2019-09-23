@@ -116,6 +116,9 @@ namespace Droplet.Core.Inp.Options
             // Dry Weather Step Option
             DryWeatherStepOption.OptionName => new DryWeatherStepOption(row, database),
 
+            // Routing Time Step Option
+            RoutingStepOption.OptionName => new RoutingStepOption(row, database),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };

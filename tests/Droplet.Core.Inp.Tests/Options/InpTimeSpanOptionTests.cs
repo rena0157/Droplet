@@ -174,5 +174,40 @@ DRY_STEP             01:00:00
         }
 
         #endregion
+
+        #region Routing Step Option
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="RoutingStepOption"/>
+        /// </summary>
+        /// <param name="value">The string that will be parsed</param>
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that the string 
+        /// will contain</param>
+        [Theory]
+        [ClassData(typeof(RoutingStepOptionParserTestData))]
+        public void RoutingStepOptionParserTests(string value, TimeSpan expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<RoutingStepOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="RoutingStepOptionParserTests(string, TimeSpan)"/> tests
+        /// </summary>
+        private class RoutingStepOptionParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+ROUTING_STEP         0:00:30
+",
+
+                    new TimeSpan(0, 0, 30)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
     }
 }
