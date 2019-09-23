@@ -65,5 +65,43 @@ DRY_DAYS             5
         }
 
         #endregion
+
+        #region Report Step Option
+
+        /// <summary>
+        /// Tests for the parsing of the <see cref="ReportStepOption"/>
+        /// </summary>
+        /// <param name="value">An inp <see cref="string"/> that contains the value that
+        /// is to be parsed</param>
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that the parser should
+        /// create</param>
+        [Theory]
+        [ClassData(typeof(ReportStepOptionParserTestData))]
+        public void ReportStepOptionParserTests(string value, TimeSpan expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<ReportStepOption>().Value);
+
+        /// <summary>
+        /// Data class for the <see cref="ReportStepOptionParserTests(string, TimeSpan)"/> tests
+        /// </summary>
+        private class ReportStepOptionParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+REPORT_STEP          00:15:00
+",
+
+                    new TimeSpan(0, 15, 0)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
+
+
     }
 }
