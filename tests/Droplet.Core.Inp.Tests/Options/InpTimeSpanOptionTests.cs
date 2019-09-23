@@ -102,6 +102,41 @@ REPORT_STEP          00:15:00
 
         #endregion
 
+        #region Wet Step Option
 
+        /// <summary>
+        /// Tests for the parsing of the <see cref="WetWeatherStepOption"/> option
+        /// </summary>
+        /// <param name="value">A <see cref="string"/> that contains the value that 
+        /// Will be parsed</param>
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that the 
+        /// Parser should produce</param>
+        [Theory]
+        [ClassData(typeof(WetWeatherOptionParserTestData))]
+        public void WetWeatherOptionParserTests(string value, TimeSpan expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database
+                .GetOption<WetWeatherStepOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="WetWeatherOptionParserTests(string, TimeSpan)"/> tests
+        /// </summary>
+        private class WetWeatherOptionParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+WET_STEP             00:05:00
+",
+
+                    new TimeSpan(0, 5, 0)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
     }
 }
