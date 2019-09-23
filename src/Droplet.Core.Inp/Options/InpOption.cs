@@ -113,6 +113,9 @@ namespace Droplet.Core.Inp.Options
             // Wet Weather Step Option
             WetWeatherStepOption.OptionName => new WetWeatherStepOption(row, database),
 
+            // Dry Weather Step Option
+            DryWeatherStepOption.OptionName => new DryWeatherStepOption(row, database),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };
