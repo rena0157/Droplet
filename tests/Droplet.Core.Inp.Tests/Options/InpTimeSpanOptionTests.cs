@@ -244,5 +244,39 @@ RULE_STEP            00:00:00
         }
 
         #endregion
+
+        #region Lengthening Step Option
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="ConduitLengtheningStepOption"/> class
+        /// </summary>
+        /// <param name="value">A string that contains the option that will be parsed</param>
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that will be parsed</param>
+        [Theory]
+        [ClassData(typeof(ConduitLengtheningStepOptionParserTestData))]
+        public void ConduitLengtheningStepOptionParserTests(string value, TimeSpan expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<ConduitLengtheningStepOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="ConduitLengtheningStepOptionParserTests(string, TimeSpan)"/> tests
+        /// </summary>
+        private class ConduitLengtheningStepOptionParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+LENGTHENING_STEP     10
+",
+
+                    TimeSpan.FromSeconds(10)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
     }
 }
