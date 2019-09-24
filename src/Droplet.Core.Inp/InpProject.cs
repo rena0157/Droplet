@@ -4,7 +4,9 @@
 
 using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.IO;
+using Droplet.Core.Inp.Utilities;
 using System.IO;
+using System.Resources;
 
 namespace Droplet.Core.Inp
 {
