@@ -65,5 +65,218 @@ DRY_DAYS             5
         }
 
         #endregion
+
+        #region Report Step Option
+
+        /// <summary>
+        /// Tests for the parsing of the <see cref="ReportStepOption"/>
+        /// </summary>
+        /// <param name="value">An inp <see cref="string"/> that contains the value that
+        /// is to be parsed</param>
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that the parser should
+        /// create</param>
+        [Theory]
+        [ClassData(typeof(ReportStepOptionParserTestData))]
+        public void ReportStepOptionParserTests(string value, TimeSpan expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<ReportStepOption>().Value);
+
+        /// <summary>
+        /// Data class for the <see cref="ReportStepOptionParserTests(string, TimeSpan)"/> tests
+        /// </summary>
+        private class ReportStepOptionParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+REPORT_STEP          00:15:00
+",
+
+                    new TimeSpan(0, 15, 0)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
+
+        #region Wet Step Option
+
+        /// <summary>
+        /// Tests for the parsing of the <see cref="WetWeatherStepOption"/> option
+        /// </summary>
+        /// <param name="value">A <see cref="string"/> that contains the value that 
+        /// Will be parsed</param>
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that the 
+        /// Parser should produce</param>
+        [Theory]
+        [ClassData(typeof(WetWeatherOptionParserTestData))]
+        public void WetWeatherOptionParserTests(string value, TimeSpan expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database
+                .GetOption<WetWeatherStepOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="WetWeatherOptionParserTests(string, TimeSpan)"/> tests
+        /// </summary>
+        private class WetWeatherOptionParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+WET_STEP             00:05:00
+",
+
+                    new TimeSpan(0, 5, 0)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
+
+        #region Dry Step Option
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="DryWeatherStepOption"/>
+        /// </summary>
+        /// <param name="value">A <see cref="string"/> that contains a <see cref="DryWeatherStepOption"/>
+        ///  that the parser will parse into a <see cref="TimeSpan"/></param>
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/></param>
+        [Theory]
+        [ClassData(typeof(DryWeatherStepOptionParserTestData))]
+        public void DryWeatherStepOptionParserTests(string value, TimeSpan expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database
+                .GetOption<DryWeatherStepOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="DryWeatherStepOptionParserTests(string, TimeSpan)"/> tests
+        /// </summary>
+        private class DryWeatherStepOptionParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+DRY_STEP             01:00:00
+",
+
+                    new TimeSpan(1, 0, 0)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
+
+        #region Routing Step Option
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="RoutingStepOption"/>
+        /// </summary>
+        /// <param name="value">The string that will be parsed</param>
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that the string 
+        /// will contain</param>
+        [Theory]
+        [ClassData(typeof(RoutingStepOptionParserTestData))]
+        public void RoutingStepOptionParserTests(string value, TimeSpan expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<RoutingStepOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="RoutingStepOptionParserTests(string, TimeSpan)"/> tests
+        /// </summary>
+        private class RoutingStepOptionParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+ROUTING_STEP         0:00:30
+",
+
+                    new TimeSpan(0, 0, 30)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
+
+        #region Rule Step Option
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="ControlRuleStepOption"/> class
+        /// </summary>
+        /// <param name="value">The inp string that will be tested</param>
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that 
+        /// the parser should produce</param>
+        [Theory]
+        [ClassData(typeof(ControlRuleStepOptionParserTestData))]
+        public void ControlRuleStepOptionParserTests(string value, TimeSpan expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<ControlRuleStepOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="ControlRuleStepOptionParserTests(string, TimeSpan)"/> tests
+        /// </summary>
+        private class ControlRuleStepOptionParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+RULE_STEP            00:00:00
+",
+
+                    new TimeSpan()
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
+
+        #region Lengthening Step Option
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="ConduitLengtheningStepOption"/> class
+        /// </summary>
+        /// <param name="value">A string that contains the option that will be parsed</param>
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that will be parsed</param>
+        [Theory]
+        [ClassData(typeof(ConduitLengtheningStepOptionParserTestData))]
+        public void ConduitLengtheningStepOptionParserTests(string value, TimeSpan expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<ConduitLengtheningStepOption>().Value);
+
+        /// <summary>
+        /// Test data for the <see cref="ConduitLengtheningStepOptionParserTests(string, TimeSpan)"/> tests
+        /// </summary>
+        private class ConduitLengtheningStepOptionParserTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+LENGTHENING_STEP     10
+",
+
+                    TimeSpan.FromSeconds(10)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        #endregion
     }
 }

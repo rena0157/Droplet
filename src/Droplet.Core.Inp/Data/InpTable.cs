@@ -14,10 +14,10 @@ namespace Droplet.Core.Inp.Data
         /// <summary>
         /// The backing dictionary
         /// </summary>
-        protected Dictionary<string, IInpTableRow> _tableDictionary;
+        private Dictionary<string, IInpTableRow> _tableDictionary;
 
         /// <summary>
-        /// Default Constructor that will initialize the inptables
+        /// Default Constructor that will initialize the inp tables
         /// entities
         /// </summary>
         public InpTable()
@@ -62,7 +62,7 @@ namespace Droplet.Core.Inp.Data
         {
             // Check to see if the table already contains this 
             // entry and if it does then append the values to it
-            // Note that we don't readd the key value to the values array
+            // Note that we don't read the key value to the values array
             if (_tableDictionary.ContainsKey(row.Key))
             {
                 // Using the range 1..^0 grabs the second value to the last value

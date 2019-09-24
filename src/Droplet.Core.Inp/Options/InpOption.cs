@@ -71,7 +71,7 @@ namespace Droplet.Core.Inp.Options
         /// <param name="optionName">The name of the option that will be created</param>
         /// <param name="database">The <see cref="IInpDatabase"/> that the option will belong to</param>
         /// <param name="row">The <see cref="IInpTableRow"/> that will be used to build the <see cref="InpOption"/></param>
-        /// <returns>Returns: an option that is refered to by the <paramref name="optionName"/> that is passed</returns>
+        /// <returns>Returns: an option that is refereed to by the <paramref name="optionName"/> that is passed</returns>
         internal static InpOption CreateFromOptionName(string optionName, IInpTableRow row, IInpDatabase database) => optionName switch
         {
             FlowUnitsOption.OptionName => new FlowUnitsOption(row, database),
@@ -104,7 +104,26 @@ namespace Droplet.Core.Inp.Options
             SweepingStartDateTimeOption.OptionName => new SweepingStartDateTimeOption(row, database),
             SweepingEndDateTimeOption.OptionName => new SweepingEndDateTimeOption(row, database),
 
+            // Dry Days Option
             DryDaysOption.OptionName => new DryDaysOption(row, database),
+
+            // Report Step Option
+            ReportStepOption.OptionName => new ReportStepOption(row, database),
+
+            // Wet Weather Step Option
+            WetWeatherStepOption.OptionName => new WetWeatherStepOption(row, database),
+
+            // Dry Weather Step Option
+            DryWeatherStepOption.OptionName => new DryWeatherStepOption(row, database),
+
+            // Routing Time Step Option
+            RoutingStepOption.OptionName => new RoutingStepOption(row, database),
+
+            // Control Rule Time Step Option
+            ControlRuleStepOption.OptionName => new ControlRuleStepOption(row, database),
+
+            // Add the Conduit Lengthening Step Option
+            ConduitLengtheningStepOption.OptionName => new ConduitLengtheningStepOption(row, database),
 
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
