@@ -56,7 +56,7 @@ namespace Droplet.Core.Inp.Options
         {
             "DEPTH" => LinkOffset.DepthOffset,
             "ELEVATION" => LinkOffset.ElevationOffset,
-            _ => throw new ArgumentException()
+            _ => throw new ArgumentException($"{nameof(inpString)} does not match any pattern for")
         };
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace Droplet.Core.Inp.Data
 
         /// <summary>
         /// The database backing store, that holds objects in a dictionary
-        /// whos key is a <see cref="Guid"/> that is created at the objects creation
+        /// who's key is a <see cref="Guid"/> that is created at the objects creation
         /// </summary>
         private Dictionary<Guid, IInpDbObject> _objectDictionary;
 
@@ -41,6 +41,8 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         public InpDatabase()
         {
+            _inpTables = new List<IInpTable>();
+
             // Initialize the backing store for the database
             _objectDictionary = new Dictionary<Guid, IInpDbObject>();
         }
@@ -49,9 +51,16 @@ namespace Droplet.Core.Inp.Data
         /// Constructor that builds the database from the tables
         /// supplied from an inp file.
         /// </summary>
+        /// <exception cref="ArgumentNullException">
+        /// Throws if <paramref name="tables"/> is <see cref="null"/>
+        /// </exception>
         /// <param name="tables">The tables that will be used to build the database</param>
         public InpDatabase(List<IInpTable> tables) : this()
         {
+            // If null throw exception
+            if (tables == null)
+                throw new ArgumentNullException(nameof(tables));
+
             // Set the tables provided
             _inpTables = tables;
 
@@ -89,7 +98,7 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         /// <typeparam name="T">The type of the option that will be returned</typeparam>
         /// <returns>Returns: An option from the database whose type matches <typeparamref name="T"/></returns>
-        public T GetOption<T>() where T: InpOption
+        public T? GetOption<T>() where T: InpOption
         {
             return _objectDictionary.Values.FirstOrDefault(o => o is T) as T;
         }
@@ -99,11 +108,11 @@ namespace Droplet.Core.Inp.Data
         /// <exception cref="NullReferenceException">
         /// Will throw if <paramref name="type"/> is <see cref="null"/>
         /// </exception>
-        public InpOption GetOption(Type type)
+        public InpOption? GetOption(Type type)
         {
             // If the type is null throw an exception
             if (type == null)
-                throw new NullReferenceException("The type parameter passed was null");
+                throw new NullReferenceException();
 
             // TODO: Find a way to throw an exception if the type is not an inheritor of InpOption
 
@@ -124,7 +133,7 @@ namespace Droplet.Core.Inp.Data
             // Create a return list
             var returnList = new List<T>();
 
-            // Foreach entity in the database add
+            // For each entity in the database add
             // the entities if it matches the type provided
             foreach(var e in _objectDictionary.Values)
             {
@@ -139,9 +148,16 @@ namespace Droplet.Core.Inp.Data
         /// Update the database from the supplied tables. This method
         /// will effectively rebuild the database from the tables.
         /// </summary>
+        /// <exception cref="ArgumentNullException">
+        /// Throws if <paramref name="tables"/> is null
+        /// </exception>
         /// <param name="tables">The tables that the database will be updated from</param>
         public void UpdateDatabase(List<IInpTable> tables)
         {
+            // If null throw exception
+            if (tables == null)
+                throw new ArgumentNullException(nameof(tables));
+
             // Iterate through all tables
             foreach(var table in tables)
             {

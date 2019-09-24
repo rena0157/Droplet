@@ -12,7 +12,7 @@ namespace Droplet.Core.Inp.Data
     /// A table row in an inp table
     /// </summary>
     /// <typeparam name="T">The row type</typeparam>
-    public class InpTableRow : IInpTableRow
+    public sealed class InpTableRow : IInpTableRow
     {
         /// <summary>
         /// Default Constructor for the table row. This constructor requires the key of the row

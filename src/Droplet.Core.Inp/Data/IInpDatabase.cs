@@ -27,7 +27,7 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         /// <typeparam name="T">The <see cref="InpOption"/> type that will be returned</typeparam>
         /// <returns>Returns: An option with the type <typeparamref name="T"/></returns>
-        public T GetOption<T>() where T : InpOption;
+        public T? GetOption<T>() where T : InpOption;
 
         /// <summary>
         /// Get an option of the type <paramref name="type"/> from
@@ -37,7 +37,7 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         /// <param name="type">The type of the option that will be returned</param>
         /// <returns>Returns: the specified option from the database</returns>
-        public InpOption GetOption(Type type);
+        public InpOption? GetOption(Type type);
 
         /// <summary>
         /// Get all entities of the type <typeparamref name="T"/>
