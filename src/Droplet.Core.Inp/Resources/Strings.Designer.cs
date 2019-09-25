@@ -79,6 +79,15 @@ namespace Droplet.Core.Inp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Inp File at {0} failed to read.
+        /// </summary>
+        internal static string InpFileException_Message {
+            get {
+                return ResourceManager.GetString("InpFileException.Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot Convert this entity to an inp string.
         /// </summary>
         internal static string ToInpString_ArgumentException {

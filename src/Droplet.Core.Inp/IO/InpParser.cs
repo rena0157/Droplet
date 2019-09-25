@@ -3,6 +3,7 @@
 // By: Adam Renaud
 
 using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -46,29 +47,40 @@ namespace Droplet.Core.Inp.IO
         /// <param name="reader">The reader that will be used to read the file</param>
         public void ParseFile(IInpProject inpProject, IInpReader reader)
         {
-            _ = reader ?? throw new ArgumentNullException(nameof(reader));
-            _ = inpProject ?? throw new ArgumentNullException(nameof(inpProject));
-
-            while(!reader.EndOfStream)
+            try
             {
-                // Read the next line from the stream
-                var line = reader.ReadLine();
+                _ = reader ?? throw new ArgumentNullException(nameof(reader));
+                _ = inpProject ?? throw new ArgumentNullException(nameof(inpProject));
 
-                // if the current string is the start of a section
-                // read the section name from the string
-                var sectionName = string.Empty;
-                if (line.Contains(StartHeaderString, StringComparison.CurrentCulture))
-                    sectionName = line.Trim((StartHeaderString + EndHeaderString).ToCharArray());
+                while(!reader.EndOfStream)
+                {
+                    // Read the next line from the stream
+                    var line = reader.ReadLine();
 
-                // If the sectionName is null or empty then continue on to the next string
-                if (string.IsNullOrEmpty(sectionName)) continue;
+                    // if the current string is the start of a section
+                    // read the section name from the string
+                    var sectionName = string.Empty;
+                    if (line.Contains(StartHeaderString, StringComparison.CurrentCulture))
+                        sectionName = line.Trim((StartHeaderString + EndHeaderString).ToCharArray());
 
-                // Add this table to the tables list
-                InpTables.Add(BuildTable(reader, sectionName));
+                    // If the sectionName is null or empty then continue on to the next string
+                    if (string.IsNullOrEmpty(sectionName)) continue;
+
+                    // Add this table to the tables list
+                    InpTables.Add(BuildTable(reader, sectionName));
+                }
+
+                // Update the database from the tables created above
+                inpProject.Database.UpdateDatabase(InpTables);
             }
-
-            // Update the database from the tables created above
-            inpProject.Database.UpdateDatabase(InpTables);
+            catch (Exception inner)
+            {
+                throw new InpFileException($"The file at {inpProject?.InpFile} could not be read", inner);
+            }
+            finally
+            {
+                // Maybe should do something here
+            }
         }
 
         /// <summary>

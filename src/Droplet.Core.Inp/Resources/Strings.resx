@@ -123,6 +123,9 @@
   <data name="FromInpString.ArgumentException" xml:space="preserve">
     <value>Cannot Match the Pattern for this type and</value>
   </data>
+  <data name="InpFileException.Message" xml:space="preserve">
+    <value>The Inp File at {0} failed to read</value>
+  </data>
   <data name="ToInpString.ArgumentException" xml:space="preserve">
     <value>Cannot Convert this entity to an inp string</value>
   </data>
