@@ -61,11 +61,29 @@ namespace Droplet.Core.Inp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hello World.
+        ///   Looks up a localized string similar to &lt;NULL&gt;.
         /// </summary>
-        internal static string Test {
+        internal static string DefaultProperty {
             get {
-                return ResourceManager.GetString("Test", resourceCulture);
+                return ResourceManager.GetString("DefaultProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot Match the Pattern for this type and.
+        /// </summary>
+        internal static string FromInpString_ArgumentException {
+            get {
+                return ResourceManager.GetString("FromInpString.ArgumentException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot Convert this entity to an inp string.
+        /// </summary>
+        internal static string ToInpString_ArgumentException {
+            get {
+                return ResourceManager.GetString("ToInpString.ArgumentException", resourceCulture);
             }
         }
     }

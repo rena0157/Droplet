@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Droplet.Core.Inp.Data
 {
     /// <summary>
-    /// Interface for an inp database object
+    /// Interface for an inp database object 
     /// </summary>
     public interface IInpDatabase
     {
@@ -52,5 +52,10 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         /// <param name="tables">The tables that make up the database</param>
         void UpdateDatabase(List<IInpTable> tables);
+
+        /// <summary>
+        /// Purge the database of any items that contains NULL as their names
+        /// </summary>
+        void Purge();
     }
 }

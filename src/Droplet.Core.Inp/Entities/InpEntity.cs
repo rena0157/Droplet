@@ -3,7 +3,9 @@
 // By: Adam Renaud
 
 using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Utilities;
 using System;
+using System.Globalization;
 
 namespace Droplet.Core.Inp.Entities
 {
@@ -21,6 +23,8 @@ namespace Droplet.Core.Inp.Entities
         public InpEntity()
         {
             ID = Guid.NewGuid();
+            var resources = new InpResourceManager();
+            Name = Description = Tag = resources.GetString("DefaultProperty", CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -31,6 +35,17 @@ namespace Droplet.Core.Inp.Entities
         /// <param name="database">The database that will be used to initialize this entity</param>
         public InpEntity(IInpTableRow row, IInpDatabase database) : this()
         {
+            // Check if the argument is null
+            _ = row ?? throw new ArgumentNullException(nameof(row));
+            _ = database ?? throw new ArgumentNullException(nameof(database));
+
+            // Check to see if the row has a name
+            // and if it does set it
+            if (row.Values.Count > 1)
+                Name = row[0];
+
+            // Set the database for the 
+            Database = database;
         }
 
         #endregion
@@ -58,6 +73,6 @@ namespace Droplet.Core.Inp.Entities
         /// <summary>
         /// The <see cref="IInpDatabase"/> that this entity belongs to
         /// </summary>
-        public IInpDatabase Database {get; protected set; } 
+        public IInpDatabase? Database {get; protected set; } 
     }
 }

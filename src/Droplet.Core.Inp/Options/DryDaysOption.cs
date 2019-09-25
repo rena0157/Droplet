@@ -3,6 +3,7 @@
 // Created: 2019-09-22
 
 using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Exceptions;
 using System;
 
 namespace Droplet.Core.Inp.Options
@@ -26,7 +27,7 @@ namespace Droplet.Core.Inp.Options
         }
 
         /// <summary>
-        /// Const <see cref="string"/> that is the name of the option in inp files
+        /// Constant <see cref="string"/> that is the name of the option in inp files
         /// </summary>
         internal const string OptionName = "DRY_DAYS";
 
@@ -38,8 +39,15 @@ namespace Droplet.Core.Inp.Options
         /// <param name="row">The row that will be parsed</param>
         /// <returns></returns>
         internal protected override TimeSpan ParseRow(IInpTableRow row)
-            // Return the value from days
-            => TimeSpan.FromDays(double.Parse(row[1]));
+        {
+            // Check for null
+            _ = row ?? throw new ArgumentNullException(nameof(row));
+
+            // If not null try and parse the row, if the parse is successful return it 
+            // from days. If not throw a new InpParseException
+            return TimeSpan.FromDays(double.TryParse(row[1], out var result) ? result 
+                : throw new InpParseException(typeof(DryDaysOption).Name));
+        }
 
         #endregion
     }

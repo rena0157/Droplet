@@ -31,6 +31,8 @@ namespace Droplet.Core.Inp.Options
         /// <returns>Returns: the rows value to a <see cref="TimeSpan"/> to seconds</returns>
         protected internal override TimeSpan ParseRow(IInpTableRow row)
         {
+            _ = row ?? throw new ArgumentNullException(nameof(row));
+
             // If able to parse the row return the from seconds method
             if (double.TryParse(row[1], out var result))
                 return TimeSpan.FromSeconds(result);

@@ -46,16 +46,6 @@ namespace Droplet.Core.Inp.Tests.Options
                 SetupParserTest(value).Database.GetOption<StartDateTimeOption>().Value);
 
         /// <summary>
-        /// Testing the expected behavior if the start time is there but the start date is not.
-        /// The expected behavior in this case is to throw the <see cref="InpParseException"/>
-        /// </summary>
-        /// <param name="value">The string value</param>
-        [Theory]
-        [InlineData("[OPTIONS]\nSTART_TIME           01:12:50\n")]
-        public void StartDateTimeParserTests_WithoutStartDate(string value)
-            => Assert.Throws<InpParseException>(() => SetupParserTest(value));
-
-        /// <summary>
         /// Test Data for the <see cref="StartDateTimeParserTests(string, DateTime)"/> tests
         /// </summary>
         private class StartDateTimeParserTestData : IEnumerable<object[]>

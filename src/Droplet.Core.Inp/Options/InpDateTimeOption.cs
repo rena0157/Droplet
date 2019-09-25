@@ -3,6 +3,7 @@
 // Created: 2019-09-18
 
 using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Exceptions;
 using System;
 
 namespace Droplet.Core.Inp.Options
@@ -24,15 +25,24 @@ namespace Droplet.Core.Inp.Options
         {
             // Convert the row into a DateTime and
             // store it in the value property
-            Value = DateTime.Parse(row[1]);
+            Value = ParseRow(row);
         }
 
         /// <summary>
         /// Parse the <see cref="IInpTableRow"/> that is passed and return it.
         /// </summary>
         /// <param name="row">The row that will be parsed an returned</param>
+        /// <exception cref="ArgumentNullException">
+        /// Will Throw if <paramref name="row"/> is <see cref="null"/>
+        /// </exception>
+        /// <exception cref="InpParseException">
+        /// Will Throw if <see cref="DateTime.TryParse(ReadOnlySpan{char}, out DateTime)"/> fails
+        /// </exception>
         /// <returns>Returns: The <see cref="DateTime"/> that is parsed from the row</returns>
-        protected internal override DateTime ParseRow(IInpTableRow row) => DateTime.Parse(row[1]);
+        protected internal override DateTime ParseRow(IInpTableRow row) 
+            => row == null ? throw new ArgumentNullException(nameof(row)) :
+            DateTime.TryParse(row[1], out var result) ? result : 
+            throw new InpParseException(typeof(InpDateTimeOption).FullName);
 
         /// <summary>
         /// Internal Method that is used to add a <see cref="TimeSpan"/>

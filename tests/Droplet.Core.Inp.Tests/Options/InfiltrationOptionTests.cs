@@ -29,7 +29,7 @@ namespace Droplet.Core.Inp.Tests.Options
         /// <param name="method">The expected method from that string</param>
         [Theory]
         [ClassData(typeof(ParserTestData))]
-        public void ParserTests(string value, InfiltrationMethods method)
+        public void ParserTests(string value, InfiltrationMethod method)
         {
             Initialize(value);
             var project = new InpProject();
@@ -47,7 +47,7 @@ namespace Droplet.Core.Inp.Tests.Options
         #region Test Data
 
         /// <summary>
-        /// Test data for <see cref="InfiltrationOptionTests.ParserTests(string, InfiltrationMethods)"/>
+        /// Test data for <see cref="InfiltrationOptionTests.ParserTests(string, InfiltrationMethod)"/>
         /// </summary>
         private class ParserTestData : IEnumerable<object[]>
         {
@@ -65,7 +65,7 @@ namespace Droplet.Core.Inp.Tests.Options
 INFILTRATION         HORTON
 ",
 
-                    InfiltrationMethods.Horton
+                    InfiltrationMethod.Horton
                 };
 
                 // Modified Horton
@@ -75,7 +75,7 @@ INFILTRATION         HORTON
 INFILTRATION         MODIFIED_HORTON
 ",
 
-                    InfiltrationMethods.ModifiedHorton
+                    InfiltrationMethod.ModifiedHorton
                 };
 
                 // Green-Ampt
@@ -85,7 +85,7 @@ INFILTRATION         MODIFIED_HORTON
 INFILTRATION         GREEN_AMPT
 ",
 
-                    InfiltrationMethods.GreenAmpt
+                    InfiltrationMethod.GreenAmpt
                 };
 
                 // Modified Green-Ampt
@@ -95,7 +95,7 @@ INFILTRATION         GREEN_AMPT
 INFILTRATION         MODIFIED_GREEN_AMPT
 ",
 
-                    InfiltrationMethods.ModifiedGreenAmpt
+                    InfiltrationMethod.ModifiedGreenAmpt
                 };
 
                 // Curve-Number
@@ -105,7 +105,7 @@ INFILTRATION         MODIFIED_GREEN_AMPT
 INFILTRATION         CURVE_NUMBER
 ",
 
-                    InfiltrationMethods.CurveNumber
+                    InfiltrationMethod.CurveNumber
                 };
             }
 

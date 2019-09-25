@@ -117,7 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Test" xml:space="preserve">
-    <value>Hello World</value>
+  <data name="DefaultProperty" xml:space="preserve">
+    <value>&lt;NULL&gt;</value>
+  </data>
+  <data name="FromInpString.ArgumentException" xml:space="preserve">
+    <value>Cannot Match the Pattern for this type and</value>
+  </data>
+  <data name="ToInpString.ArgumentException" xml:space="preserve">
+    <value>Cannot Convert this entity to an inp string</value>
   </data>
 </root>

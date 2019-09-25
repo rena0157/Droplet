@@ -25,6 +25,6 @@ namespace Droplet.Core.Inp.IO
         /// </summary>
         /// <returns>Returns: The next line in the inp stream without consuming
         /// the current index</returns>
-        string PeekLine();
+        string? PeekLine();
     }
 }

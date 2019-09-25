@@ -34,6 +34,9 @@ namespace Droplet.Core.Inp.Options
         /// <returns>Returns: The parsd value</returns>
         internal protected override TimeSpan ParseRow(IInpTableRow row)
         {
+            // Check for null
+            _ = row ?? throw new ArgumentNullException(nameof(row));
+
             // Try and parse the row as a time span
             if (TimeSpan.TryParse(row[1], out var value))
                 return value;

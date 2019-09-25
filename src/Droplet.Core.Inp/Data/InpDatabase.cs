@@ -167,15 +167,24 @@ namespace Droplet.Core.Inp.Data
                     // Create the entity from the row
                     var entity = row.ToInpEntity(this);
 
-                    // If the entity is null throw an exception
-                    if (entity == null)
-                        throw new InpParseException($"The entity with row {row.Key ?? "<OPTION NAME NOT FOUND>"} could not be created and is null");
-
                     // Add the entity to the dictionary only if it is not already in it
                     if (!_objectDictionary.ContainsKey(entity.ID))
                         _objectDictionary.Add(entity.ID, entity);
                 }
             }
+
+            Purge();
+        }
+
+        /// <summary>
+        /// Remove any items from the dictionary that contain
+        /// NULL in their names
+        /// </summary>
+        public void Purge()
+        {
+            foreach(var item in _objectDictionary.Values)
+                if (item is IInpEntity entity && entity.Name == "<NULL>")
+                    _objectDictionary.Remove(entity.ID);
         }
 
         #endregion

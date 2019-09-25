@@ -25,7 +25,7 @@ namespace Droplet.Core.Inp.Tests.Options
         /// <param name="expectedValue">The expected value</param>
         [Theory]
         [ClassData(typeof(ParserTestData))]
-        public void ParserTests(string value, FlowUnits expectedValue)
+        public void ParserTests(string value, FlowUnit expectedValue)
         {
             Initialize(value);
             using var reader = new InpFileReader(MemoryStream);
@@ -56,7 +56,7 @@ namespace Droplet.Core.Inp.Tests.Options
                     @"[OPTIONS]
 FLOW_UNITS           CFS
 ",
-                    FlowUnits.CubicFeetPerSecond
+                    FlowUnit.CubicFeetPerSecond
                 };
 
                 // liters per second
@@ -65,7 +65,7 @@ FLOW_UNITS           CFS
                     @"[OPTIONS]
 FLOW_UNITS           LPS
 ",
-                    FlowUnits.LitersPerSecond
+                    FlowUnit.LitersPerSecond
                 };
 
                 // Gallons per min
@@ -74,7 +74,7 @@ FLOW_UNITS           LPS
                     @"[OPTIONS]
 FLOW_UNITS           GPM
 ",
-                    FlowUnits.GallonsPerMinute
+                    FlowUnit.GallonsPerMinute
                 };
 
                 // Million Gallons per day
@@ -83,7 +83,7 @@ FLOW_UNITS           GPM
                     @"[OPTIONS]
 FLOW_UNITS           MGD
 ",
-                    FlowUnits.MillionGallonsPerDay
+                    FlowUnit.MillionGallonsPerDay
                 };
 
                 // Gallons per min
@@ -92,7 +92,7 @@ FLOW_UNITS           MGD
                     @"[OPTIONS]
 FLOW_UNITS           CMS
 ",
-                    FlowUnits.CubicMetersPerSecond
+                    FlowUnit.CubicMetersPerSecond
                 };
 
                 // Gallons per min
@@ -101,7 +101,7 @@ FLOW_UNITS           CMS
                     @"[OPTIONS]
 FLOW_UNITS           MLD
 ",
-                    FlowUnits.MillionLitersPerDay
+                    FlowUnit.MillionLitersPerDay
                 };
             }
 

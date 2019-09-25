@@ -27,7 +27,7 @@ namespace Droplet.Core.Inp.IO
         /// <summary>
         /// A list of all the tables in this parser
         /// </summary>
-        protected List<IInpTable> InpTables { get; set;}
+        protected List<IInpTable> InpTables { get; }
 
         /// <summary>
         /// Default Constructor that initializes the values for this
@@ -46,6 +46,9 @@ namespace Droplet.Core.Inp.IO
         /// <param name="reader">The reader that will be used to read the file</param>
         public void ParseFile(IInpProject inpProject, IInpReader reader)
         {
+            _ = reader ?? throw new ArgumentNullException(nameof(reader));
+            _ = inpProject ?? throw new ArgumentNullException(nameof(inpProject));
+
             while(!reader.EndOfStream)
             {
                 // Read the next line from the stream
@@ -54,11 +57,11 @@ namespace Droplet.Core.Inp.IO
                 // if the current string is the start of a section
                 // read the section name from the string
                 var sectionName = string.Empty;
-                if (line.Contains(StartHeaderString))
+                if (line.Contains(StartHeaderString, StringComparison.CurrentCulture))
                     sectionName = line.Trim((StartHeaderString + EndHeaderString).ToCharArray());
 
-                // If the sectionName is empty then continue on to the next string
-                if (sectionName == string.Empty) continue;
+                // If the sectionName is null or empty then continue on to the next string
+                if (string.IsNullOrEmpty(sectionName)) continue;
 
                 // Add this table to the tables list
                 InpTables.Add(BuildTable(reader, sectionName));
@@ -75,12 +78,14 @@ namespace Droplet.Core.Inp.IO
         /// <param name="tableName">The table name</param>
         protected virtual InpTable BuildTable(IInpReader reader, string tableName)
         {
+            _ = reader ?? throw new ArgumentNullException(nameof(reader));
+
             var table = new InpTable(tableName);
             var comments = new StringBuilder();
 
             // While the reader is not at the end of a section and the
             // reader is not at the end of the stream build the table
-            while(!reader.EndOfStream && !EndOfSection(reader.PeekLine()))
+            while(!reader.EndOfStream && !EndOfSection(reader.PeekLine() ?? ""))
             {
                 // Get the next line from the reader
                 var line = reader.ReadLine();
@@ -109,7 +114,7 @@ namespace Droplet.Core.Inp.IO
         /// <param name="line">The line that will be tested</param>
         /// <returns>Returns: True if the end of the section is reached</returns>
         protected virtual bool EndOfSection(string line) 
-            => line != null && line.Contains(StartHeaderString);
+            => line != null && line.Contains(StartHeaderString, StringComparison.CurrentCulture);
 
         /// <summary>
         /// Get the tokens from the current line using ' ' as the separator
@@ -117,7 +122,7 @@ namespace Droplet.Core.Inp.IO
         /// <param name="line">The line that the tokes will come from</param>
         /// <returns>Returns: A string array that contains all of the tokens from this line</returns>
         protected virtual string[] GetTokens(string line) 
-            => line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            => line == null ? Array.Empty<string>() : line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
         /// <summary>
         /// Check to see if the line is a comment
@@ -125,6 +130,8 @@ namespace Droplet.Core.Inp.IO
         /// <param name="line">The line that will be tested</param>
         /// <returns>Returns: True if the line contains a comment</returns>
         protected virtual bool IsComment(string line)
-            => line.StartsWith(";") && !line.Contains(";;");
+            => line == null ? false : 
+            line.StartsWith(";", StringComparison.CurrentCulture) && 
+            !line.Contains(";;", StringComparison.CurrentCulture);
     }
 }
