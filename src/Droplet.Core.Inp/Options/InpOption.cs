@@ -128,6 +128,9 @@ namespace Droplet.Core.Inp.Options
             // Add the Conduit Lengthening Step Option
             ConduitLengtheningStepOption.OptionName => new ConduitLengtheningStepOption(row, database),
 
+            // Inertial Terms Option
+            InertialTermsOption.OptionName => new InertialTermsOption(row, database),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };
