@@ -44,7 +44,7 @@ namespace Droplet.Core.Inp
             // Set the project name to the filename without extension
             ProjectName = Path.GetFileNameWithoutExtension(InpFile);
 
-            // Create a new filestream for the file and an new InpFileReader
+            // Create a new file stream for the file and an new InpFileReader
             using var fs = new FileStream(InpFile, FileMode.Open, FileAccess.Read, FileShare.Read);
             using var reader = new InpFileReader(fs);
 
