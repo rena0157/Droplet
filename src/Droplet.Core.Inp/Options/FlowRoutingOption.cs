@@ -1,4 +1,5 @@
 ﻿using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Exceptions;
 using System;
 
 namespace Droplet.Core.Inp.Options
@@ -39,6 +40,9 @@ namespace Droplet.Core.Inp.Options
         /// <returns>Returns: The parsed <see cref="FlowRouting"/> value</returns>
         protected internal override FlowRouting ParseRow(IInpTableRow row)
         {
+            // Check for null
+            _ = row ?? throw new ArgumentNullException(nameof(row));
+
             // Return the from inp string value
             return FlowRouting.SteadyFlow.FromInpString(row[1]);
         }

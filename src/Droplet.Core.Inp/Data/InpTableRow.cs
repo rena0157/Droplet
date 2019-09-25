@@ -12,7 +12,7 @@ namespace Droplet.Core.Inp.Data
     /// A table row in an inp table
     /// </summary>
     /// <typeparam name="T">The row type</typeparam>
-    public class InpTableRow : IInpTableRow
+    public sealed class InpTableRow : IInpTableRow
     {
         /// <summary>
         /// Default Constructor for the table row. This constructor requires the key of the row
@@ -40,10 +40,13 @@ namespace Droplet.Core.Inp.Data
         public List<string> Values { get; }
 
         /// <summary>
-        /// Get an indexed value from the <see cref="Values"/> list
+        /// Get an indexed value from the <see cref="Values"/> list. Note that this is a
+        /// safe operation and will return <see cref="string.Empty"/> if an attempt to read
+        /// past the bounds of the array is made
         /// </summary>
         /// <returns>Returns: a string from the list at the index that is passed</returns>
-        string IInpTableRow.this[int index] => Values[index];
+        string IInpTableRow.this[int index] 
+            => Values.Count > index ? Values[index] : string.Empty;
 
         /// <summary>
         /// The comment for the row.
@@ -60,14 +63,14 @@ namespace Droplet.Core.Inp.Data
         /// constructor of an entity which has the following signature <see cref="InpEntity(IInpTableRow, IInpDatabase)"/>
         /// </summary>
         /// <returns>Returns: An <see cref="IInpEntity"/> that is created from this table data</returns>
-        public IInpEntity ToInpEntity(IInpDatabase database) => InitializeEntity(database);
+        public IInpEntity ToInpEntity(IInpDatabase database) => InitializeEntity(database) ?? new InpEntity();
 
         /// <summary>
         /// Initializes the entities that this table is associated with
         /// </summary>
         /// <returns>Returns: an <see cref="IInpEntity"/> that is initialized with this row
         /// and the database</returns>
-        private IInpEntity InitializeEntity(IInpDatabase database) => InpTable.Name switch
+        private IInpEntity? InitializeEntity(IInpDatabase database) => InpTable.Name switch
         {
             InpOption.HeaderName => InpOption.CreateFromOptionName(Key, this, database),
 

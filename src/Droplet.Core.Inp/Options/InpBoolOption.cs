@@ -5,6 +5,7 @@
 
 using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.Exceptions;
+using System;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -34,7 +35,8 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">The row that will be converted</param>
         /// <returns>Returns: a <see cref="bool"/> that is created from the row</returns>
-        protected internal override bool ParseRow(IInpTableRow row) => FromInpString(row[1]);
+        protected internal override bool ParseRow(IInpTableRow row) 
+            => row == null ? throw new ArgumentNullException(nameof(row)) : FromInpString(row[1]);
         
         #endregion
 

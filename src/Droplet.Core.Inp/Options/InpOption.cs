@@ -1,6 +1,8 @@
 ﻿using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.Entities;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -16,11 +18,13 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">the database that this option belongs to</param>
         public InpOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
+            Value = default!;
         }
 
         /// <summary>
         /// The value of the option
         /// </summary>
+        [NotNull]
         public virtual T Value { get; set; }
 
         /// <summary>
@@ -31,9 +35,9 @@ namespace Droplet.Core.Inp.Options
         internal protected virtual T ParseRow(IInpTableRow row)
         {
             // The base class cannot parse the value because
-            // it doesn't know what the value type is and needs to be overriden
+            // it doesn't know what the value type is and needs to be overridden
             // in derived classes
-            throw new NotImplementedException("The base class cannot parse options");
+            throw new NotImplementedException();
         }
     }
 
@@ -61,7 +65,6 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that this object will be constructed from</param>
         public InpOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-            Database = database;
         }
 
         /// <summary>
@@ -72,7 +75,7 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The <see cref="IInpDatabase"/> that the option will belong to</param>
         /// <param name="row">The <see cref="IInpTableRow"/> that will be used to build the <see cref="InpOption"/></param>
         /// <returns>Returns: an option that is refereed to by the <paramref name="optionName"/> that is passed</returns>
-        internal static InpOption CreateFromOptionName(string optionName, IInpTableRow row, IInpDatabase database) => optionName switch
+        internal static InpOption? CreateFromOptionName(string optionName, IInpTableRow row, IInpDatabase database) => optionName switch
         {
             FlowUnitsOption.OptionName => new FlowUnitsOption(row, database),
             InfiltrationOption.OptionName => new InfiltrationOption(row, database),
@@ -86,19 +89,19 @@ namespace Droplet.Core.Inp.Options
             StartDateTimeOption.StartDateName => new StartDateTimeOption(row, database),
             // Sets the time of the StartDateTime Option, if it is not null
             StartDateTimeOption.StartTimeName => database.GetOption<StartDateTimeOption>()
-                                                         ?.AddTime(TimeSpan.Parse(row[1])),
+                                                         ?.AddTime(TimeSpan.Parse(row[1], CultureInfo.CurrentCulture)),
 
             // Report Start Date, Sets the Report Start Date
             ReportStartDateTimeOption.DateOptionName => new ReportStartDateTimeOption(row, database),
             // Report Start Time, Sets the Report Start Time
             ReportStartDateTimeOption.TimeOptionName => database.GetOption<ReportStartDateTimeOption>()
-                                                                ?.AddTime(TimeSpan.Parse(row[1])),
+                                                                ?.AddTime(TimeSpan.Parse(row[1], CultureInfo.CurrentCulture)),
 
             // End Date, Sets the End Date
             EndDateTimeOption.DateOptionName => new EndDateTimeOption(row, database),
             // End Date, Sets the End Time
             EndDateTimeOption.TimeOptionName => database.GetOption<EndDateTimeOption>()
-                                                        ?.AddTime(TimeSpan.Parse(row[1])),
+                                                        ?.AddTime(TimeSpan.Parse(row[1], CultureInfo.CurrentCulture)),
 
             // Sweeping Start & End Options
             SweepingStartDateTimeOption.OptionName => new SweepingStartDateTimeOption(row, database),

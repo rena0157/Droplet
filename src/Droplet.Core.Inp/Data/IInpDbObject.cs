@@ -19,6 +19,6 @@ namespace Droplet.Core.Inp.Data
         /// <summary>
         /// The database that the object belongs to
         /// </summary>
-        IInpDatabase Database { get; }
+        IInpDatabase? Database { get; }
     }
 }

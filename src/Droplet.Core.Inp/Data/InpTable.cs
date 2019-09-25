@@ -57,9 +57,15 @@ namespace Droplet.Core.Inp.Data
         /// <exception cref="ArgumentException">
         /// This will throw if the row is already in the table
         /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown if <paramref name="row"/> is null
+        /// </exception>
         /// <param name="row">The row that is to be added</param>
         public void AddRow(IInpTableRow row)
         {
+            // Check for null
+            _ = row ?? throw new ArgumentNullException(nameof(row));
+
             // Check to see if the table already contains this 
             // entry and if it does then append the values to it
             // Note that we don't read the key value to the values array

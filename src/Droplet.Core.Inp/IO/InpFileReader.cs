@@ -71,7 +71,7 @@ namespace Droplet.Core.Inp.IO
         /// </summary>
         /// <returns>Returns: The next line of the stream or null if the end of the
         /// stream has been reached</returns>
-        public string PeekLine()
+        public string? PeekLine()
         {
             // If we have reached the end of the
             // stream then this should return null

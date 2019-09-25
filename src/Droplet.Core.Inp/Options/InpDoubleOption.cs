@@ -1,5 +1,6 @@
 ﻿using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.Exceptions;
+using System;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -28,11 +29,14 @@ namespace Droplet.Core.Inp.Options
         /// <returns>Returns: a <see cref="double"/> that is parsed from the row</returns>
         protected internal override double ParseRow(IInpTableRow row)
         {
+            // Check for null
+            _ = row ?? throw new ArgumentNullException(nameof(row));
+
             // Try to parse the row
             if (double.TryParse(row[1], out var value))
-                // If it suceeds then assign the value of the parsing
+                // If it succeeds then assign the value of the parsing
                 return value;
-            // If it is not sucessful throw an new exception
+            // If it is not successful throw an new exception
             else
                 throw new InpParseException($"The parsing of {this} was unsucessful due to a double" +
                     $" conversion issue");

@@ -1,12 +1,15 @@
 ﻿using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Exceptions;
+using Droplet.Core.Inp.Utilities;
 using System;
+using System.Globalization;
 
 namespace Droplet.Core.Inp.Options
 {
     /// <summary>
-    /// Options class for <see cref="FlowUnits"/>
+    /// Options class for <see cref="FlowUnit"/>
     /// </summary>
-    public class FlowUnitsOption : InpOption<FlowUnits>
+    public class FlowUnitsOption : InpOption<FlowUnit>
     {
         #region Constants
 
@@ -46,7 +49,7 @@ namespace Droplet.Core.Inp.Options
     /// LPS: liters per second
     /// MLD: million liters per day 
     /// </summary>
-    public enum FlowUnits
+    public enum FlowUnit
     {
         LitersPerSecond,
 
@@ -63,7 +66,7 @@ namespace Droplet.Core.Inp.Options
 
     /// <summary>
     /// Public static class that holds extension methods for the <see cref="FlowUnitsOption"/>
-    /// class and extends the <see cref="FlowUnits"/> enumeration
+    /// class and extends the <see cref="FlowUnit"/> enumeration
     /// </summary>
     public static class FlowUnitsExtensions
     {
@@ -72,22 +75,22 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="option">The option</param>
         /// <returns></returns>
-        public static string GetDbName(this FlowUnits u) => "FLOW_UNITS";
+        public static string GetDbName(this FlowUnit u) => "FLOW_UNITS";
 
         /// <summary>
-        /// Convert an inp string to a <see cref="FlowUnits"/> enumeration
+        /// Convert an inp string to a <see cref="FlowUnit"/> enumeration
         /// </summary>
         /// <param name="units">The units that this is extending</param>
         /// <param name="s">The inp string</param>
         /// <returns></returns>
-        public static FlowUnits FromInpString(this FlowUnits u, string s) => s switch
+        public static FlowUnit FromInpString(this FlowUnit u, string s) => s switch
         {
-            "LPS" => FlowUnits.LitersPerSecond,
-            "CMS" => FlowUnits.CubicMetersPerSecond,
-            "CFS" => FlowUnits.CubicFeetPerSecond,
-            "GPM" => FlowUnits.GallonsPerMinute,
-            "MLD" => FlowUnits.MillionLitersPerDay,
-            "MGD" => FlowUnits.MillionGallonsPerDay,
+            "LPS" => FlowUnit.LitersPerSecond,
+            "CMS" => FlowUnit.CubicMetersPerSecond,
+            "CFS" => FlowUnit.CubicFeetPerSecond,
+            "GPM" => FlowUnit.GallonsPerMinute,
+            "MLD" => FlowUnit.MillionLitersPerDay,
+            "MGD" => FlowUnit.MillionGallonsPerDay,
 
             _ => throw new ArgumentOutOfRangeException($"The string {s} could not be matched to a flow unts")
         };
@@ -97,16 +100,17 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="units">The units that will be converted</param>
         /// <returns>Returns: An inp string</returns>
-        public static string ToInpString(this FlowUnits units) => units switch
+        public static string ToInpString(this FlowUnit units) => units switch
         {
-            FlowUnits.LitersPerSecond => "LPS",
-            FlowUnits.CubicMetersPerSecond => "CMS",
-            FlowUnits.CubicFeetPerSecond => "CFS",
-            FlowUnits.GallonsPerMinute => "GPM",
-            FlowUnits.MillionGallonsPerDay => "MGD",
-            FlowUnits.MillionLitersPerDay => "MLD",
+            FlowUnit.LitersPerSecond => "LPS",
+            FlowUnit.CubicMetersPerSecond => "CMS",
+            FlowUnit.CubicFeetPerSecond => "CFS",
+            FlowUnit.GallonsPerMinute => "GPM",
+            FlowUnit.MillionGallonsPerDay => "MGD",
+            FlowUnit.MillionLitersPerDay => "MLD",
 
-            _ => throw new ArgumentOutOfRangeException()
+            _ => throw new ArgumentException(new InpResourceManager()
+                .GetString("ToInpString.ArgumentException", CultureInfo.CurrentCulture))
         };
     }
 }

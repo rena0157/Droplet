@@ -1,5 +1,7 @@
 ﻿using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Utilities;
 using System;
+using System.Globalization;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -42,7 +44,7 @@ namespace Droplet.Core.Inp.Options
     }
 
     /// <summary>
-    /// Extensions class for the <see cref="LinkOffset"/> enum
+    /// Extensions class for the <see cref="LinkOffset"/> enumeration
     /// </summary>
     public static class LinkOffsetExtensions
     {
@@ -56,7 +58,9 @@ namespace Droplet.Core.Inp.Options
         {
             "DEPTH" => LinkOffset.DepthOffset,
             "ELEVATION" => LinkOffset.ElevationOffset,
-            _ => throw new ArgumentException()
+
+            _ => throw new ArgumentException(new InpResourceManager()
+                .GetString("FromInpString.ArgumentException", CultureInfo.CurrentCulture) + nameof(LinkOffset))
         };
 
         /// <summary>
@@ -66,7 +70,7 @@ namespace Droplet.Core.Inp.Options
         /// <returns>Returns: A string that is a valid inp string</returns>
         public static string ToInpString(this LinkOffset linkOffset)
         {
-            throw new NotImplementedException("This still needs to be implemented");
+            throw new NotImplementedException();
         }
     }
 
