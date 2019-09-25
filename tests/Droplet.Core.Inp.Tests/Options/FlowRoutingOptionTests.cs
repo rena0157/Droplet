@@ -34,24 +34,8 @@ namespace Droplet.Core.Inp.Tests.Options
         /// <param name="exectedValue">The expected value from the parser</param>
         [Theory]
         [ClassData(typeof(ParserTestData))]
-        public void ParserTests(string value, FlowRouting exectedValue)
-        {
-            // Initializing the string into the memory stream
-            Initialize(value);
-
-            // Initializing the project, reader and parser
-            var project = new InpProject();
-            var reader = new InpFileReader(stream: MemoryStream);
-            var parser = new InpParser();
-            parser.ParseFile(inpProject: project, reader: reader);
-
-            // Get the value from the database
-            var actualValue = project.Database.GetOption<FlowRoutingOption>();
-
-            // Assert that the value parsed is equal to the value
-            // that was passed into this test
-            Assert.Equal(expected: exectedValue, actual: actualValue.Value);
-        }
+        public void ParserTests(string value, FlowRouting expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<FlowRoutingOption>().Value);
 
         #endregion
 
