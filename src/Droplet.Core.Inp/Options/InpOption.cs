@@ -77,12 +77,25 @@ namespace Droplet.Core.Inp.Options
         /// <returns>Returns: an option that is refereed to by the <paramref name="optionName"/> that is passed</returns>
         internal static InpOption? CreateFromOptionName(string optionName, IInpTableRow row, IInpDatabase database) => optionName switch
         {
+            // Flow Units Option
             FlowUnitsOption.OptionName => new FlowUnitsOption(row, database),
+
+            // Infiltration Option
             InfiltrationOption.OptionName => new InfiltrationOption(row, database),
+
+            // Flow Routing Option
             FlowRoutingOption.OptionName => new FlowRoutingOption(row, database),
+
+            // Link Offset Option
             LinkOffsetOption.OptionName => new LinkOffsetOption(row, database),
+
+            // Min Slope Option
             MinSlopeOption.OptionName => new MinSlopeOption(row, database),
+
+            // Allow Ponding Option
             AllowPondingOption.OptionName => new AllowPondingOption(row, database),
+
+            // Skip Steady State Option
             SkipSteadyStateOption.OptionName => new SkipSteadyStateOption(row, database),
 
             // Start Date Time, Sets the Start Date and Start Time
@@ -130,6 +143,9 @@ namespace Droplet.Core.Inp.Options
 
             // Inertial Terms Option
             InertialTermsOption.OptionName => new InertialTermsOption(row, database),
+
+            // Min Surface Area Option
+            MinSurfaceAreaOption.OptionName => new MinSurfaceAreaOption(row, database),
 
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
