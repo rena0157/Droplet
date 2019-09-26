@@ -74,7 +74,7 @@ namespace Droplet.Core.Inp.Options
 
     /// <summary>
     /// Static class that contains all of the extension methods for the
-    /// <see cref="FlowRouting"/> enum.
+    /// <see cref="FlowRouting"/> enumeration.
     /// </summary>
     public static class FlowRoutingExtensions
     {
@@ -96,9 +96,8 @@ namespace Droplet.Core.Inp.Options
             // Conversion for the kinematic wave flow option
             "KINWAVE" => FlowRouting.KinematicWave,
 
-            // If the string is not a regcongnized value then throw an exception
-            _ => throw new ArgumentException($"The string {s} is not a valid inp string that" +
-                $"can be converted to the type {typeof(FlowRouting)}")
+            // If the string is not a recognized value then throw an exception
+            _ => throw InpParseException.CreateWithStandardMessage(typeof(FlowRoutingOption))
         };
     }
 }

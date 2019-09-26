@@ -121,7 +121,13 @@
     <value>&lt;NULL&gt;</value>
   </data>
   <data name="FromInpString.ArgumentException" xml:space="preserve">
-    <value>Cannot Match the Pattern for this type and</value>
+    <value>The string read from the inp file cannot be parsed to the type </value>
+  </data>
+  <data name="InpFileException.Message" xml:space="preserve">
+    <value>The Inp File at {0} failed to read</value>
+  </data>
+  <data name="InpParseException.DefaultMessage" xml:space="preserve">
+    <value>Error evaluating and parsing the following Item: </value>
   </data>
   <data name="ToInpString.ArgumentException" xml:space="preserve">
     <value>Cannot Convert this entity to an inp string</value>

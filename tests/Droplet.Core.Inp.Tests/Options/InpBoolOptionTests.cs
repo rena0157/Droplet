@@ -2,6 +2,7 @@
 // By: Adam Renaud
 // Created: 2019-09-16
 
+using Droplet.Core.Inp.Exceptions;
 using Droplet.Core.Inp.IO;
 using Droplet.Core.Inp.Options;
 using System.Collections;
@@ -36,8 +37,17 @@ namespace Droplet.Core.Inp.Tests.Options
         [Theory]
         [InlineData("YES", true)]
         [InlineData("NO", false)]
-        public void BoolParserTests(string value, bool expectedValue) 
+        public void BoolParserTests_ValidInpString(string value, bool expectedValue) 
             => Assert.Equal(expectedValue, InpBoolOption.FromInpString(value));
+
+        /// <summary>
+        /// Testing the parsing of garbage data. This should throw the <see cref="InpParseException"/>
+        /// </summary>
+        /// <param name="value">The garbage data that will be passed</param>
+        [Theory]
+        [InlineData("Some Garbage data")]
+        public void BoolParserTests_InvalidInpString(string value)
+            => Assert.Throws<InpParseException>(() => InpBoolOption.FromInpString(value));
 
         /// <summary>
         /// Testing the parsing of the <see cref="AllowPondingOption"/>
@@ -46,7 +56,7 @@ namespace Droplet.Core.Inp.Tests.Options
         /// <param name="expectedValue">The expected value of the option</param>
         [Theory]
         [ClassData(typeof(AllowPondingTestData))]
-        public void AllowPondingTests(string value, bool expectedValue)
+        public void AllowPondingParserTests_ValidInpString(string value, bool expectedValue)
             => Assert
                 .Equal(expectedValue, 
                 SetupParserTest(value).Database.GetOption<AllowPondingOption>().Value);
@@ -68,12 +78,12 @@ namespace Droplet.Core.Inp.Tests.Options
         #region Test Data
 
         /// <summary>
-        /// Test data for the <see cref="AllowPondingTests(string, bool)"/> tests
+        /// Test data for the <see cref="AllowPondingParserTests_ValidInpString(string, bool)"/> tests
         /// </summary>
         private class AllowPondingTestData : IEnumerable<object[]>
         {
             /// <summary>
-            /// Get the test data for the <see cref="AllowPondingTests"/>
+            /// Get the test data for the <see cref="AllowPondingParserTests_ValidInpString"/>
             /// </summary>
             /// <returns></returns>
             public IEnumerator<object[]> GetEnumerator()

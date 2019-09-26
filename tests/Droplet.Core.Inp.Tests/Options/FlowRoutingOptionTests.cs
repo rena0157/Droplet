@@ -1,4 +1,5 @@
-﻿using Droplet.Core.Inp.IO;
+﻿using Droplet.Core.Inp.Exceptions;
+using Droplet.Core.Inp.IO;
 using Droplet.Core.Inp.Options;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using Xunit.Abstractions;
 namespace Droplet.Core.Inp.Tests.Options
 {
     /// <summary>
-    /// Test class for
+    /// Test class for <see cref="FlowRoutingOption"/>
     /// </summary>
     public class FlowRoutingOptionTests : FileTestsBase
     {
@@ -33,35 +34,28 @@ namespace Droplet.Core.Inp.Tests.Options
         /// <param name="value">The Inp string value</param>
         /// <param name="exectedValue">The expected value from the parser</param>
         [Theory]
-        [ClassData(typeof(ParserTestData))]
-        public void ParserTests(string value, FlowRouting exectedValue)
-        {
-            // Initializing the string into the memory stream
-            Initialize(value);
+        [ClassData(typeof(ParserTest_ValidStringsData))]
+        public void ParserTests_ValidInpString(string value, FlowRouting expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<FlowRoutingOption>().Value);
 
-            // Initializing the project, reader and parser
-            var project = new InpProject();
-            var reader = new InpFileReader(stream: MemoryStream);
-            var parser = new InpParser();
-            parser.ParseFile(inpProject: project, reader: reader);
-
-            // Get the value from the database
-            var actualValue = project.Database.GetOption<FlowRoutingOption>();
-
-            // Assert that the value parsed is equal to the value
-            // that was passed into this test
-            Assert.Equal(expected: exectedValue, actual: actualValue.Value);
-        }
+        /// <summary>
+        /// Testing what happens if an invalid string is passed to the parser
+        /// </summary>
+        /// <param name="value">The invalid string</param>
+        [Theory]
+        [ClassData(typeof(ParserTest_InvalidStringsData))]
+        public void ParserTests_InvalidInpString(string value)
+            => Assert.Throws<InpFileException>(() => SetupParserTest(value));
 
         #endregion
 
         #region Test Data
 
         /// <summary>
-        /// Test data for the <see cref="ParserTests(string, FlowRouting)"/>
+        /// Test data for the <see cref="ParserTests_ValidInpString(string, FlowRouting)"/>
         /// tests
         /// </summary>
-        public class ParserTestData : IEnumerable<object[]>
+        private class ParserTest_ValidStringsData : IEnumerable<object[]>
         {
             /// <summary>
             /// Gets a <see cref="string"/> that represents an inp string
@@ -99,6 +93,24 @@ FLOW_ROUTING         DYNWAVE
 ",
 
                     FlowRouting.DynamicWave
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        /// <summary>
+        /// Test data for the <see cref="ParserTests_InvalidInpString(string)"/> tests
+        /// </summary>
+        private class ParserTest_InvalidStringsData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"[OPTIONS]
+FLOW_ROUTING        GARBAGE DATA
+"
                 };
             }
 

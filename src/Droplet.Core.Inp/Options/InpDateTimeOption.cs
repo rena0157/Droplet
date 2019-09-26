@@ -42,7 +42,7 @@ namespace Droplet.Core.Inp.Options
         protected internal override DateTime ParseRow(IInpTableRow row) 
             => row == null ? throw new ArgumentNullException(nameof(row)) :
             DateTime.TryParse(row[1], out var result) ? result : 
-            throw new InpParseException(typeof(InpDateTimeOption).FullName);
+            throw InpParseException.CreateWithStandardMessage(typeof(InpDateTimeOption));
 
         /// <summary>
         /// Internal Method that is used to add a <see cref="TimeSpan"/>

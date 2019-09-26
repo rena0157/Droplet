@@ -1,4 +1,5 @@
-﻿using Droplet.Core.Inp.Options;
+﻿using Droplet.Core.Inp.Exceptions;
+using Droplet.Core.Inp.Options;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +9,9 @@ using Xunit.Abstractions;
 
 namespace Droplet.Core.Inp.Tests.Options
 {
+    /// <summary>
+    /// Test class for <see cref="InertialTermsOption"/>
+    /// </summary>
     public class InertialTermsOptionTests : FileTestsBase
     {
         /// <summary>
@@ -28,11 +32,21 @@ namespace Droplet.Core.Inp.Tests.Options
         /// <param name="expectedValue">The expected value that the parser should create from the string passed in</param>
         [Theory]
         [ClassData(typeof(InertialTermsParserTestData))]
-        public void InertialTermsOptionParserTests(string value, InertialTermsHandling expectedValue)
+        public void ParserTests_ValidInpString(string value, InertialTermsHandling expectedValue)
             => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<InertialTermsOption>().Value);
 
         /// <summary>
-        /// Test data for the <see cref="InertialTermsOptionParserTests(string, InertialTermsHandling)"/> tests
+        /// Testing this class under the circumstance that garbage data is in the place
+        /// of the expected data
+        /// </summary>
+        /// <param name="value">The string that contains the data</param>
+        [Theory]
+        [InlineData("[OPTIONS]\nINERTIAL_DAMPING     GARBAGEDATA\n")]
+        public void ParserTests_InvalidInpString(string value)
+            => Assert.Throws<InpFileException>(() => SetupParserTest(value));
+
+        /// <summary>
+        /// Test data for the <see cref="ParserTests_ValidInpString(string, InertialTermsHandling)"/> tests
         /// </summary>
         private class InertialTermsParserTestData : IEnumerable<object[]>
         {

@@ -1,4 +1,5 @@
 ﻿using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Exceptions;
 using Droplet.Core.Inp.Utilities;
 using System;
 using System.Globalization;
@@ -59,8 +60,7 @@ namespace Droplet.Core.Inp.Options
             "DEPTH" => LinkOffset.DepthOffset,
             "ELEVATION" => LinkOffset.ElevationOffset,
 
-            _ => throw new ArgumentException(new InpResourceManager()
-                .GetString("FromInpString.ArgumentException", CultureInfo.CurrentCulture) + nameof(LinkOffset))
+            _ => throw InpParseException.CreateWithStandardMessage(typeof(LinkOffsetOption))
         };
 
         /// <summary>

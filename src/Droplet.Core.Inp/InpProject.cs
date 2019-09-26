@@ -3,8 +3,11 @@
 // Created: 2019-08-09
 
 using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Exceptions;
 using Droplet.Core.Inp.IO;
 using Droplet.Core.Inp.Utilities;
+using System;
+using System.Globalization;
 using System.IO;
 using System.Resources;
 
@@ -44,7 +47,7 @@ namespace Droplet.Core.Inp
             // Set the project name to the filename without extension
             ProjectName = Path.GetFileNameWithoutExtension(InpFile);
 
-            // Create a new filestream for the file and an new InpFileReader
+            // Create a new file stream for the file and an new InpFileReader
             using var fs = new FileStream(InpFile, FileMode.Open, FileAccess.Read, FileShare.Read);
             using var reader = new InpFileReader(fs);
 

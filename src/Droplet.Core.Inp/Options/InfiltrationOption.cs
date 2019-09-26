@@ -3,6 +3,7 @@
 // By: Adam Renaud
 
 using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Exceptions;
 using System;
 
 namespace Droplet.Core.Inp.Options
@@ -65,7 +66,7 @@ namespace Droplet.Core.Inp.Options
             "GREEN_AMPT" => InfiltrationMethod.GreenAmpt,
             "MODIFIED_GREEN_AMPT" => InfiltrationMethod.ModifiedGreenAmpt,
             "CURVE_NUMBER" => InfiltrationMethod.CurveNumber,
-            _ => throw new ArgumentException($"The string {inpString} is not a valid {typeof(InfiltrationMethod)}")
+            _ => throw InpParseException.CreateWithStandardMessage(typeof(InfiltrationOption))
         };
     }
 }

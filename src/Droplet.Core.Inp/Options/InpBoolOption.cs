@@ -24,8 +24,7 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that the option belongs to</param>
         internal InpBoolOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-            // Set the value from the helper method
-            Value = ParseRow(row);
+           Value = ParseRow(row);
         }
 
 
@@ -57,8 +56,7 @@ namespace Droplet.Core.Inp.Options
 
             // If the string does not match the patterns above
             // throw a parse exception
-            _ => throw new InpParseException($"The string {inpString} does not" +
-                $" match a prescribed pattern to convert to a {typeof(bool)}")
+            _ => throw InpParseException.CreateWithStandardMessage(typeof(InpBoolOption))
         };
 
         #endregion

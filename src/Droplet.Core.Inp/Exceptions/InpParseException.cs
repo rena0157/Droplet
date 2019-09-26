@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Droplet.Core.Inp.Utilities;
+using System;
+using System.Globalization;
+using System.Resources;
 
 namespace Droplet.Core.Inp.Exceptions
 {
@@ -9,10 +12,79 @@ namespace Droplet.Core.Inp.Exceptions
     [Serializable]
     public class InpParseException : Exception
     {
+        #region Internal Helpers
+
+        /// <summary>
+        /// Create a new <see cref="InpParseException"/> with the default Culture appropriate message
+        /// </summary>
+        /// <param name="type">The type where the exception occurred</param>
+        /// <returns>Returns: an <see cref="InpParseException"/> with the default message set</returns>
+        internal static InpParseException CreateWithStandardMessage(Type type)
+        {
+            try
+            {
+                // Get the message from the resource manager
+                var message = new InpResourceManager().GetString("InpParseException.DefaultMessage", CultureInfo.CurrentCulture);
+
+                // Return a new inp parse exception
+                return new InpParseException(message + type?.FullName);
+            }
+            catch(MissingManifestResourceException)
+            {
+                return new InpParseException();
+            }
+            catch(InvalidOperationException)
+            {
+                return new InpParseException();
+            }
+            catch (MissingSatelliteAssemblyException)
+            {
+                return new InpParseException();
+            }
+        }
+
+        /// <summary>
+        /// Create a new <see cref="InpParseException"/> with the default Culture appropriate message 
+        /// and include the inner <see cref="Exception"/>
+        /// </summary>
+        /// <param name="type">The type where the exception occurred</param>
+        /// <param name="inner">The inner Exception</param>
+        /// <returns>Returns: A new <see cref="InpParseException"/></returns>
+        internal static InpParseException CreateWithStandardMessage(Type type, Exception inner)
+        {
+            try
+            {
+                // Get message from the resource manager
+                var message = new InpResourceManager().GetString("InpParseException.DefaultMessage", CultureInfo.CurrentCulture);
+
+                // Return the exception and set the message and the inner exception
+                return new InpParseException(message + type?.FullName, inner);
+            }
+            // Catch any other exceptions that could occur because of the above
+            catch (MissingManifestResourceException)
+            {
+                return new InpParseException();
+            }
+            catch (InvalidOperationException)
+            {
+                return new InpParseException();
+            }
+            catch (MissingSatelliteAssemblyException)
+            {
+                return new InpParseException();
+            }
+        }
+
+        #endregion
+
+        #region Constructors
+
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public InpParseException() { }
+        public InpParseException()
+        {
+        }
 
         /// <summary>
         /// Default constructor that accepts a message that will be
@@ -37,5 +109,7 @@ namespace Droplet.Core.Inp.Exceptions
         protected InpParseException(
           System.Runtime.Serialization.SerializationInfo info,
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+
+        #endregion
     }
 }
