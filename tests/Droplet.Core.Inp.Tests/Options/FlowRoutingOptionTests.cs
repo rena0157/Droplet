@@ -39,9 +39,9 @@ namespace Droplet.Core.Inp.Tests.Options
             => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<FlowRoutingOption>().Value);
 
         /// <summary>
-        /// 
+        /// Testing what happens if an invalid string is passed to the parser
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">The invalid string</param>
         [Theory]
         [ClassData(typeof(ParserTest_InvalidStringsData))]
         public void ParserTests_InvalidInpString(string value)

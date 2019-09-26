@@ -42,8 +42,7 @@ namespace Droplet.Core.Inp.Options
                 return value;
             // If it fails then throw an exception
             else
-                throw new InpParseException($"Unable to parse value {row[1]} " +
-                    $"in the {typeof(InpTimeSpanOption)} option");
+                throw InpParseException.CreateWithStandardMessage(typeof(InpTimeSpanOption));
         }
     }
 }

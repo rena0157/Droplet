@@ -70,7 +70,7 @@ namespace Droplet.Core.Inp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot Match the Pattern for this type and.
+        ///   Looks up a localized string similar to The string read from the inp file cannot be parsed to the type .
         /// </summary>
         internal static string FromInpString_ArgumentException {
             get {
@@ -84,6 +84,15 @@ namespace Droplet.Core.Inp.Resources {
         internal static string InpFileException_Message {
             get {
                 return ResourceManager.GetString("InpFileException.Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error evaluating and parsing the following Item: .
+        /// </summary>
+        internal static string InpParseException_DefaultMessage {
+            get {
+                return ResourceManager.GetString("InpParseException.DefaultMessage", resourceCulture);
             }
         }
         

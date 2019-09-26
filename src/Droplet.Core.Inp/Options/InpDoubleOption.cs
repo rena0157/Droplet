@@ -38,8 +38,7 @@ namespace Droplet.Core.Inp.Options
                 return value;
             // If it is not successful throw an new exception
             else
-                throw new InpParseException($"The parsing of {this} was unsucessful due to a double" +
-                    $" conversion issue");
+                throw InpParseException.CreateWithStandardMessage(typeof(InpDoubleOption));
         }
     }
 }

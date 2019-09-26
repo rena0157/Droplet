@@ -1,4 +1,5 @@
 ﻿using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Exceptions;
 using Droplet.Core.Inp.Utilities;
 using System;
 using System.Globalization;
@@ -87,8 +88,7 @@ namespace Droplet.Core.Inp.Options
             "PARTIAL" => InertialTermsHandling.Dampen,
 
             // If the string passed does not match the prescribed pattern throw an argument exception
-            _ => throw new ArgumentException(new InpResourceManager()
-                .GetString("FromInpString.ArgumentException", CultureInfo.CurrentCulture) + nameof(InertialTermsHandlingExtensions))
+            _ => throw InpParseException.CreateWithStandardMessage(typeof(InertialTermsOption))
         };
     }
 }

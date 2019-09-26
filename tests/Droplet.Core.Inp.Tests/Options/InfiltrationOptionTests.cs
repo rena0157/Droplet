@@ -1,4 +1,5 @@
-﻿using Droplet.Core.Inp.IO;
+﻿using Droplet.Core.Inp.Exceptions;
+using Droplet.Core.Inp.IO;
 using Droplet.Core.Inp.Options;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,25 +30,25 @@ namespace Droplet.Core.Inp.Tests.Options
         /// <param name="method">The expected method from that string</param>
         [Theory]
         [ClassData(typeof(ParserTestData))]
-        public void ParserTests(string value, InfiltrationMethod method)
-        {
-            Initialize(value);
-            var project = new InpProject();
-            var parser = new InpParser();
-            var reader = new InpFileReader(stream: MemoryStream);
-            parser.ParseFile(inpProject: project, reader: reader);
+        public void ParserTests_ValidInpString(string value, InfiltrationMethod expectedValue)
+            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<InfiltrationOption>().Value);
 
-            var option = project.Database.GetOption<InfiltrationOption>();
-
-            Assert.Equal(method, option.Value);
-        }
+        /// <summary>
+        /// Testing the exception that will be thrown if the string passed to the
+        /// parser is not a valid string
+        /// </summary>
+        /// <param name="value">The string that will be passed to the parser</param>
+        [Theory]
+        [InlineData("[OPTIONS]\nINFILTRATION         GARBAGEDATA\n")]
+        public void PaserTests_InvalidInpString(string value)
+            => Assert.Throws<InpFileException>(() => SetupParserTest(value));
 
         #endregion
 
         #region Test Data
 
         /// <summary>
-        /// Test data for <see cref="InfiltrationOptionTests.ParserTests(string, InfiltrationMethod)"/>
+        /// Test data for <see cref="InfiltrationOptionTests.ParserTests_ValidInpString(string, InfiltrationMethod)"/>
         /// </summary>
         private class ParserTestData : IEnumerable<object[]>
         {

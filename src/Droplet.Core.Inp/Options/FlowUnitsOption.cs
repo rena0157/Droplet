@@ -1,8 +1,5 @@
 ﻿using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.Exceptions;
-using Droplet.Core.Inp.Utilities;
-using System;
-using System.Globalization;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -37,7 +34,7 @@ namespace Droplet.Core.Inp.Options
 
     /// <summary>
     /// The different possible flow units that can be used in the
-    /// simultaion and results
+    /// simulation and results
     /// 
     /// US Units.
     /// CFS: cubic feet per second 
@@ -92,7 +89,7 @@ namespace Droplet.Core.Inp.Options
             "MLD" => FlowUnit.MillionLitersPerDay,
             "MGD" => FlowUnit.MillionGallonsPerDay,
 
-            _ => throw new ArgumentOutOfRangeException($"The string {s} could not be matched to a flow unts")
+            _ => throw InpParseException.CreateWithStandardMessage(typeof(FlowRoutingOption))
         };
 
         /// <summary>
@@ -109,8 +106,7 @@ namespace Droplet.Core.Inp.Options
             FlowUnit.MillionGallonsPerDay => "MGD",
             FlowUnit.MillionLitersPerDay => "MLD",
 
-            _ => throw new ArgumentException(new InpResourceManager()
-                .GetString("ToInpString.ArgumentException", CultureInfo.CurrentCulture))
+            _ => throw InpParseException.CreateWithStandardMessage(typeof(FlowRoutingOption))
         };
     }
 }

@@ -97,8 +97,7 @@ namespace Droplet.Core.Inp.Options
             "KINWAVE" => FlowRouting.KinematicWave,
 
             // If the string is not a recognized value then throw an exception
-            _ => throw new ArgumentException($"The string {s} is not a valid inp string and cannot " +
-                $"be converted to the type {typeof(FlowRouting)}.")
+            _ => throw InpParseException.CreateWithStandardMessage(typeof(FlowRoutingOption))
         };
     }
 }
