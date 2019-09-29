@@ -36,7 +36,16 @@ namespace Droplet.Core.Inp.Options
         /// <returns>Returns: a <see cref="bool"/> that is created from the row</returns>
         protected internal override bool ParseRow(IInpTableRow row) 
             => row == null ? throw new ArgumentNullException(nameof(row)) : FromInpString(row[1]);
-        
+
+        /// <summary>
+        /// Public Override of the ToInpString Method
+        /// </summary>
+        /// <returns>Returns: The entity as a string</returns>
+        public override string ToInpString()
+        {
+            return Name.PadRight(OptionStringPadding) + InpBoolToString(Value);
+        }
+
         #endregion
 
         #region Public Static Helpers
@@ -57,6 +66,16 @@ namespace Droplet.Core.Inp.Options
             // If the string does not match the patterns above
             // throw a parse exception
             _ => throw InpParseException.CreateWithStandardMessage(typeof(InpBoolOption))
+        };
+
+        /// <summary>
+        /// Converts a <see cref="bool"/> to an inp <see cref="string"/>
+        /// </summary>
+        /// <returns>Returns: A <see cref="string"/> that is formatted to a YES or a NO</returns>
+        public static string InpBoolToString(bool option) => option switch
+        {
+            true => "YES",
+            false => "NO",
         };
 
         #endregion

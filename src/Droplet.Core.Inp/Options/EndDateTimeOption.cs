@@ -19,7 +19,7 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that the option will belong to</param>
         internal EndDateTimeOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-            // Everthing is constructed in the base class
+            // Everything is constructed in the base class
         }
 
         /// <summary>
@@ -33,5 +33,7 @@ namespace Droplet.Core.Inp.Options
         /// for this class
         /// </summary>
         internal const string TimeOptionName = "END_TIME";
+
+
     }
 }

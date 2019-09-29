@@ -3,6 +3,8 @@
 // Created: 2019-09-156
 
 using Droplet.Core.Inp.Data;
+using System;
+using System.Globalization;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -18,6 +20,7 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that the option belongs to</param>
         internal AllowPondingOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
+
         }
 
         /// <summary>

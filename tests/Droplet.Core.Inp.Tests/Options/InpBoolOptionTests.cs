@@ -5,6 +5,7 @@
 using Droplet.Core.Inp.Exceptions;
 using Droplet.Core.Inp.IO;
 using Droplet.Core.Inp.Options;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Xunit;
@@ -26,7 +27,7 @@ namespace Droplet.Core.Inp.Tests.Options
         {
         }
 
-        #region Tests
+        #region Generic Tests
 
         /// <summary>
         /// Testing the parsing from a <see cref="string"/> to a <see cref="bool"/>
@@ -49,17 +50,64 @@ namespace Droplet.Core.Inp.Tests.Options
         public void BoolParserTests_InvalidInpString(string value)
             => Assert.Throws<InpParseException>(() => InpBoolOption.FromInpString(value));
 
+        #endregion  
+
+        #region Allow Ponding Tests
+
+        /// <summary>
+        /// String that contains the Allow Ponding option and the true value
+        /// </summary>
+        private const string AllowPondingTrue = @"[OPTIONS]
+ALLOW_PONDING        YES
+";
+
+        /// <summary>
+        /// String that contains the allow ponding option for the false value
+        /// </summary>
+        private const string AllowPondingFalse = @"[OPTIONS]
+ALLOW_PONDING        NO
+";
+
         /// <summary>
         /// Testing the parsing of the <see cref="AllowPondingOption"/>
         /// </summary>
         /// <param name="value">A string value from an inp file</param>
         /// <param name="expectedValue">The expected value of the option</param>
         [Theory]
-        [ClassData(typeof(AllowPondingTestData))]
+        [InlineData(AllowPondingTrue, true)]
+        [InlineData(AllowPondingFalse, false)]
         public void AllowPondingParserTests_ValidInpString(string value, bool expectedValue)
             => Assert
                 .Equal(expectedValue, 
                 SetupParserTest(value).Database.GetOption<AllowPondingOption>().Value);
+
+        /// <summary>
+        /// Testing the ToInpString Method for the <see cref="AllowPondingOption"/>
+        /// </summary>
+        /// <param name="value">The option string</param>
+        [Theory]
+        [InlineData(AllowPondingTrue)]
+        public void AllowPondingToInpStringTests(string value)
+            => Assert.Contains(SetupParserTest(value).Database.GetOption<AllowPondingOption>().ToInpString(),
+                value);
+
+        #endregion
+
+        #region Skip Steady State Tests
+
+        /// <summary>
+        /// The <see cref="SkipSteadyStateOption"/> true <see cref="string"/> value
+        /// </summary>
+        private const string SkipSSTrue = @"[OPTIONS]
+SKIP_STEADY_STATE    YES
+";
+
+        /// <summary>
+        /// The <see cref="SkipSteadyStateOption"/> false <see cref="string"/> value
+        /// </summary>
+        private const string SkipSSFalse = @"[OPTIONS]
+SKIP_STEADY_STATE    NO
+";
 
         /// <summary>
         /// Testing the parsing of the <see cref="SkipSteadyStateOption"/>
@@ -67,87 +115,13 @@ namespace Droplet.Core.Inp.Tests.Options
         /// <param name="value">A string from an inp file</param>
         /// <param name="expectedValue">The expected option</param>
         [Theory]
-        [ClassData(typeof(SkipSteadyStateParserTestData))]
+        [InlineData(SkipSSTrue, true)]
+        [InlineData(SkipSSFalse, false)]
         public void SkipSteadyStateParserTests(string value, bool expectedValue)
             => Assert
             .Equal(expectedValue,
                 SetupParserTest(value).Database.GetOption<SkipSteadyStateOption>().Value);
 
-        #endregion  
-
-        #region Test Data
-
-        /// <summary>
-        /// Test data for the <see cref="AllowPondingParserTests_ValidInpString(string, bool)"/> tests
-        /// </summary>
-        private class AllowPondingTestData : IEnumerable<object[]>
-        {
-            /// <summary>
-            /// Get the test data for the <see cref="AllowPondingParserTests_ValidInpString"/>
-            /// </summary>
-            /// <returns></returns>
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                // True
-                yield return new object[]
-                {
-                    @"[OPTIONS]
-ALLOW_PONDING        YES
-",
-
-                    true
-                };
-
-                // False
-                yield return new object[]
-                {
-                    @"[OPTIONS]
-ALLOW_PONDING        NO
-",
-
-                    false
-                };
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
-
-        /// <summary>
-        /// Test Data for <see cref="SkipSteadyStateParserTests(string, bool)"/>
-        /// tests
-        /// </summary>
-        private class SkipSteadyStateParserTestData : IEnumerable<object[]>
-        {
-            /// <summary>
-            /// Returns: An inp String and the expected value that
-            /// should be parsed from it
-            /// </summary>
-            /// <returns></returns>
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                // True
-                yield return new object[]
-                {
-                    @"[OPTIONS]
-SKIP_STEADY_STATE    YES
-",
-
-                    true
-                };
-
-                // False
-                yield return new object[]
-                {
-                    @"[OPTIONS]
-SKIP_STEADY_STATE    NO
-",
-
-                    false
-                };
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
 
         #endregion
     }
