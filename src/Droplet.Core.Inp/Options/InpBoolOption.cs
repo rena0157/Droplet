@@ -22,10 +22,7 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">The row that the <see cref="InpOption{T}"/> will be built from</param>
         /// <param name="database">The database that the option belongs to</param>
-        internal InpBoolOption(IInpTableRow row, IInpDatabase database) : base(row, database)
-        {
-           Value = ParseRow(row);
-        }
+        internal InpBoolOption(IInpTableRow row, IInpDatabase database) : base(row, database) => Value = ParseRow(row);
 
 
         /// <summary>
@@ -38,13 +35,12 @@ namespace Droplet.Core.Inp.Options
             => row == null ? throw new ArgumentNullException(nameof(row)) : FromInpString(row[1]);
 
         /// <summary>
-        /// Public Override of the ToInpString Method
+        /// Public Override of the ToInpString Method that will concatenate the name of 
+        /// the option and the value of the <see cref="bool"/> value
         /// </summary>
-        /// <returns>Returns: The entity as a string</returns>
-        public override string ToInpString()
-        {
-            return Name.PadRight(OptionStringPadding) + InpBoolToString(Value);
-        }
+        /// <returns>Returns: The <see cref="InpBoolOption"/> as a <see cref="string"/></returns>
+        public override string ToInpString() 
+            => Name.PadRight(OptionStringPadding) + BoolToInpString(Value);
 
         #endregion
 
@@ -72,7 +68,7 @@ namespace Droplet.Core.Inp.Options
         /// Converts a <see cref="bool"/> to an inp <see cref="string"/>
         /// </summary>
         /// <returns>Returns: A <see cref="string"/> that is formatted to a YES or a NO</returns>
-        public static string InpBoolToString(bool option) => option switch
+        public static string BoolToInpString(bool option) => option switch
         {
             true => "YES",
             false => "NO",
