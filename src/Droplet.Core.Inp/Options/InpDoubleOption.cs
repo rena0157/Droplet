@@ -47,8 +47,6 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <returns>Returns: the name and value of the option</returns>
         public override string ToInpString()
-        {
-            return Name.PadRight(OptionStringPadding) + Value;
-        }
+            => Name.PadRight(OptionStringPadding) + Value;
     }
 }
