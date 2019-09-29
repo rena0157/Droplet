@@ -40,5 +40,15 @@ namespace Droplet.Core.Inp.Options
             else
                 throw InpParseException.CreateWithStandardMessage(typeof(InpDoubleOption));
         }
+
+        /// <summary>
+        /// Public Override for the ToInpString method for the <see cref="InpDoubleOption"/> classes
+        ///  and inheritors
+        /// </summary>
+        /// <returns>Returns: the name and value of the option</returns>
+        public override string ToInpString()
+        {
+            return Name.PadRight(OptionStringPadding) + Value;
+        }
     }
 }
