@@ -50,6 +50,8 @@ namespace Droplet.Core.Inp.Entities
 
         #endregion
 
+        #region Public Properties
+
         /// <summary>
         /// The name of the entity
         /// </summary>
@@ -73,6 +75,37 @@ namespace Droplet.Core.Inp.Entities
         /// <summary>
         /// The <see cref="IInpDatabase"/> that this entity belongs to
         /// </summary>
-        public IInpDatabase? Database {get; protected set; } 
+        public IInpDatabase? Database {get; protected set; }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Returns the formatted Description strings as per the inp
+        /// spec. Entities that implement this class should override this method.
+        /// </summary>
+        /// <returns>Returns: A formatted Inp String that contains the Description</returns>
+        public virtual string ToInpString() => GetInpDescriptionString();
+
+        #endregion
+
+        #region Protected Methods
+
+        /// <summary>
+        /// Get the inp Description strings and prepends the ';' operator 
+        /// to it.
+        /// </summary>
+        /// <returns>Returns: the description from the entity in the correct inp format.</returns>
+        protected string GetInpDescriptionString()
+        {
+            // Make a copy of the string
+            var descriptionCopy = new Span<char>(Description.ToCharArray()).ToString();
+
+            // Replace \n with \n;
+            return descriptionCopy.Replace(Environment.NewLine, Environment.NewLine + ";", StringComparison.Ordinal);
+        }
+
+        #endregion
     }
 }
