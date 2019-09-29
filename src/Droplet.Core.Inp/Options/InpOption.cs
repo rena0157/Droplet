@@ -9,7 +9,7 @@ namespace Droplet.Core.Inp.Options
     /// <summary>
     /// A class that holds the Option Data for an inp option
     /// </summary>
-    public class InpOption<T> : InpOption
+    public class InpOption<T> : InpOption where T : struct
     {
         /// <summary>
         /// Constructor that passes the arguments to the base class
@@ -18,7 +18,7 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">the database that this option belongs to</param>
         public InpOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-            Value = default!;
+            Value = default;
         }
 
         /// <summary>
@@ -26,6 +26,7 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         [NotNull]
         public virtual T Value { get; set; }
+
 
         /// <summary>
         /// Parse the Row into the Value type
@@ -49,7 +50,12 @@ namespace Droplet.Core.Inp.Options
         /// <summary>
         /// The header name for the options section
         /// </summary>
-        public const string HeaderName = "OPTIONS";
+        internal const string HeaderName = "OPTIONS";
+
+        /// <summary>
+        /// The amount that option strings are padded in inp files
+        /// </summary>
+        internal const int OptionStringPadding = 21;
 
         /// <summary>
         /// Default Constructor for the options type
