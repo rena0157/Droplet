@@ -70,7 +70,7 @@ namespace Droplet.Core.Inp.Data
 
         #endregion
 
-        #region IInpDatabase Implementation
+        #region Get Methods
 
         /// <summary>
         /// Get an object from the database. Note that if the object is not in
@@ -125,24 +125,59 @@ namespace Droplet.Core.Inp.Data
         /// from the database.
         /// </summary>
         /// <typeparam name="T">The type must be an <see cref="IInpEntity"/> implementer</typeparam>
-        /// <returns>Returns: An <see cref="IInpEntity"/> list</returns>
-        public List<T> GetAllEntities<T>() where T : IInpEntity
+        /// <returns>Returns: An <see cref="IEnumerable{IInpEntity}"/> list</returns>
+        public IEnumerable<T> GetAllEntities<T>() where T : IInpEntity
         {
-            // TODO: Find a better way of doing this
-
-            // Create a return list
-            var returnList = new List<T>();
-
-            // For each entity in the database add
-            // the entities if it matches the type provided
+            // For each entity in the database, if the entity
+            // matches the type that is passed then convert it and
+            // return it
             foreach(var e in _objectDictionary.Values)
             {
                 if (e is T et)
-                    returnList.Add(et);
+                    yield return et;
             }
-
-            return returnList;
         }
+
+        /// <summary>
+        /// Returns all of the entities from the database
+        /// </summary>
+        /// <returns>Returns: All entities from the database</returns>
+        public IEnumerable<IInpEntity> GetAllEntities()
+        {
+            foreach(var entity in _objectDictionary.Values)
+                if (entity is IInpEntity e)
+                    yield return e;
+        }
+
+        public IEnumerable<string> GetInpStrings()
+        {
+            foreach(var s in GetTitleStrings())
+                yield return s;
+
+            foreach (var s in GetOptionStrings())
+                yield return s;
+        }
+
+        #endregion
+
+        #region Private Helper Methods
+
+        private IEnumerable<string> GetTitleStrings()
+        {
+            yield return $"[TITLE]{Environment.NewLine};;Project Title/Notes";
+        }
+
+        private IEnumerable<string> GetOptionStrings()
+        {
+            yield return $"[OPTIONS]{Environment.NewLine};;Option             Value";
+
+            foreach(var entity in GetAllEntities<InpOption>())
+                yield return entity.ToInpString();
+        }
+
+        #endregion
+
+        #region Update Methods
 
         /// <summary>
         /// Update the database from the supplied tables. This method
@@ -188,5 +223,6 @@ namespace Droplet.Core.Inp.Data
         }
 
         #endregion
+
     }
 }

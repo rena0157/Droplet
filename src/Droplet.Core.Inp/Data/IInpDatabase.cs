@@ -14,6 +14,9 @@ namespace Droplet.Core.Inp.Data
     /// </summary>
     public interface IInpDatabase
     {
+
+        #region Get Methods
+
         /// <summary>
         /// Get an object from the database
         /// </summary>
@@ -45,7 +48,22 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         /// <typeparam name="T">The type must be an <see cref="IInpEntity"/> implementor</typeparam>
         /// <returns>Returns: An <see cref="IInpEntity"/> list</returns>
-        List<T> GetAllEntities<T>() where T : IInpEntity;
+        IEnumerable<T> GetAllEntities<T>() where T : IInpEntity;
+
+        /// <summary>
+        /// Get all entities from the database, in the form of a stream
+        /// </summary>
+        /// <returns>Returns the entities from the database</returns>
+        IEnumerable<IInpEntity> GetAllEntities();
+
+        /// <summary>
+        /// Get the strings from the database that can be written to
+        /// an inp file
+        /// </summary>
+        /// <returns>Returns: The strings from all entities in the database</returns>
+        IEnumerable<string> GetInpStrings();
+
+        #endregion
 
         /// <summary>
         /// Update the database
