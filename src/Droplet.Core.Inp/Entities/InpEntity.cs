@@ -99,6 +99,10 @@ namespace Droplet.Core.Inp.Entities
         /// <returns>Returns: the description from the entity in the correct inp format.</returns>
         protected string GetInpDescriptionString()
         {
+            // If there is no description return an empty string
+            if (Description == "<NULL>")
+                return string.Empty;
+
             // Make a copy of the string
             var descriptionCopy = new Span<char>(Description.ToCharArray()).ToString();
 
