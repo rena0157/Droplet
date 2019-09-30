@@ -31,7 +31,7 @@ namespace Droplet.Core.Inp.Options
         /// for the <see cref="TimeSpan"/> type
         /// </summary>
         /// <param name="row">The row that will be parsed</param>
-        /// <returns>Returns: The parsd value</returns>
+        /// <returns>Returns: The parsed value</returns>
         internal protected override TimeSpan ParseRow(IInpTableRow row)
         {
             // Check for null
@@ -44,5 +44,13 @@ namespace Droplet.Core.Inp.Options
             else
                 throw InpParseException.CreateWithStandardMessage(typeof(InpTimeSpanOption));
         }
+
+        /// <summary>
+        /// Public override for the <see cref="InpTimeSpanOption"/> class 
+        /// that returns the <see cref="Name"/> and the <see cref="Value"/> formatted as an inp <see cref="string"/>
+        /// </summary>
+        /// <returns>Returns: A formatted Inp <see cref="string"/></returns>
+        public override string ToInpString()
+            => Name.PadRight(OptionStringPadding) + Value.ToString();
     }
 }

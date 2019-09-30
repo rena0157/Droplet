@@ -3,11 +3,13 @@
 // Created: 2019-09-22
 
 using Droplet.Core.Inp.Options;
+using Droplet.Core.Inp.Entities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
+using Droplet.Core.Inp.Exceptions;
 
 namespace Droplet.Core.Inp.Tests.Options
 {
@@ -32,6 +34,13 @@ namespace Droplet.Core.Inp.Tests.Options
         #region Dry Days Option
 
         /// <summary>
+        /// Valid Inp String that contains a <see cref="DryDaysOption"/> in it
+        /// </summary>
+        private const string DryDaysValidString = @"[OPTIONS]
+DRY_DAYS             5
+";
+
+        /// <summary>
         /// Tests for the parsing of the <see cref="DryDaysOption"/> option
         /// </summary>
         /// <param name="value">A <see cref="string"/> from an inp file that contains
@@ -45,6 +54,15 @@ namespace Droplet.Core.Inp.Tests.Options
                 SetupParserTest(value).Database.GetOption<DryDaysOption>().Value);
 
         /// <summary>
+        /// Tests the <see cref="IInpEntity.ToInpString"/> method as overridden for the <see cref="DryDaysOption"/> class
+        /// </summary>
+        /// <param name="value">The string that the method will be testing against.</param>
+        [Theory]
+        [InlineData(DryDaysValidString)]
+        public void DryDaysToInpStringTest(string value)
+            => Assert.Contains(SetupParserTest(value).Database.GetOption<DryDaysOption>().ToInpString(), value);
+
+        /// <summary>
         /// Test data for the <see cref="DryDaysOptionParserTests(string, TimeSpan)"/> tests
         /// </summary>
         private class DryDaysOptionParserTestData : IEnumerable<object[]>
@@ -53,10 +71,7 @@ namespace Droplet.Core.Inp.Tests.Options
             {
                 yield return new object[]
                 {
-                    @"[OPTIONS]
-DRY_DAYS             5
-",
-
+                    DryDaysValidString,
                     TimeSpan.FromDays(5)
                 };
             }
@@ -69,6 +84,18 @@ DRY_DAYS             5
         #region Report Step Option
 
         /// <summary>
+        /// Valid Inp String that contains a <see cref="ReportStepOption"/>. 
+        /// The option value is 00:15:00
+        /// </summary>
+        private const string ReportStepValidString = @"[OPTIONS]
+REPORT_STEP          00:15:00
+";
+
+        private const string ReportStepInvalidString = @"[OPTIONS]
+REPORT_STEP          NOTVALID
+";
+
+        /// <summary>
         /// Tests for the parsing of the <see cref="ReportStepOption"/>
         /// </summary>
         /// <param name="value">An inp <see cref="string"/> that contains the value that
@@ -77,11 +104,30 @@ DRY_DAYS             5
         /// create</param>
         [Theory]
         [ClassData(typeof(ReportStepOptionParserTestData))]
-        public void ReportStepOptionParserTests(string value, TimeSpan expectedValue)
+        public void ReportStepOptionParserTests_ValidString(string value, TimeSpan expectedValue)
             => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<ReportStepOption>().Value);
 
         /// <summary>
-        /// Data class for the <see cref="ReportStepOptionParserTests(string, TimeSpan)"/> tests
+        /// Tests for the parsing of the <see cref="ReportStepOption"/> where an invalid string is passed. This 
+        /// should throw an <see cref="InpFileException"/>
+        /// </summary>
+        /// <param name="value">An invalid inp string</param>
+        [Theory]
+        [InlineData(ReportStepInvalidString)]
+        public void ReportStepOptionParserTests_InvalidString(string value)
+            => Assert.Throws<InpFileException>(() => SetupParserTest(value));
+
+        /// <summary>
+        /// Tests for <see cref="IInpEntity.ToInpString"/> method as overridden for the <see cref="ReportStepOption"/>
+        /// </summary>
+        /// <param name="value">A vaild inp string that will be used to test against</param>
+        [Theory]
+        [InlineData(ReportStepValidString)]
+        public void ReportStepToInpStringTest(string value)
+            => Assert.Contains(SetupParserTest(value).Database.GetOption<ReportStepOption>().ToInpString(), value);
+
+        /// <summary>
+        /// Data class for the <see cref="ReportStepOptionParserTests_ValidString(string, TimeSpan)"/> tests
         /// </summary>
         private class ReportStepOptionParserTestData : IEnumerable<object[]>
         {
@@ -89,10 +135,7 @@ DRY_DAYS             5
             {
                 yield return new object[]
                 {
-                    @"[OPTIONS]
-REPORT_STEP          00:15:00
-",
-
+                    ReportStepValidString,
                     new TimeSpan(0, 15, 0)
                 };
             }
@@ -248,6 +291,14 @@ RULE_STEP            00:00:00
         #region Lengthening Step Option
 
         /// <summary>
+        /// Valid string that contains a <see cref="ConduitLengtheningStepOption"/> with the 
+        /// value 10 seconds
+        /// </summary>
+        private const string LengtheningStepInpString = @"[OPTIONS]
+LENGTHENING_STEP     10
+";
+
+        /// <summary>
         /// Testing the parsing of the <see cref="ConduitLengtheningStepOption"/> class
         /// </summary>
         /// <param name="value">A string that contains the option that will be parsed</param>
@@ -258,6 +309,15 @@ RULE_STEP            00:00:00
             => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<ConduitLengtheningStepOption>().Value);
 
         /// <summary>
+        /// Test the ToInpString Method for the <see cref="ConduitLengtheningStepOption"/> option class
+        /// </summary>
+        /// <param name="value">The valid string that will be parsed and then tested against</param>
+        [Theory]
+        [InlineData(LengtheningStepInpString)]
+        public void ConduitLengtheningStepToInpStringTests(string value)
+            => Assert.Contains(SetupParserTest(value).Database.GetOption<ConduitLengtheningStepOption>().ToInpString(), value);
+
+        /// <summary>
         /// Test data for the <see cref="ConduitLengtheningStepOptionParserTests(string, TimeSpan)"/> tests
         /// </summary>
         private class ConduitLengtheningStepOptionParserTestData : IEnumerable<object[]>
@@ -266,10 +326,7 @@ RULE_STEP            00:00:00
             {
                 yield return new object[]
                 {
-                    @"[OPTIONS]
-LENGTHENING_STEP     10
-",
-
+                    LengtheningStepInpString,
                     TimeSpan.FromSeconds(10)
                 };
             }

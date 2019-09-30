@@ -41,5 +41,12 @@ namespace Droplet.Core.Inp.Options
             else
                 throw new InpParseException($"Unable to parse {typeof(ConduitLengtheningStepOption)}");
         }
+
+        /// <summary>
+        /// Public Override of the ToInpString Method for the <see cref="ConduitLengtheningStepOption"/> class
+        /// </summary>
+        /// <returns>Returns: The name of the option followed by the <see cref="TimeSpan.Seconds"/> from the <see cref="Value"/></returns>
+        public override string ToInpString()
+            => Name.PadRight(OptionStringPadding) + Value.Seconds;
     }
 }

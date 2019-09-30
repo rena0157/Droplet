@@ -50,5 +50,17 @@ namespace Droplet.Core.Inp.Options
         }
 
         #endregion
+
+        #region Public Methods
+        
+        /// <summary>
+        /// Public Override of the ToInpString Method that will return the <see cref="Name"/> and the 
+        /// <see cref="Value"/> for this <see cref="string"/>. The value that is returned is the number of days.
+        /// </summary>
+        /// <returns>Returns: the <see cref="Name"/> and number of days from the <see cref="TimeSpan.Days"/></returns>
+        public override string ToInpString()
+            => Name.PadRight(OptionStringPadding) + Value.Days;
+
+        #endregion
     }
 }
