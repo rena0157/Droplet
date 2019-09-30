@@ -1,5 +1,6 @@
 ﻿using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.Exceptions;
+using Droplet.Core.Inp.Entities;
 using System;
 
 namespace Droplet.Core.Inp.Options
@@ -33,7 +34,7 @@ namespace Droplet.Core.Inp.Options
         internal const string OptionName = "FLOW_ROUTING";
 
         /// <summary>
-        /// Protected internal override fo the <see cref="InpOption{T}.ParseRow(IInpTableRow)"/> Method 
+        /// Protected internal override for the <see cref="InpOption{T}.ParseRow(IInpTableRow)"/> Method 
         /// that parses the row and returns a <see cref="FlowRouting"/> option
         /// </summary>
         /// <param name="row">The row that will be parsed</param>
@@ -48,6 +49,19 @@ namespace Droplet.Core.Inp.Options
         }
 
         #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Public override of the <see cref="IInpEntity.ToInpString"/> Method 
+        /// That will convert this entity to an inp string
+        /// </summary>
+        /// <returns>Returns: the <see cref="Name"/> of this object and its <see cref="Value"/></returns>
+        public override string ToInpString()
+            => Name.PadRight(OptionStringPadding) + Value.ToInpString();
+
+        #endregion
+
     }
 
     /// <summary>
@@ -98,6 +112,23 @@ namespace Droplet.Core.Inp.Options
 
             // If the string is not a recognized value then throw an exception
             _ => throw InpParseException.CreateWithStandardMessage(typeof(FlowRoutingOption))
+        };
+
+        /// <summary>
+        /// Convert the value of this <see cref="FlowRouting"/> enumeration to an inp <see cref="string"/>
+        /// </summary>
+        /// <param name="routingValue">The this object that will be used for the extension method</param>
+        /// <returns>Returns: An inp <see cref="string"/> that corresponds to the value of <paramref name="routingValue"/></returns>
+        public static string ToInpString(this FlowRouting routingValue) => routingValue switch
+        {
+            // Conversion for the Steady Flow Option
+            FlowRouting.SteadyFlow => "STEADY",
+
+            // Conversion for the Kinematic Wave Option
+            FlowRouting.KinematicWave => "KINWAVE",
+
+            // Conversion for the Dynamic Wave Option
+            FlowRouting.DynamicWave => "DYNWAVE"
         };
     }
 }
