@@ -51,7 +51,7 @@ DRY_DAYS             5
         [ClassData(typeof(DryDaysOptionParserTestData))]
         public void DryDaysOptionParserTests(string value, TimeSpan expectedValue)
             => Assert.Equal(expectedValue,
-                SetupParserTest(value).Database.GetOption<DryDaysOption>().Value);
+                SetupProject(value).Database.GetOption<DryDaysOption>().Value);
 
         /// <summary>
         /// Tests the <see cref="IInpEntity.ToInpString"/> method as overridden for the <see cref="DryDaysOption"/> class
@@ -60,7 +60,7 @@ DRY_DAYS             5
         [Theory]
         [InlineData(DryDaysValidString)]
         public void DryDaysToInpStringTest(string value)
-            => Assert.Contains(SetupParserTest(value).Database.GetOption<DryDaysOption>().ToInpString(), value);
+            => Assert.Contains(SetupProject(value).Database.GetOption<DryDaysOption>().ToInpString(), value);
 
         /// <summary>
         /// Test data for the <see cref="DryDaysOptionParserTests(string, TimeSpan)"/> tests
@@ -105,7 +105,7 @@ REPORT_STEP          NOTVALID
         [Theory]
         [ClassData(typeof(ReportStepOptionParserTestData))]
         public void ReportStepOptionParserTests_ValidString(string value, TimeSpan expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<ReportStepOption>().Value);
+            => Assert.Equal(expectedValue, SetupProject(value).Database.GetOption<ReportStepOption>().Value);
 
         /// <summary>
         /// Tests for the parsing of the <see cref="ReportStepOption"/> where an invalid string is passed. This 
@@ -115,7 +115,7 @@ REPORT_STEP          NOTVALID
         [Theory]
         [InlineData(ReportStepInvalidString)]
         public void ReportStepOptionParserTests_InvalidString(string value)
-            => Assert.Throws<InpFileException>(() => SetupParserTest(value));
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
 
         /// <summary>
         /// Tests for <see cref="IInpEntity.ToInpString"/> method as overridden for the <see cref="ReportStepOption"/>
@@ -124,7 +124,7 @@ REPORT_STEP          NOTVALID
         [Theory]
         [InlineData(ReportStepValidString)]
         public void ReportStepToInpStringTest(string value)
-            => Assert.Contains(SetupParserTest(value).Database.GetOption<ReportStepOption>().ToInpString(), value);
+            => Assert.Contains(SetupProject(value).Database.GetOption<ReportStepOption>().ToInpString(), value);
 
         /// <summary>
         /// Data class for the <see cref="ReportStepOptionParserTests_ValidString(string, TimeSpan)"/> tests
@@ -157,7 +157,7 @@ REPORT_STEP          NOTVALID
         [Theory]
         [ClassData(typeof(WetWeatherOptionParserTestData))]
         public void WetWeatherOptionParserTests(string value, TimeSpan expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database
+            => Assert.Equal(expectedValue, SetupProject(value).Database
                 .GetOption<WetWeatherStepOption>().Value);
 
         /// <summary>
@@ -193,7 +193,7 @@ WET_STEP             00:05:00
         [Theory]
         [ClassData(typeof(DryWeatherStepOptionParserTestData))]
         public void DryWeatherStepOptionParserTests(string value, TimeSpan expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database
+            => Assert.Equal(expectedValue, SetupProject(value).Database
                 .GetOption<DryWeatherStepOption>().Value);
 
         /// <summary>
@@ -229,7 +229,7 @@ DRY_STEP             01:00:00
         [Theory]
         [ClassData(typeof(RoutingStepOptionParserTestData))]
         public void RoutingStepOptionParserTests(string value, TimeSpan expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<RoutingStepOption>().Value);
+            => Assert.Equal(expectedValue, SetupProject(value).Database.GetOption<RoutingStepOption>().Value);
 
         /// <summary>
         /// Test data for the <see cref="RoutingStepOptionParserTests(string, TimeSpan)"/> tests
@@ -256,6 +256,13 @@ ROUTING_STEP         0:00:30
         #region Rule Step Option
 
         /// <summary>
+        /// A valid string for the <see cref="ControlRuleStepOption"/>
+        /// </summary>
+        private const string RuleStepOptionValidInpString = @"[OPTIONS]
+RULE_STEP            00:00:00
+";
+
+        /// <summary>
         /// Testing the parsing of the <see cref="ControlRuleStepOption"/> class
         /// </summary>
         /// <param name="value">The inp string that will be tested</param>
@@ -264,7 +271,26 @@ ROUTING_STEP         0:00:30
         [Theory]
         [ClassData(typeof(ControlRuleStepOptionParserTestData))]
         public void ControlRuleStepOptionParserTests(string value, TimeSpan expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<ControlRuleStepOption>().Value);
+            => Assert.Equal(expectedValue, SetupProject(value).Database.GetOption<ControlRuleStepOption>().Value);
+
+        /// <summary>
+        /// Passing an invalid inp string to the <see cref="ControlRuleStepOption"/> parser
+        /// </summary>
+        /// <param name="value">The invalid string</param>
+        [Theory]
+        [InlineData("[OPTIONS]\nRULE_STEP            INVALID_DATA\n")]
+        public void ControlRuleStepOptionParserTests_InvalidString_ShouldThrowInpFileException(string value)
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
+
+        /// <summary>
+        /// Tests the <see cref="IInpEntity.ToInpString"/> method as implemented for the <see cref="ControlRuleStepOption"/>
+        /// </summary>
+        /// <param name="value">The string that will be parsed</param>
+        [Theory]
+        [InlineData(RuleStepOptionValidInpString)]
+        public void ControlRuleStepOptionToInpString_ValidString_ShouldMatchValue(string value)
+            => Assert.Equal(PruneInpString(value, OptionsHeader),
+                SetupProject(value).Database.GetOption<ControlRuleStepOption>().ToInpString());
 
         /// <summary>
         /// Test data for the <see cref="ControlRuleStepOptionParserTests(string, TimeSpan)"/> tests
@@ -275,10 +301,7 @@ ROUTING_STEP         0:00:30
             {
                 yield return new object[]
                 {
-                    @"[OPTIONS]
-RULE_STEP            00:00:00
-",
-
+                    RuleStepOptionValidInpString,
                     new TimeSpan()
                 };
             }
@@ -306,7 +329,7 @@ LENGTHENING_STEP     10
         [Theory]
         [ClassData(typeof(ConduitLengtheningStepOptionParserTestData))]
         public void ConduitLengtheningStepOptionParserTests(string value, TimeSpan expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<ConduitLengtheningStepOption>().Value);
+            => Assert.Equal(expectedValue, SetupProject(value).Database.GetOption<ConduitLengtheningStepOption>().Value);
 
         /// <summary>
         /// Test the ToInpString Method for the <see cref="ConduitLengtheningStepOption"/> option class
@@ -314,8 +337,9 @@ LENGTHENING_STEP     10
         /// <param name="value">The valid string that will be parsed and then tested against</param>
         [Theory]
         [InlineData(LengtheningStepInpString)]
-        public void ConduitLengtheningStepToInpStringTests(string value)
-            => Assert.Contains(SetupParserTest(value).Database.GetOption<ConduitLengtheningStepOption>().ToInpString(), value);
+        public void ConduitLengtheningStepToInpString_ValidString_ShouldMatchValue(string value)
+            => Assert.Equal(PruneInpString(value, OptionsHeader), 
+                SetupProject(value).Database.GetOption<ConduitLengtheningStepOption>().ToInpString());
 
         /// <summary>
         /// Test data for the <see cref="ConduitLengtheningStepOptionParserTests(string, TimeSpan)"/> tests

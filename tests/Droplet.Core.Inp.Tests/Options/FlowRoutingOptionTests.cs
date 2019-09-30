@@ -65,7 +65,7 @@ FLOW_ROUTING        GARBAGE DATA
         [InlineData(FlowRoutingValidInpStringDynamic, FlowRouting.DynamicWave)]
         [InlineData(FlowRoutingValidInpStringKynwave, FlowRouting.KinematicWave)]
         public void ParserTests_ValidInpString_ShouldMatchExpectedValue(string value, FlowRouting expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<FlowRoutingOption>().Value);
+            => Assert.Equal(expectedValue, SetupProject(value).Database.GetOption<FlowRoutingOption>().Value);
 
         /// <summary>
         /// Testing what happens if an invalid string is passed to the parser
@@ -74,7 +74,7 @@ FLOW_ROUTING        GARBAGE DATA
         [Theory]
         [InlineData(FlowRoutingInvalidString)]
         public void ParserTests_InvalidInpString_ShouldThrowInpFileException(string value)
-            => Assert.Throws<InpFileException>(() => SetupParserTest(value));
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
 
         /// <summary>
         /// Testing the <see cref="IInpEntity.ToInpString"/> method as implemented for the 
@@ -88,7 +88,7 @@ FLOW_ROUTING        GARBAGE DATA
         public void ToInpString_ValidString_ShouldMatchPassedString(string value)
         {
             // Arrange: Set up the project
-            var project = SetupParserTest(value);
+            var project = SetupProject(value);
 
             // Act: Get the actual value of the string
             var actualValue = project.Database.GetOption<FlowRoutingOption>().ToInpString();

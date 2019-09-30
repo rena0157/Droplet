@@ -15,7 +15,15 @@ namespace Droplet.Core.Inp.Options
     public class InpBoolOption : InpOption<bool>
     {
 
-        #region Internal Members
+        #region Constructors
+
+        /// <summary>
+        /// Public Default Constructor that accepts a value for the option
+        /// </summary>
+        /// <param name="value">The value of the option</param>
+        public InpBoolOption(bool value) : base(value)
+        {
+        }
 
         /// <summary>
         /// Build the option from an <see cref="IInpTableRow"/> and an <see cref="IInpDatabase"/>
@@ -24,6 +32,9 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that the option belongs to</param>
         internal InpBoolOption(IInpTableRow row, IInpDatabase database) : base(row, database) => Value = ParseRow(row);
 
+        #endregion
+
+        #region Internal Members
 
         /// <summary>
         /// Protected internal override the <see cref="InpOption{T}.ParseRow(IInpTableRow)"/> method 

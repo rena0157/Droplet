@@ -11,8 +11,11 @@ namespace Droplet.Core.Inp.Tests
     /// </summary>
     public abstract class FileTestsBase : TestBase, IDisposable
     {
+
+        #region Constructors
+
         /// <summary>
-        /// Defaul Constructor that initializes this class
+        /// Default Constructor that initializes this class
         /// </summary>
         /// <param name="logger">Accepts a logger</param>
         public FileTestsBase(ITestOutputHelper logger) : base(logger)
@@ -20,7 +23,20 @@ namespace Droplet.Core.Inp.Tests
             MemoryStream = new MemoryStream();
         }
 
+        #endregion
+
+        #region Protected Members
+
         protected MemoryStream MemoryStream { get; }
+
+        /// <summary>
+        /// The header value for the <see cref="InpOption"/> class
+        /// </summary>
+        protected const string OptionsHeader = "[OPTIONS]";
+
+        #endregion
+
+        #region Protected Helper Methods
 
         /// <summary>
         /// Initialize the <see cref="MemoryStream"/> object. Note
@@ -46,7 +62,7 @@ namespace Droplet.Core.Inp.Tests
         /// <see cref="InpProject"/>.
         /// </summary>
         /// <param name="value">The string that will be parsed</param>
-        protected virtual IInpProject SetupParserTest(string value)
+        protected virtual IInpProject SetupProject(string value)
         {
             // Initialize the project from the string passed to
             // this method
@@ -65,12 +81,39 @@ namespace Droplet.Core.Inp.Tests
         }
 
         /// <summary>
+        /// Prunes the <see cref="Environment.NewLine"/>s and the <paramref name="header"/> from 
+        /// the <paramref name="inpString"/> string that is passed.
+        /// </summary>
+        /// <param name="inpString">The string that will be pruned</param>
+        /// <param name="header">The header that will be removed from the string</param>
+        /// <returns></returns>
+        protected virtual string PruneInpString(string inpString, string header)
+        {
+            // Check for null for the value parameter
+            if (string.IsNullOrEmpty(inpString))
+                throw new ArgumentException("message", nameof(inpString));
+
+            // Check for null for the header parameter
+            if (string.IsNullOrWhiteSpace(header))
+                throw new ArgumentException("message", nameof(header));
+
+            // Remove the Newline Char and the header from the string
+            return inpString.Replace(Environment.NewLine, "").Replace(header, "");
+        }
+
+        #endregion
+
+        #region Dispose Pattern
+
+        /// <summary>
         /// Implementing the <see cref="IDisposable"/> pattern
         /// </summary>
         public void Dispose()
         {
             ((IDisposable)MemoryStream).Dispose();
         }
+
+        #endregion
 
     }
 }

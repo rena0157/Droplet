@@ -31,7 +31,7 @@ namespace Droplet.Core.Inp.Tests.Options
         [Theory]
         [ClassData(typeof(ParserTestData))]
         public void ParserTests_ValidInpString(string value, InfiltrationMethod expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<InfiltrationOption>().Value);
+            => Assert.Equal(expectedValue, SetupProject(value).Database.GetOption<InfiltrationOption>().Value);
 
         /// <summary>
         /// Testing the exception that will be thrown if the string passed to the
@@ -41,7 +41,7 @@ namespace Droplet.Core.Inp.Tests.Options
         [Theory]
         [InlineData("[OPTIONS]\nINFILTRATION         GARBAGEDATA\n")]
         public void PaserTests_InvalidInpString(string value)
-            => Assert.Throws<InpFileException>(() => SetupParserTest(value));
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
 
         #endregion
 

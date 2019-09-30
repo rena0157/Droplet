@@ -36,7 +36,7 @@ MIN_SLOPE            0.15
         [Theory]
         [InlineData(MinSlopeValidString, 0.15)]
         public void MinSlopeParserTests_ValidString(string value, double expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<MinSlopeOption>().Value);
+            => Assert.Equal(expectedValue, SetupProject(value).Database.GetOption<MinSlopeOption>().Value);
 
         /// <summary>
         /// Testing the ToInpString Method for the <see cref="MinSlopeOption"/>
@@ -45,7 +45,7 @@ MIN_SLOPE            0.15
         [Theory]
         [InlineData(MinSlopeValidString)]
         public void MinSlopeToInpStringTest(string value)
-            => Assert.Contains(SetupParserTest(value).Database.GetOption<MinSlopeOption>().ToInpString(),
+            => Assert.Contains(SetupProject(value).Database.GetOption<MinSlopeOption>().ToInpString(),
                 value);
 
         #endregion
@@ -68,7 +68,7 @@ MIN_SURFAREA         1.167
         [Theory]
         [InlineData(MinSurfaceAreaValidString, 1.167)]
         public void MinSurfaceAreaParserTests_ValidStrings(string value, double expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<MinSurfaceAreaOption>().Value);
+            => Assert.Equal(expectedValue, SetupProject(value).Database.GetOption<MinSurfaceAreaOption>().Value);
 
         /// <summary>
         /// Testing the ToInpString Method for the <see cref="MinSurfaceAreaOption"/> option
@@ -77,7 +77,7 @@ MIN_SURFAREA         1.167
         [Theory]
         [InlineData(MinSurfaceAreaValidString)]
         public void MinSurfaceAreaToInpStringTest(string value)
-            => Assert.Contains(SetupParserTest(value).Database.GetOption<MinSurfaceAreaOption>().ToInpString(),
+            => Assert.Contains(SetupProject(value).Database.GetOption<MinSurfaceAreaOption>().ToInpString(),
                 value);
 
         #endregion

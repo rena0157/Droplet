@@ -13,6 +13,18 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class AllowPondingOption : InpBoolOption
     {
+
+        #region Constructors
+
+        /// <summary>
+        /// Sets the value of the option
+        /// </summary>
+        /// <param name="value"></param>
+        public AllowPondingOption(bool value) : base(value)
+        {
+            Name = OptionName;
+        }
+
         /// <summary>
         /// Constructor that accepts a <see cref="IInpTableRow"/> and a <see cref="IInpDatabase"/>
         /// </summary>
@@ -22,6 +34,8 @@ namespace Droplet.Core.Inp.Options
         {
 
         }
+
+        #endregion
 
         /// <summary>
         /// The name of the option as defined in inp files

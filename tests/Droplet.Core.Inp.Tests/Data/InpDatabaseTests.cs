@@ -19,7 +19,7 @@ namespace Droplet.Core.Inp.Tests.Data
         [ClassData(typeof(ToInpStringsTestData))]
         public void ToInpStringTest(string value)
         {
-            var project = SetupParserTest(value);
+            var project = SetupProject(value);
             var finalString = new StringBuilder();
 
             foreach (var line in project.Database.GetInpStrings())

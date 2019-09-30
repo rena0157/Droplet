@@ -43,7 +43,7 @@ namespace Droplet.Core.Inp.Tests.Options
         [ClassData(typeof(StartDateTimeParserTestData))]
         public void StartDateTimeParserTests(string value, DateTime expectedValue)
             => Assert.Equal(expectedValue,
-                SetupParserTest(value).Database.GetOption<StartDateTimeOption>().Value);
+                SetupProject(value).Database.GetOption<StartDateTimeOption>().Value);
 
         /// <summary>
         /// Test Data for the <see cref="StartDateTimeParserTests(string, DateTime)"/> tests
@@ -100,7 +100,7 @@ START_DATE           07/28/2019
         [ClassData(typeof(ReportStartDateTimeParserTestData))]
         public void ReportStartDateTimeParserTests(string value, DateTime expectedValue)
             => Assert.Equal(expectedValue,
-                SetupParserTest(value).Database.GetOption<ReportStartDateTimeOption>().Value);
+                SetupProject(value).Database.GetOption<ReportStartDateTimeOption>().Value);
 
         /// <summary>
         /// Test Data for the <see cref="ReportStartDateTimeParserTests(string, DateTime)"/> tests
@@ -142,7 +142,7 @@ REPORT_START_TIME    00:00:00
         [ClassData(typeof(EndDateTimeParserTesData))]
         public void EndDateTimeParserTests(string value, DateTime expectedDateTime)
             => Assert.Equal(expectedDateTime,
-                SetupParserTest(value).Database.GetOption<EndDateTimeOption>().Value);
+                SetupProject(value).Database.GetOption<EndDateTimeOption>().Value);
 
         /// <summary>
         /// Test data for the <see cref="EndDateTimeParserTesData"/>
@@ -178,7 +178,7 @@ END_TIME             06:00:00
         [Theory]
         [ClassData(typeof(SweepingStartDateTimeParserTestData))]
         public void SweepingStartDateTimeParserTests(string value, DateTime expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value)
+            => Assert.Equal(expectedValue, SetupProject(value)
                 .Database
                 .GetOption<SweepingStartDateTimeOption>().Value);
 
@@ -213,7 +213,7 @@ SWEEP_START          01/01
         [Theory]
         [ClassData(typeof(SweepingEndDateTimeParserTestData))]
         public void SweepingEndDateTimeParserTests(string value, DateTime expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database
+            => Assert.Equal(expectedValue, SetupProject(value).Database
                                                                  .GetOption<SweepingEndDateTimeOption>().Value);
 
         /// <summary>

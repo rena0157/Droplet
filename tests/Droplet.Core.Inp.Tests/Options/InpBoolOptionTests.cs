@@ -79,7 +79,7 @@ ALLOW_PONDING        NO
         public void AllowPondingParserTests_ValidInpString(string value, bool expectedValue)
             => Assert
                 .Equal(expectedValue, 
-                SetupParserTest(value).Database.GetOption<AllowPondingOption>().Value);
+                SetupProject(value).Database.GetOption<AllowPondingOption>().Value);
 
         /// <summary>
         /// Testing the ToInpString Method for the <see cref="AllowPondingOption"/>
@@ -88,7 +88,7 @@ ALLOW_PONDING        NO
         [Theory]
         [InlineData(AllowPondingTrue)]
         public void AllowPondingToInpStringTests(string value)
-            => Assert.Contains(SetupParserTest(value).Database.GetOption<AllowPondingOption>().ToInpString(),
+            => Assert.Contains(new AllowPondingOption("ALLOW_PONDING", true).ToInpString(),
                 value);
 
         #endregion
@@ -120,7 +120,7 @@ SKIP_STEADY_STATE    NO
         public void SkipSteadyStateParserTests(string value, bool expectedValue)
             => Assert
             .Equal(expectedValue,
-                SetupParserTest(value).Database.GetOption<SkipSteadyStateOption>().Value);
+                SetupProject(value).Database.GetOption<SkipSteadyStateOption>().Value);
 
 
         #endregion

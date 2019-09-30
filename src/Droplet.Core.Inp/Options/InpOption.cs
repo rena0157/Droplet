@@ -16,9 +16,18 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="row">the row that will be used to construct the option</param>
         /// <param name="database">the database that this option belongs to</param>
-        public InpOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal InpOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
             Value = default;
+        }
+
+        /// <summary>
+        /// Public Constructor that accepts a name and a value
+        /// </summary>
+        /// <param name="value">The value for the option</param>
+        public InpOption(T value)
+        {
+            Value = value;
         }
 
         /// <summary>
