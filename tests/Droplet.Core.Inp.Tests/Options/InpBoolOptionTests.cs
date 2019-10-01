@@ -87,8 +87,8 @@ ALLOW_PONDING        NO
         /// <param name="value">The option string</param>
         [Theory]
         [InlineData(AllowPondingTrue)]
-        public void AllowPondingToInpStringTests(string value)
-            => Assert.Contains(new AllowPondingOption("ALLOW_PONDING", true).ToInpString(),
+        public void AllowPonding_ToInpString_ShouldMatchValue(string value)
+            => Assert.Contains(new AllowPondingOption(true).ToInpString(),
                 value);
 
         #endregion

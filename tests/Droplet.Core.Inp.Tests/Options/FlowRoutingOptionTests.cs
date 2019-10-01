@@ -86,16 +86,7 @@ FLOW_ROUTING        GARBAGE DATA
         [InlineData(FlowRoutingValidInpStringDynamic)]
         [InlineData(FlowRoutingValidInpStringKynwave)]
         public void ToInpString_ValidString_ShouldMatchPassedString(string value)
-        {
-            // Arrange: Set up the project
-            var project = SetupProject(value);
-
-            // Act: Get the actual value of the string
-            var actualValue = project.Database.GetOption<FlowRoutingOption>().ToInpString();
-
-            // Assert: The string must match the value that is passed without the [OPTIONS] and new lines
-            Assert.Equal(value.Replace("[OPTIONS]", "").Replace(Environment.NewLine,""), actualValue);
-        }
+            => Assert.Equal(PruneInpString(value, OptionsHeader), SetupProject(value).Database.GetOption<FlowRoutingOption>().ToInpString());
 
         #endregion
     }

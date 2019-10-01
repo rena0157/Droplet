@@ -14,6 +14,17 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class InpTimeSpanOption : InpOption<TimeSpan>
     {
+
+        #region Constructors
+
+        /// <summary>
+        /// Default Constructor that accepts a <see cref="TimeSpan"/> value
+        /// </summary>
+        /// <param name="value">The value that will be set</param>
+        public InpTimeSpanOption(TimeSpan value) : base(value)
+        {
+        }
+
         /// <summary>
         /// Default Constructor that accepts a row and 
         /// parses it into a <see cref="TimeSpan"/> which is then stored in the 
@@ -25,6 +36,10 @@ namespace Droplet.Core.Inp.Options
         {
             Value = ParseRow(row);
         }
+
+        #endregion
+
+        #region Internal Methods
 
         /// <summary>
         /// Parse the <see cref="IInpTableRow"/> to the <see cref="Value"/> 
@@ -45,6 +60,10 @@ namespace Droplet.Core.Inp.Options
                 throw InpParseException.CreateWithStandardMessage(typeof(InpTimeSpanOption));
         }
 
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
         /// Public override for the <see cref="InpTimeSpanOption"/> class 
         /// that returns the <see cref="Name"/> and the <see cref="Value"/> formatted as an inp <see cref="string"/>
@@ -52,5 +71,7 @@ namespace Droplet.Core.Inp.Options
         /// <returns>Returns: A formatted Inp <see cref="string"/></returns>
         public override string ToInpString()
             => Name.PadRight(OptionStringPadding) + Value.ToString();
+
+        #endregion
     }
 }

@@ -13,7 +13,17 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class DryDaysOption : InpTimeSpanOption
     {
-        #region Internal Members
+        #region Constructors
+
+        /// <summary>
+        /// Default Constructor that accepts an <see cref="int"/> that represents the number of days 
+        /// for the value of this option. The <see cref="Name"/> value is set to the default inp option name.
+        /// </summary>
+        /// <param name="days">The number of days that will be set as the value</param>
+        public DryDaysOption(int days) : base(TimeSpan.FromDays(days))
+        {
+            Name = OptionName;
+        }
 
         /// <summary>
         /// The internal constructor that will create the option from a <see cref="IInpTableRow"/> 
@@ -25,6 +35,10 @@ namespace Droplet.Core.Inp.Options
         {
             Value = ParseRow(row);
         }
+
+        #endregion
+
+        #region Internal Members
 
         /// <summary>
         /// Constant <see cref="string"/> that is the name of the option in inp files

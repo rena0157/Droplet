@@ -41,17 +41,34 @@ DRY_DAYS             5
 ";
 
         /// <summary>
+        /// An invalid inp string for the <see cref="DryDaysOption"/>
+        /// </summary>
+        private const string DryDaysInvalidString = @"[OPTIONS]
+DRY_DAYS             INVALIDSTRING
+";
+
+        /// <summary>
         /// Tests for the parsing of the <see cref="DryDaysOption"/> option
         /// </summary>
         /// <param name="value">A <see cref="string"/> from an inp file that contains
         /// the option that will be parsed</param>
-        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that the parser shoud 
+        /// <param name="expectedValue">The expected <see cref="TimeSpan"/> that the parser should 
         /// produce</param>
         [Theory]
         [ClassData(typeof(DryDaysOptionParserTestData))]
-        public void DryDaysOptionParserTests(string value, TimeSpan expectedValue)
+        public void DryDaysOptionParser_ValidString_ShouldMatchExpected(string value, TimeSpan expectedValue)
             => Assert.Equal(expectedValue,
                 SetupProject(value).Database.GetOption<DryDaysOption>().Value);
+
+        /// <summary>
+        /// Testing the parser when an invalid string is passed for the <see cref="DryDaysOption"/>. 
+        /// This test should throw an <see cref="InpFileException"/>
+        /// </summary>
+        /// <param name="value">The invalid <see cref="string"/></param>
+        [Theory]
+        [InlineData(DryDaysInvalidString)]
+        public void DryDaysOptionParser_InvalidString_ShouldThrowInpFileException(string value)
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
 
         /// <summary>
         /// Tests the <see cref="IInpEntity.ToInpString"/> method as overridden for the <see cref="DryDaysOption"/> class
@@ -59,11 +76,11 @@ DRY_DAYS             5
         /// <param name="value">The string that the method will be testing against.</param>
         [Theory]
         [InlineData(DryDaysValidString)]
-        public void DryDaysToInpStringTest(string value)
-            => Assert.Contains(SetupProject(value).Database.GetOption<DryDaysOption>().ToInpString(), value);
+        public void DryDaysToInpString_ValidString_ShouldMatchValue(string value)
+            => Assert.Equal(PruneInpString(value, OptionsHeader), new DryDaysOption(5).ToInpString());
 
         /// <summary>
-        /// Test data for the <see cref="DryDaysOptionParserTests(string, TimeSpan)"/> tests
+        /// Test data for the <see cref="DryDaysOptionParser_ValidString_ShouldMatchExpected(string, TimeSpan)"/> tests
         /// </summary>
         private class DryDaysOptionParserTestData : IEnumerable<object[]>
         {
@@ -289,8 +306,7 @@ RULE_STEP            00:00:00
         [Theory]
         [InlineData(RuleStepOptionValidInpString)]
         public void ControlRuleStepOptionToInpString_ValidString_ShouldMatchValue(string value)
-            => Assert.Equal(PruneInpString(value, OptionsHeader),
-                SetupProject(value).Database.GetOption<ControlRuleStepOption>().ToInpString());
+            => Assert.Equal(PruneInpString(value, OptionsHeader), new ControlRuleStepOption(new TimeSpan()).ToInpString());
 
         /// <summary>
         /// Test data for the <see cref="ControlRuleStepOptionParserTests(string, TimeSpan)"/> tests
@@ -338,8 +354,7 @@ LENGTHENING_STEP     10
         [Theory]
         [InlineData(LengtheningStepInpString)]
         public void ConduitLengtheningStepToInpString_ValidString_ShouldMatchValue(string value)
-            => Assert.Equal(PruneInpString(value, OptionsHeader), 
-                SetupProject(value).Database.GetOption<ConduitLengtheningStepOption>().ToInpString());
+            => Assert.Equal(PruneInpString(value, OptionsHeader), new ConduitLengtheningStepOption(10).ToInpString());
 
         /// <summary>
         /// Test data for the <see cref="ConduitLengtheningStepOptionParserTests(string, TimeSpan)"/> tests
