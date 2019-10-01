@@ -202,6 +202,20 @@ WET_STEP             00:05:00
         #region Dry Step Option
 
         /// <summary>
+        /// A valid inp string for the <see cref="DryWeatherStepOption"/>
+        /// </summary>
+        private const string DryStepValidString = @"[OPTIONS]
+DRY_STEP             01:00:00
+";
+
+        /// <summary>
+        /// An invalid string for the <see cref="DryWeatherStepOption"/>
+        /// </summary>
+        private const string DryStepInvalidString = @"[OPTIONS]
+DRY_STEP             INVALIDSTRING
+";
+
+        /// <summary>
         /// Testing the parsing of the <see cref="DryWeatherStepOption"/>
         /// </summary>
         /// <param name="value">A <see cref="string"/> that contains a <see cref="DryWeatherStepOption"/>
@@ -209,12 +223,32 @@ WET_STEP             00:05:00
         /// <param name="expectedValue">The expected <see cref="TimeSpan"/></param>
         [Theory]
         [ClassData(typeof(DryWeatherStepOptionParserTestData))]
-        public void DryWeatherStepOptionParserTests(string value, TimeSpan expectedValue)
+        public void DryWeatherStepOptionParser_ValidString_ShouldMatchExpected(string value, TimeSpan expectedValue)
             => Assert.Equal(expectedValue, SetupProject(value).Database
                 .GetOption<DryWeatherStepOption>().Value);
 
         /// <summary>
-        /// Test data for the <see cref="DryWeatherStepOptionParserTests(string, TimeSpan)"/> tests
+        /// Testing the parsing of the <see cref="DryWeatherStepOption"/> when 
+        /// an invalid string is passed to it.
+        /// </summary>
+        /// <param name="value">An invalid string</param>
+        [Theory]
+        [InlineData(DryStepInvalidString)]
+        public void DryWeatherStepOptionParser_InvalidString_ShouldThrowInpFileException(string value)
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
+
+        /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> method as implemented 
+        /// for the <see cref="DryWeatherStepOption"/>
+        /// </summary>
+        /// <param name="value"></param>
+        [Theory]
+        [InlineData(DryStepValidString)]
+        public void DryWeatherStepOption_ToInpString_ShouldMatchValue(string value)
+            => Assert.Equal(PruneInpString(value, OptionsHeader), new DryWeatherStepOption(new TimeSpan(1,0,0)).ToInpString());
+
+        /// <summary>
+        /// Test data for the <see cref="DryWeatherStepOptionParser_ValidString_ShouldMatchExpected(string, TimeSpan)"/> tests
         /// </summary>
         private class DryWeatherStepOptionParserTestData : IEnumerable<object[]>
         {
@@ -222,10 +256,7 @@ WET_STEP             00:05:00
             {
                 yield return new object[]
                 {
-                    @"[OPTIONS]
-DRY_STEP             01:00:00
-",
-
+                    DryStepValidString,
                     new TimeSpan(1, 0, 0)
                 };
             }
