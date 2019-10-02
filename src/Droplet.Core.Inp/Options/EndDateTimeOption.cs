@@ -3,6 +3,8 @@
 // Created: 2019-09-21
 
 using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Entities;
+using System;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -11,8 +13,15 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class EndDateTimeOption : InpDateTimeOption
     {
+
+        #region Constructors
+
+        public EndDateTimeOption(DateTime dateTime) : base(dateTime)
+        {
+        }
+
         /// <summary>
-        /// Constructor the the class that accepts an <see cref="IInpTableRow"/>
+        /// Constructor the class that accepts an <see cref="IInpTableRow"/>
         /// and a <see cref="IInpDatabase"/>.
         /// </summary>
         /// <param name="row">The row that the option will be created from</param>
@@ -21,6 +30,10 @@ namespace Droplet.Core.Inp.Options
         {
             // Everything is constructed in the base class
         }
+
+        #endregion
+
+        #region Internal Members
 
         /// <summary>
         /// The name of the inp option that holds the date 
@@ -34,6 +47,24 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         internal const string TimeOptionName = "END_TIME";
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Public override of the <see cref="IInpEntity.ToInpString"/> Method 
+        /// that will return both the date and the time option names and associated values
+        /// </summary>
+        /// <returns>Returns: The End Date Option name and value followed by the End Time Option name and value</returns>
+        public override string ToInpString()
+        {
+            var dateString = DateOptionName.PadRight(OptionStringPadding) + $"{Value:dd'/'MM'/'yyyy}";
+            var timeString = TimeOptionName.PadRight(OptionStringPadding) + $"{Value.TimeOfDay}";
+
+            return dateString + Environment.NewLine + timeString;
+        }
+
+        #endregion
 
     }
 }

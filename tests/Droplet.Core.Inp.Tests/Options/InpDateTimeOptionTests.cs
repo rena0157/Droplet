@@ -134,15 +134,69 @@ REPORT_START_TIME    00:00:00
         #region EndDateTime Tests
 
         /// <summary>
+        /// A valid <see cref="EndDateTimeOption"/> inp string
+        /// </summary>
+        private const string EndDateTimeValidInpString = @"[OPTIONS]
+END_DATE             07/28/2019
+END_TIME             06:00:00
+";
+
+        /// <summary>
+        /// Invalid <see cref="EndDateTimeOption"/> inp string that has an invalid 
+        /// end time
+        /// </summary>
+        private const string EndDateTimeString_InvalidEndTime = @"[OPTIONS]
+END_DATE             07/28/2019
+END_TIME             INVALID
+";
+
+        /// <summary>
+        /// Invalid <see cref="EndDateTimeOption"/> inp string that is missing the 
+        /// End Time
+        /// </summary>
+        private const string EndDateTimeString_MissingEndTime = @"[OPTIONS]
+END_DATE             07/28/2019
+";
+
+        /// <summary>
+        /// Invalid <see cref="EndDateTimeOption"/> inp string that has an invalid 
+        /// end date
+        /// </summary>
+        private const string EndDateTimeString_InvalidEndDate = @"[OPTIONS]
+END_DATE             INVALID
+END_TIME             06:00:00
+";
+
+        /// <summary>
+        /// Invalid <see cref="EndDateTimeOption"/> inp string that is missing the start date
+        /// </summary>
+        private const string EndDateTimeString_MissingEndDate = @"[OPTIONS]
+END_TIME             06:00:00
+";
+
+        /// <summary>
         /// Tests the parsing of the <see cref="EndDateTimeOption"/> option
         /// </summary>
         /// <param name="value">A string from an inp file that represents a date and a time</param>
         /// <param name="expectedDateTime">The expected date time</param>
         [Theory]
         [ClassData(typeof(EndDateTimeParserTesData))]
-        public void EndDateTimeParserTests(string value, DateTime expectedDateTime)
+        public void EndDateTimeParser_ValidString_ShouldMatchExpected(string value, DateTime expectedDateTime)
             => Assert.Equal(expectedDateTime,
                 SetupProject(value).Database.GetOption<EndDateTimeOption>().Value);
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="EndDateTimeOption"/> when 
+        /// and invalid string is passed
+        /// </summary>
+        /// <param name="value">The invalid string</param>
+        [Theory]
+        [InlineData(EndDateTimeString_MissingEndTime)]
+        [InlineData(EndDateTimeString_InvalidEndDate)]
+        [InlineData(EndDateTimeString_MissingEndDate)]
+        [InlineData(EndDateTimeString_InvalidEndTime)]
+        public void EndDateTimeParser_InvalidString_ShouldThrowInpFileException(string value)
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
 
         /// <summary>
         /// Test data for the <see cref="EndDateTimeParserTesData"/>
@@ -153,11 +207,7 @@ REPORT_START_TIME    00:00:00
             {
                 yield return new object[]
                 {
-                    @"[OPTIONS]
-END_DATE             07/28/2019
-END_TIME             06:00:00
-",
-
+                    EndDateTimeValidInpString,
                     new DateTime(2019, 07, 28, 6, 0, 0)
                 };
             }
