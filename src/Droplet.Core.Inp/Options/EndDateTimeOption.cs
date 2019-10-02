@@ -16,6 +16,11 @@ namespace Droplet.Core.Inp.Options
 
         #region Constructors
 
+        /// <summary>
+        /// Default Constructor that accepts a <see cref="DateTime"/> that will be used 
+        /// to set the value of this option. The name of this option will be left to the default value.
+        /// </summary>
+        /// <param name="dateTime">The <see cref="DateTime"/> that the value of this option will be set to</param>
         public EndDateTimeOption(DateTime dateTime) : base(dateTime)
         {
         }
@@ -58,7 +63,7 @@ namespace Droplet.Core.Inp.Options
         /// <returns>Returns: The End Date Option name and value followed by the End Time Option name and value</returns>
         public override string ToInpString()
         {
-            var dateString = DateOptionName.PadRight(OptionStringPadding) + $"{Value:dd'/'MM'/'yyyy}";
+            var dateString = DateOptionName.PadRight(OptionStringPadding) + $"{Value:MM'/'dd'/'yyyy}";
             var timeString = TimeOptionName.PadRight(OptionStringPadding) + $"{Value.TimeOfDay}";
 
             return dateString + Environment.NewLine + timeString;
