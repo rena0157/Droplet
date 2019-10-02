@@ -53,6 +53,17 @@ namespace Droplet.Core.Inp.Tests.Options
         public void ParserTest_EmptyString(string value)
             => Assert.Throws<InpFileException>(() => SetupProject(value));
 
+        /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> method as implemented for 
+        /// the <see cref="FlowUnitsOption"/> class
+        /// </summary>
+        /// <param name="value">The string that is expected</param>
+        /// <param name="units">The units value that will be turned into a string</param>
+        [Theory]
+        [ClassData(typeof(ParserTestData))]
+        public void ToInpString_ValidString_ShouldMatchExpected(string value, FlowUnit units)
+            => Assert.Equal(PruneInpString(value, OptionsHeader), new FlowUnitsOption(units).ToInpString());
+
         #endregion
 
         #region Test Data
