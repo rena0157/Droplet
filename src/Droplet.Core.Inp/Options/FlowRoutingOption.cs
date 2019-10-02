@@ -13,6 +13,14 @@ namespace Droplet.Core.Inp.Options
         #region Constructors
 
         /// <summary>
+        /// The default constructor for the <see cref="FlowRoutingOption"/> that accepts 
+        /// a <see cref="FlowRouting"/> that the value of this option will be set to. The 
+        /// <see cref="Name"/> for this option will be set to the default Inp String Name value.
+        /// </summary>
+        /// <param name="value">The <see cref="FlowRouting"/> that the value for this option will be set to</param>
+        public FlowRoutingOption(FlowRouting value) : base(value) => Name = OptionName;
+
+        /// <summary>
         /// The Default Constructor. Note that the base constructor
         /// will initialize the <see cref="Value"/> field.
         /// </summary>

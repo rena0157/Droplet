@@ -80,13 +80,13 @@ FLOW_ROUTING        GARBAGE DATA
         /// Testing the <see cref="IInpEntity.ToInpString"/> method as implemented for the 
         /// <see cref="FlowRoutingOption"/> class
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="expectedString"></param>
         [Theory]
-        [InlineData(FlowRoutingValidInpStringSteady)]
-        [InlineData(FlowRoutingValidInpStringDynamic)]
-        [InlineData(FlowRoutingValidInpStringKynwave)]
-        public void ToInpString_ValidString_ShouldMatchPassedString(string value)
-            => Assert.Equal(PruneInpString(value, OptionsHeader), SetupProject(value).Database.GetOption<FlowRoutingOption>().ToInpString());
+        [InlineData(FlowRoutingValidInpStringSteady, FlowRouting.SteadyFlow)]
+        [InlineData(FlowRoutingValidInpStringDynamic, FlowRouting.DynamicWave)]
+        [InlineData(FlowRoutingValidInpStringKynwave, FlowRouting.KinematicWave)]
+        public void ToInpString_ValidString_ShouldMatchPassedString(string expectedString, FlowRouting value)
+            => Assert.Equal(PruneInpString(expectedString, OptionsHeader), new FlowRoutingOption(value).ToInpString());
 
         #endregion
     }
