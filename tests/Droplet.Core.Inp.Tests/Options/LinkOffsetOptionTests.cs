@@ -1,5 +1,4 @@
-﻿using Droplet.Core.Inp.IO;
-using Droplet.Core.Inp.Options;
+﻿using Droplet.Core.Inp.Options;
 using System.Collections;
 using System.Collections.Generic;
 using Xunit;
@@ -16,7 +15,7 @@ namespace Droplet.Core.Inp.Tests.Options
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="logger">Sets the logger for this class from Xunit</param>
+        /// <param name="logger">Sets the logger for this class from <see cref="Xunit"/></param>
         public LinkOffsetOptionTests(ITestOutputHelper logger) : base(logger)
         {
         }
@@ -32,17 +31,7 @@ namespace Droplet.Core.Inp.Tests.Options
         [Theory]
         [ClassData(typeof(ParserTestData))]
         public void ParserTests(string inpString, LinkOffset expectedLinkOffset)
-        {
-            Initialize(inpString);
-            InpProject project = new InpProject();
-            InpFileReader reader = new InpFileReader(MemoryStream);
-            InpParser parser = new InpParser();
-            parser.ParseFile(project, reader);
-
-            LinkOffsetOption option = project.Database.GetOption<LinkOffsetOption>();
-
-            Assert.Equal(expectedLinkOffset, option.Value);
-        }
+            => Assert.Equal(expectedLinkOffset, SetupProject(inpString).Database.GetOption<LinkOffsetOption>().Value);
 
         #endregion  
 
