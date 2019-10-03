@@ -1,4 +1,5 @@
-﻿using Droplet.Core.Inp.Options;
+﻿using Droplet.Core.Inp.Exceptions;
+using Droplet.Core.Inp.Options;
 using System.Collections;
 using System.Collections.Generic;
 using Xunit;
@@ -30,15 +31,26 @@ namespace Droplet.Core.Inp.Tests.Options
         /// parser should generate</param>
         [Theory]
         [ClassData(typeof(ParserTestData))]
-        public void ParserTests(string inpString, LinkOffset expectedLinkOffset)
+        public void ParserTests_ValidString_ShouldMatchExpected(string inpString, LinkOffset expectedLinkOffset)
             => Assert.Equal(expectedLinkOffset, SetupProject(inpString).Database.GetOption<LinkOffsetOption>().Value);
+
+
+        /// <summary>
+        /// Testing the parser when an invalid inp string is passed. This should throw an 
+        /// <see cref="InpFileException"/>
+        /// </summary>
+        /// <param name="inpString">The invalid string</param>
+        [Theory]
+        [InlineData("[OPTIONS]\nLINK_OFFSETS         INVALIDSTRING\n")]
+        public void ParserTests_InvalidString_ShouldThrowInpFileException(string inpString)
+            => Assert.Throws<InpFileException>(() => SetupProject(inpString));
 
         #endregion  
 
         #region Test Data
 
         /// <summary>
-        /// Test data for the <see cref="ParserTests(string, LinkOffset)"/>
+        /// Test data for the <see cref="ParserTests_ValidString_ShouldMatchExpected(string, LinkOffset)"/>
         /// </summary>
         private class ParserTestData : IEnumerable<object[]>
         {
