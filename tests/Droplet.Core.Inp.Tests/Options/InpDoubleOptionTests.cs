@@ -43,10 +43,9 @@ MIN_SLOPE            0.15
         /// </summary>
         /// <param name="value"></param>
         [Theory]
-        [InlineData(MinSlopeValidString)]
-        public void MinSlopeToInpStringTest(string value)
-            => Assert.Contains(SetupProject(value).Database.GetOption<MinSlopeOption>().ToInpString(),
-                value);
+        [InlineData(MinSlopeValidString, 0.15)]
+        public void MinSlopeToInpStringTest(string inpString, double value)
+            => Assert.Equal(PruneInpString(inpString, OptionsHeader), new MinSlopeOption(value).ToInpString());
 
         #endregion
 
