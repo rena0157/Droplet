@@ -11,6 +11,12 @@ namespace Droplet.Core.Inp.Options
         #region Constructors
 
         /// <summary>
+        /// The default 
+        /// </summary>
+        /// <param name="value"></param>
+        public MinSlopeOption(double value) : base(value) => Name = OptionName;
+
+        /// <summary>
         /// Default Constructor that initializes the option from a row
         /// and adds a reference to the database that it belongs to
         /// </summary>
