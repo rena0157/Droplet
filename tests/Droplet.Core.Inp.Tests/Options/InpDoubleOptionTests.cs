@@ -74,10 +74,9 @@ MIN_SURFAREA         1.167
         /// </summary>
         /// <param name="value">The string value that has a valid string</param>
         [Theory]
-        [InlineData(MinSurfaceAreaValidString)]
-        public void MinSurfaceAreaToInpStringTest(string value)
-            => Assert.Contains(SetupProject(value).Database.GetOption<MinSurfaceAreaOption>().ToInpString(),
-                value);
+        [InlineData(MinSurfaceAreaValidString, 1.167)]
+        public void MinSurfaceAreaToInpStringTest(string inpString, double value)
+            => Assert.Equal(PruneInpString(inpString, OptionsHeader), new MinSurfaceAreaOption(value).ToInpString());
 
         #endregion
     }
