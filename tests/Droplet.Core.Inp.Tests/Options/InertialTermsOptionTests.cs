@@ -46,6 +46,17 @@ namespace Droplet.Core.Inp.Tests.Options
             => Assert.Throws<InpFileException>(() => SetupProject(value));
 
         /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> override method 
+        /// for the <see cref="InertialTermsOption"/> class
+        /// </summary>
+        /// <param name="inpString">A valid inp string</param>
+        /// <param name="expectedValue">The expected value</param>
+        [Theory]
+        [ClassData(typeof(InertialTermsParserTestData))]
+        public void ToInpString_ValidString_ShouldMatchExpected(string inpString, InertialTermsHandling expectedValue)
+            => Assert.Equal(PruneInpString(inpString, OptionsHeader), new InertialTermsOption(expectedValue).ToInpString());
+
+        /// <summary>
         /// Test data for the <see cref="ParserTests_ValidInpString(string, InertialTermsHandling)"/> tests
         /// </summary>
         private class InertialTermsParserTestData : IEnumerable<object[]>
