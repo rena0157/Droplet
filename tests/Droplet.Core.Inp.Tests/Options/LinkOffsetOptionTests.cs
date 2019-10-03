@@ -2,6 +2,7 @@
 using Droplet.Core.Inp.Options;
 using System.Collections;
 using System.Collections.Generic;
+using Droplet.Core.Inp.Entities;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -44,6 +45,17 @@ namespace Droplet.Core.Inp.Tests.Options
         [InlineData("[OPTIONS]\nLINK_OFFSETS         INVALIDSTRING\n")]
         public void ParserTests_InvalidString_ShouldThrowInpFileException(string inpString)
             => Assert.Throws<InpFileException>(() => SetupProject(inpString));
+
+        /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> method as implemented for 
+        /// the <see cref="LinkOffsetOption"/>
+        /// </summary>
+        /// <param name="expectedString">The expected string</param>
+        /// <param name="value">The value that will be converted to an inp string</param>
+        [Theory]
+        [ClassData(typeof(ParserTestData))]
+        public void ToInpString_ValidString_ShouldMatchExpected(string expectedString, LinkOffset value)
+            => Assert.Equal(PruneInpString(expectedString, OptionsHeader), new LinkOffsetOption(value).ToInpString());
 
         #endregion  
 
