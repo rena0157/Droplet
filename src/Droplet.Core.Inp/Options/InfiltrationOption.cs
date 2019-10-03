@@ -4,6 +4,7 @@
 
 using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.Exceptions;
+using Droplet.Core.Inp.Entities;
 using System;
 
 namespace Droplet.Core.Inp.Options
@@ -13,10 +14,16 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class InfiltrationOption : InpOption<InfiltrationMethod>
     {
+
+        #region Constructors
+
         /// <summary>
-        /// The name of the option
+        /// Default constructor that accepts an <see cref="InfiltrationMethod"/> that will 
+        /// be set as the value for this option. This constructor also sets the <see cref="Name"/> 
+        /// of this option to its default inp string value.
         /// </summary>
-        internal const string OptionName = "INFILTRATION";
+        /// <param name="infiltrationMethod">The method that the value will be set to</param>
+        public InfiltrationOption(InfiltrationMethod infiltrationMethod) : base(infiltrationMethod) => Name = OptionName;
 
         /// <summary>
         /// Default Constructor for this option
@@ -27,6 +34,29 @@ namespace Droplet.Core.Inp.Options
         {
             Value = Value.FromInpString(row[1]);
         }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Public override of <see cref="IInpEntity.ToInpString"/>
+        /// </summary>
+        /// <returns>Returns: a formatted string that has the <see cref="Name"/> and <see cref="Value"/> of this option</returns>
+        public override string ToInpString() 
+            => Name.PadRight(OptionStringPadding) + Value.ToInpString();
+
+        #endregion
+
+        #region Internal Members
+
+        /// <summary>
+        /// The name of the option
+        /// </summary>
+        internal const string OptionName = "INFILTRATION";
+
+        #endregion
+
     }
 
     /// <summary>
@@ -47,7 +77,7 @@ namespace Droplet.Core.Inp.Options
 
     /// <summary>
     /// Container class that holds all of the extension methods for the infiltration
-    /// methods option enum <see cref="InfiltrationMethod"/>
+    /// methods option enumeration <see cref="InfiltrationMethod"/>
     /// </summary>
     public static class InfiltrationMethodsExtensions
     {
@@ -68,5 +98,22 @@ namespace Droplet.Core.Inp.Options
             "CURVE_NUMBER" => InfiltrationMethod.CurveNumber,
             _ => throw InpParseException.CreateWithStandardMessage(typeof(InfiltrationOption))
         };
+
+        /// <summary>
+        /// Converts a <see cref="InfiltrationMethod"/> to its inp string value
+        /// </summary>
+        /// <param name="method">The method that will be used to convert to a <see cref="string"/></param>
+        /// <returns>Returns: the inp value of <paramref name="method"/></returns>
+        public static string ToInpString(this InfiltrationMethod method) => method switch
+        {
+            InfiltrationMethod.Horton => "HORTON",
+            InfiltrationMethod.ModifiedHorton => "MODIFIED_HORTON",
+            InfiltrationMethod.GreenAmpt => "GREEN_AMPT",
+            InfiltrationMethod.ModifiedGreenAmpt => "MODIFIED_GREEN_AMPT",
+            InfiltrationMethod.CurveNumber => "CURVE_NUMBER",
+
+            _ => throw InpParseException.CreateWithStandardMessage(typeof(InfiltrationOption))
+        };
+
     }
 }

@@ -1,5 +1,5 @@
-﻿using Droplet.Core.Inp.Exceptions;
-using Droplet.Core.Inp.IO;
+﻿using Droplet.Core.Inp.Entities;
+using Droplet.Core.Inp.Exceptions;
 using Droplet.Core.Inp.Options;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,12 +43,22 @@ namespace Droplet.Core.Inp.Tests.Options
         public void PaserTests_InvalidInpString(string value)
             => Assert.Throws<InpFileException>(() => SetupProject(value));
 
+        /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> method
+        /// </summary>
+        /// <param name="inpString">The expected string</param>
+        /// <param name="expectedMethod">The value that will be converted</param>
+        [Theory]
+        [ClassData(typeof(ParserTestData))]
+        public void ToInpString_ValidString_ShouldMatchValue(string inpString, InfiltrationMethod expectedMethod)
+            => Assert.Equal(PruneInpString(inpString, OptionsHeader), new InfiltrationOption(expectedMethod).ToInpString());
+
         #endregion
 
         #region Test Data
 
         /// <summary>
-        /// Test data for <see cref="InfiltrationOptionTests.ParserTests_ValidInpString(string, InfiltrationMethod)"/>
+        /// Test data for <see cref="ParserTests_ValidInpString(string, InfiltrationMethod)"/>
         /// </summary>
         private class ParserTestData : IEnumerable<object[]>
         {
