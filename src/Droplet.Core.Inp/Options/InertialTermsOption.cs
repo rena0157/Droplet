@@ -1,5 +1,6 @@
 ﻿using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.Exceptions;
+using Droplet.Core.Inp.Entities;
 using Droplet.Core.Inp.Utilities;
 using System;
 using System.Globalization;
@@ -12,6 +13,8 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class InertialTermsOption : InpOption<InertialTermsHandling>
     {
+        #region Constructors
+
         /// <summary>
         /// Constructor that accepts an <see cref="IInpTableRow"/> and an 
         /// <see cref="IInpDatabase"/>
@@ -24,11 +27,21 @@ namespace Droplet.Core.Inp.Options
             Value = ParseRow(row);
         }
 
+        #endregion
+
+        #region Internal Members
+
         /// <summary>
         /// The inp option name that is found in inp files
         /// </summary>
         internal const string OptionName = "INERTIAL_DAMPING";
 
+        /// <summary>
+        /// Internal override of the <see cref="ParseRow(IInpTableRow)"/> method
+        /// </summary>
+        /// <param name="row">The <see cref="IInpTableRow"/> that will be parsed</param>
+        /// <returns>Returns a new <see cref="InertialTermsHandling"/> value that corresponds with the 
+        /// parsed value from the <paramref name="row"/></returns>
         protected internal override InertialTermsHandling ParseRow(IInpTableRow row)
         {
             // Check for null
@@ -38,6 +51,9 @@ namespace Droplet.Core.Inp.Options
             // From inp string extension method
             return InertialTermsHandling.Dampen.FromInpString(row[1]);
         }
+
+        #endregion
+
     }
 
     /// <summary>
