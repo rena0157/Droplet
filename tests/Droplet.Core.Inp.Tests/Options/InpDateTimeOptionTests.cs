@@ -339,6 +339,17 @@ END_TIME             00:00:00"
                 .GetOption<SweepingStartDateTimeOption>().Value);
 
         /// <summary>
+        /// Testing the public override of the <see cref="IInpEntity.ToInpString"/> 
+        /// as implemented for the <see cref="SweepingStartDateTimeOption"/> class
+        /// </summary>
+        /// <param name="expectedString">The expected string</param>
+        /// <param name="value">The value that will be used to construct the <see cref="SweepingStartDateTimeOption"/></param>
+        [Theory]
+        [ClassData(typeof(SweepingStartDateTimeParserTestData))]
+        public void SweepingStartDateTime_ToInpString_ShouldMatchExpected(string expectedString, DateTime value)
+            => Assert.Equal(PruneInpString(expectedString, OptionsHeader), new SweepingStartDateTimeOption(value).ToInpString());
+
+        /// <summary>
         /// Test data for the <see cref="SweepingStartDateTimeParserTests(string, DateTime)"/>
         ///  tests
         /// </summary>
@@ -371,6 +382,18 @@ SWEEP_START          01/01
         public void SweepingEndDateTimeParserTests(string value, DateTime expectedValue)
             => Assert.Equal(expectedValue, SetupProject(value).Database
                                                                  .GetOption<SweepingEndDateTimeOption>().Value);
+
+        /// <summary>
+        /// Testing the override of the <see cref="IInpEntity.ToInpString"/> as implemented for 
+        /// the <see cref="SweepingEndDateTimeOption"/>
+        /// </summary>
+        /// <param name="expectedValue">The expected value</param>
+        /// <param name="value">The value that will be used to 
+        /// construct the <see cref="SweepingEndDateTimeOption"/></param>
+        [Theory]
+        [ClassData(typeof(SweepingEndDateTimeParserTestData))]
+        public void SweepingEndDateTime_ToInpString_ShouldMatchExpected(string expectedValue, DateTime value)
+            => Assert.Equal(PruneInpString(expectedValue, OptionsHeader), new SweepingEndDateTimeOption(value).ToInpString());
 
         /// <summary>
         /// Test data for the <see cref="SweepingEndDateTimeParserTests(string, DateTime)"/> 
