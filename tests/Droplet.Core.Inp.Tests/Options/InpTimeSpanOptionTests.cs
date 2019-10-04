@@ -179,6 +179,17 @@ REPORT_STEP          NOTVALID
                 .GetOption<WetWeatherStepOption>().Value);
 
         /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> method as implemented for 
+        /// the <see cref="WetWeatherStepOption"/>
+        /// </summary>
+        /// <param name="expectedValue">The expected <see cref="string"/></param>
+        /// <param name="value">The value that will be used to construct the <see cref="WetWeatherStepOption"/></param>
+        [Theory]
+        [ClassData(typeof(WetWeatherOptionParserTestData))]
+        public void WetWeatherStep_ToInpString_ShouldMatchExpected(string expectedValue, TimeSpan value)
+            => Assert.Equal(PruneInpString(expectedValue, OptionsHeader), new WetWeatherStepOption(value).ToInpString());
+
+        /// <summary>
         /// Test data for the <see cref="WetWeatherOptionParserTests(string, TimeSpan)"/> tests
         /// </summary>
         private class WetWeatherOptionParserTestData : IEnumerable<object[]>
