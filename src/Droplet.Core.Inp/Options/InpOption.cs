@@ -162,6 +162,9 @@ namespace Droplet.Core.Inp.Options
             // Min Surface Area Option
             MinSurfaceAreaOption.OptionName => new MinSurfaceAreaOption(row, database),
 
+            // Max trials option
+            MaxTrialsOption.OptionName => new MaxTrialsOption(row, database),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };
