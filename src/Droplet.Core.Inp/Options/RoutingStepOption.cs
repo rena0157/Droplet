@@ -1,4 +1,5 @@
 ﻿using Droplet.Core.Inp.Data;
+using System;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -7,6 +8,17 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class RoutingStepOption : InpTimeSpanOption
     {
+
+        #region Constructors
+
+        /// <summary>
+        /// The default constructor for the <see cref="RoutingStepOption"/>.
+        /// </summary>
+        /// <param name="value">The value that will be used to set the <see cref="Value"/> of 
+        /// this class</param>
+        public RoutingStepOption(TimeSpan value) : base(value) => Name = OptionName;
+
+
         /// <summary>
         /// Internal Constructor that accepts an <see cref="IInpTableRow"/> 
         /// and an <see cref="IInpDatabase"/>
@@ -17,9 +29,15 @@ namespace Droplet.Core.Inp.Options
         {
         }
 
+        #endregion
+
+        #region Internal Members
+
         /// <summary>
         /// The option name in inp files
         /// </summary>
         internal const string OptionName = "ROUTING_STEP";
+
+        #endregion
     }
 }

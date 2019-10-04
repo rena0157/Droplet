@@ -270,6 +270,20 @@ DRY_STEP             INVALIDSTRING
         #region Routing Step Option
 
         /// <summary>
+        /// A valid <see cref="string"/> for the <see cref="RoutingStepOption"/> class
+        /// </summary>
+        private const string RoutingStepOption_ValidString = @"[OPTIONS]
+ROUTING_STEP         00:00:30
+";
+
+        /// <summary>
+        /// An invalid <see cref="string"/> for the <see cref="RoutingStepOption"/> class
+        /// </summary>
+        private const string RoutingStepOption_InvalidString = @"[OPTIONS]
+ROUTING_STEP         INVALIDSTRING
+";
+
+        /// <summary>
         /// Testing the parsing of the <see cref="RoutingStepOption"/>
         /// </summary>
         /// <param name="value">The string that will be parsed</param>
@@ -281,6 +295,27 @@ DRY_STEP             INVALIDSTRING
             => Assert.Equal(expectedValue, SetupProject(value).Database.GetOption<RoutingStepOption>().Value);
 
         /// <summary>
+        /// Testing the paring of <see cref="RoutingStepOption"/> when 
+        /// an invalid string is passed to it
+        /// </summary>
+        /// <param name="value">An invalid string</param>
+        [Theory]
+        [InlineData(RoutingStepOption_InvalidString)]
+        public void RoutingStepOptionParser_InvalidString_ShouldThrowInpFileException(string value)
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
+
+        /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> override for the 
+        /// <see cref="RoutingStepOption"/>
+        /// </summary>
+        /// <param name="expectedString">The expected <see cref="string"/></param>
+        /// <param name="value">The value</param>
+        [Theory]
+        [ClassData(typeof(RoutingStepOptionParserTestData))]
+        public void RoutingStepOption_ToInpString_ShouldMatchExpected(string expectedString, TimeSpan value)
+            => Assert.Equal(PruneInpString(expectedString, OptionsHeader), new RoutingStepOption(value).ToInpString());
+
+        /// <summary>
         /// Test data for the <see cref="RoutingStepOptionParserTests(string, TimeSpan)"/> tests
         /// </summary>
         private class RoutingStepOptionParserTestData : IEnumerable<object[]>
@@ -289,10 +324,7 @@ DRY_STEP             INVALIDSTRING
             {
                 yield return new object[]
                 {
-                    @"[OPTIONS]
-ROUTING_STEP         0:00:30
-",
-
+                    RoutingStepOption_ValidString,
                     new TimeSpan(0, 0, 30)
                 };
             }
