@@ -98,12 +98,23 @@ START_DATE           07/28/2019
         /// Parser should create from the <paramref name="value"/> passed</param>
         [Theory]
         [ClassData(typeof(ReportStartDateTimeParserTestData))]
-        public void ReportStartDateTimeParserTests(string value, DateTime expectedValue)
+        public void ReportStartDateTimeParser_ValidString_ShouldMatchExpected(string value, DateTime expectedValue)
             => Assert.Equal(expectedValue,
                 SetupProject(value).Database.GetOption<ReportStartDateTimeOption>().Value);
 
         /// <summary>
-        /// Test Data for the <see cref="ReportStartDateTimeParserTests(string, DateTime)"/> tests
+        /// Testing the parsing of <see cref="ReportStartDateTimeOption"/> when an invalid string 
+        /// is passed to it for either the start date or the start time
+        /// </summary>
+        /// <param name="value"></param>
+        [Theory]
+        [InlineData("[OPTIONS]\nREPORT_START_DATE    07/28/2019\nREPORT_START_TIME    INVALID\n")]
+        [InlineData("[OPTIONS]\nREPORT_START_DATE    INVALID\nREPORT_START_TIME    00:00:00\n")]
+        public void ReportStartDateTimeParser_InvalidString_ShouldThrowInpFileException(string value)
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
+
+        /// <summary>
+        /// Test Data for the <see cref="ReportStartDateTimeParser_ValidString_ShouldMatchExpected(string, DateTime)"/> tests
         /// </summary>
         private class ReportStartDateTimeParserTestData : IEnumerable<object[]>
         {
