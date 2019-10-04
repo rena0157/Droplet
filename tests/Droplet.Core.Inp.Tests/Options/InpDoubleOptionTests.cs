@@ -1,4 +1,6 @@
-﻿using Droplet.Core.Inp.Options;
+﻿using Droplet.Core.Inp.Entities;
+using Droplet.Core.Inp.Exceptions;
+using Droplet.Core.Inp.Options;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -77,6 +79,53 @@ MIN_SURFAREA         1.167
         [InlineData(MinSurfaceAreaValidString, 1.167)]
         public void MinSurfaceAreaToInpStringTest(string inpString, double value)
             => Assert.Equal(PruneInpString(inpString, OptionsHeader), new MinSurfaceAreaOption(value).ToInpString());
+
+        #endregion
+
+        #region Head Tolerance Tests
+
+        /// <summary>
+        /// Valid string for the <see cref="HeadToleranceOption"/>
+        /// </summary>
+        private const string HeadTolerance_ValidString = @"[OPTIONS]
+HEAD_TOLERANCE       0.0015";
+
+        /// <summary>
+        /// Invalid string for the <see cref="HeadToleranceOption"/>
+        /// </summary>
+        private const string HeadTolderance_InvalidString = @"[OPTIONS]
+HEAD_TOLERANCE       INVALIDSTRING
+";
+
+        /// <summary>
+        /// Testing the parsing of <see cref="HeadToleranceOption"/> with a valid <see cref="string"/>
+        /// </summary>
+        /// <param name="inpString">The valid string that contains the <see cref="HeadToleranceOption"/></param>
+        /// <param name="value">The value that is expected from the parser</param>
+        [Theory]
+        [InlineData(HeadTolerance_ValidString, 0.0015)]
+        public void HeadToleranceParser_ValidString_ShouldMatchValue(string inpString, double value)
+            => Assert.Equal(value, SetupProject(inpString).Database.GetOption<HeadToleranceOption>().Value);
+
+        /// <summary>
+        /// Testing the parsing of <see cref="HeadToleranceOption"/> with an invalid string.
+        /// </summary>
+        /// <param name="inpString">The invalid string</param>
+        [Theory]
+        [InlineData(HeadTolderance_InvalidString)]
+        public void HeadToleranceParser_InvalidString_ShouldThrowInpFileException(string inpString)
+            => Assert.Throws<InpFileException>(() => SetupProject(inpString));
+
+        /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> method as overridden for the 
+        /// <see cref="HeadToleranceOption"/>
+        /// </summary>
+        /// <param name="expected">The expected <see cref="string"/></param>
+        /// <param name="value">The value that will create a new <see cref="HeadToleranceOption"/></param>
+        [Theory]
+        [InlineData(HeadTolerance_ValidString, 0.0015)]
+        public void HeadTolerance_ToInpString_ShouldMatchExpected(string expected, double value)
+            => Assert.Equal(PruneInpString(expected, OptionsHeader), new HeadToleranceOption(value).ToInpString());
 
         #endregion
     }
