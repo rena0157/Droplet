@@ -3,11 +3,8 @@
 // Created: 2019-09-16
 
 using Droplet.Core.Inp.Exceptions;
-using Droplet.Core.Inp.IO;
 using Droplet.Core.Inp.Options;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Droplet.Core.Inp.Entities;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -109,6 +106,10 @@ SKIP_STEADY_STATE    YES
 SKIP_STEADY_STATE    NO
 ";
 
+        private const string SkipSSInvalid = @"[OPTIONS]
+SKIP_STEADY_STATE    INVALIDSTRING
+";
+
         /// <summary>
         /// Testing the parsing of the <see cref="SkipSteadyStateOption"/>
         /// </summary>
@@ -117,11 +118,32 @@ SKIP_STEADY_STATE    NO
         [Theory]
         [InlineData(SkipSSTrue, true)]
         [InlineData(SkipSSFalse, false)]
-        public void SkipSteadyStateParserTests(string value, bool expectedValue)
+        public void SkipSteadyStateParser_ValidString_ShouldMatchExpected(string value, bool expectedValue)
             => Assert
-            .Equal(expectedValue,
-                SetupProject(value).Database.GetOption<SkipSteadyStateOption>().Value);
+            .Equal(expectedValue, SetupProject(value).Database.GetOption<SkipSteadyStateOption>().Value);
 
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="SkipSteadyStateOption"/> when 
+        /// an invalid string is passed to it
+        /// </summary>
+        /// <param name="value">The invalid string</param>
+        [Theory]
+        [InlineData(SkipSSInvalid)]
+        public void SkipSteadyStateParser_InvalidString_ShouldThrowInpFileException(string value)
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
+
+        /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> as overridden for the 
+        /// <see cref="SkipSteadyStateOption"/>
+        /// </summary>
+        /// <param name="expectedString">The expected string</param>
+        /// <param name="value">The value that will be used to construct the <see cref="SkipSteadyStateOption"/></param>
+        [Theory]
+        [InlineData(SkipSSTrue, true)]
+        [InlineData(SkipSSFalse, false)]
+        public void SkipSteadyState_ToInpString_ShouldMatchExpected(string expectedString, bool value)
+            => Assert.Equal(PruneInpString(expectedString, OptionsHeader), new SkipSteadyStateOption(value).ToInpString());
 
         #endregion
     }
