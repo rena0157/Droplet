@@ -136,7 +136,10 @@ namespace Droplet.Core.Inp.Options
             FlowRouting.KinematicWave => "KINWAVE",
 
             // Conversion for the Dynamic Wave Option
-            FlowRouting.DynamicWave => "DYNWAVE"
+            FlowRouting.DynamicWave => "DYNWAVE",
+
+            // Throw exception if unknown value is passed
+            _ => throw InpParseException.CreateWithStandardMessage(typeof(FlowRoutingOption))
         };
     }
 }
