@@ -4,6 +4,7 @@
 
 using Droplet.Core.Inp.Exceptions;
 using Droplet.Core.Inp.Options;
+using Droplet.Core.Inp.Entities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -46,6 +47,16 @@ namespace Droplet.Core.Inp.Tests.Options
                 SetupProject(value).Database.GetOption<StartDateTimeOption>().Value);
 
         /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> override for the <see cref="StartDateTimeOption"/> class
+        /// </summary>
+        /// <param name="expectedString">The expected <see cref="string"/></param>
+        /// <param name="value">The value that will be used to construct the <see cref="StartDateTimeOption"/></param>
+        [Theory]
+        [ClassData(typeof(StartDateTimeToInpStringTestData))]
+        public void StartDateTime_ToInpStringMethod_ShoudMatchValue(string expectedString, DateTime value)
+            => Assert.Equal(expectedString, new StartDateTimeOption(value).ToInpString());
+
+        /// <summary>
         /// Test Data for the <see cref="StartDateTimeParserTests(string, DateTime)"/> tests
         /// </summary>
         private class StartDateTimeParserTestData : IEnumerable<object[]>
@@ -79,6 +90,25 @@ START_DATE           07/28/2019
 
                     new DateTime(2019, 07, 28, 0, 0, 0)
 };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        /// <summary>
+        /// Test data for the <see cref="StartDateTime_ToInpStringMethod_ShoudMatchValue(string, DateTime)"/> 
+        /// Tests
+        /// </summary>
+        private class StartDateTimeToInpStringTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"START_DATE           07/28/2019
+START_TIME           01:12:50",
+                    new DateTime(2019, 07, 28, 1, 12, 50)
+                };
             }
 
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
