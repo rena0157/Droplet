@@ -165,6 +165,9 @@ namespace Droplet.Core.Inp.Options
             // Max trials option
             MaxTrialsOption.OptionName => new MaxTrialsOption(row, database),
 
+            // Head Tolerance option
+            HeadToleranceOption.OptionName => new HeadToleranceOption(row, database),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };
