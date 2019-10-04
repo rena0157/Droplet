@@ -15,24 +15,24 @@ namespace Droplet.Core.Inp.Options
         #region Constructors
 
         /// <summary>
+        /// The default constructor for the <see cref="SkipSteadyStateOption"/>
+        /// </summary>
+        /// <param name="value">Used to set the value of this option</param>
+        public SkipSteadyStateOption(bool value) : base(value) => Name = OptionName;
+
+        /// <summary>
         /// Constructor that requires a row from an inp file,
         /// and the database that the option will belong to
         /// </summary>
         /// <param name="row">The row that contains the data for the option</param>
         /// <param name="database">The database that the option belongs to</param>
-        public SkipSteadyStateOption(IInpTableRow row, IInpDatabase database) : base(row, database)
+        internal SkipSteadyStateOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
         }
 
         #endregion
 
-        #region Public Properties
-
-        /// <summary>
-        /// Public override of the Name Property that will
-        /// return the <see cref="OptionName"/> of this class
-        /// </summary>
-        public override string Name => OptionName;
+        #region Internal Members
 
         /// <summary>
         /// The name of the option in inp files
