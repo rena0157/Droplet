@@ -1,4 +1,6 @@
 ﻿using Droplet.Core.Inp.Data;
+using System;
+
 
 namespace Droplet.Core.Inp.Options
 {
@@ -7,7 +9,17 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class ControlRuleStepOption : InpTimeSpanOption
     {
-        #region Internal Members
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor that accepts a <see cref="TimeSpan"/> for its value. 
+        /// This constructor also sets the name for the option to the default value.
+        /// </summary>
+        /// <param name="timespan"></param>
+        public ControlRuleStepOption(TimeSpan timespan) : base(timespan)
+        {
+            Name = OptionName;
+        }
 
         /// <summary>
         /// Internal Constructor that builds the option from an <see cref="IInpTableRow"/> 
@@ -18,6 +30,10 @@ namespace Droplet.Core.Inp.Options
         internal ControlRuleStepOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
         }
+
+        #endregion
+
+        #region Internal Members
 
         /// <summary>
         /// The name of the option in inp files

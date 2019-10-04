@@ -1,7 +1,8 @@
-﻿using Droplet.Core.Inp.IO;
+﻿using Droplet.Core.Inp.Exceptions;
 using Droplet.Core.Inp.Options;
 using System.Collections;
 using System.Collections.Generic;
+using Droplet.Core.Inp.Entities;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -16,7 +17,7 @@ namespace Droplet.Core.Inp.Tests.Options
         /// <summary>
         /// Default constructor
         /// </summary>
-        /// <param name="logger">Sets the logger for this class from Xunit</param>
+        /// <param name="logger">Sets the logger for this class from <see cref="Xunit"/></param>
         public LinkOffsetOptionTests(ITestOutputHelper logger) : base(logger)
         {
         }
@@ -31,25 +32,37 @@ namespace Droplet.Core.Inp.Tests.Options
         /// parser should generate</param>
         [Theory]
         [ClassData(typeof(ParserTestData))]
-        public void ParserTests(string inpString, LinkOffset expectedLinkOffset)
-        {
-            Initialize(inpString);
-            InpProject project = new InpProject();
-            InpFileReader reader = new InpFileReader(MemoryStream);
-            InpParser parser = new InpParser();
-            parser.ParseFile(project, reader);
+        public void ParserTests_ValidString_ShouldMatchExpected(string inpString, LinkOffset expectedLinkOffset)
+            => Assert.Equal(expectedLinkOffset, SetupProject(inpString).Database.GetOption<LinkOffsetOption>().Value);
 
-            LinkOffsetOption option = project.Database.GetOption<LinkOffsetOption>();
 
-            Assert.Equal(expectedLinkOffset, option.Value);
-        }
+        /// <summary>
+        /// Testing the parser when an invalid inp string is passed. This should throw an 
+        /// <see cref="InpFileException"/>
+        /// </summary>
+        /// <param name="inpString">The invalid string</param>
+        [Theory]
+        [InlineData("[OPTIONS]\nLINK_OFFSETS         INVALIDSTRING\n")]
+        public void ParserTests_InvalidString_ShouldThrowInpFileException(string inpString)
+            => Assert.Throws<InpFileException>(() => SetupProject(inpString));
+
+        /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> method as implemented for 
+        /// the <see cref="LinkOffsetOption"/>
+        /// </summary>
+        /// <param name="expectedString">The expected string</param>
+        /// <param name="value">The value that will be converted to an inp string</param>
+        [Theory]
+        [ClassData(typeof(ParserTestData))]
+        public void ToInpString_ValidString_ShouldMatchExpected(string expectedString, LinkOffset value)
+            => Assert.Equal(PruneInpString(expectedString, OptionsHeader), new LinkOffsetOption(value).ToInpString());
 
         #endregion  
 
         #region Test Data
 
         /// <summary>
-        /// Test data for the <see cref="ParserTests(string, LinkOffset)"/>
+        /// Test data for the <see cref="ParserTests_ValidString_ShouldMatchExpected(string, LinkOffset)"/>
         /// </summary>
         private class ParserTestData : IEnumerable<object[]>
         {

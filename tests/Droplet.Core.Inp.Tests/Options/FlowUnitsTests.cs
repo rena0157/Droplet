@@ -33,7 +33,7 @@ namespace Droplet.Core.Inp.Tests.Options
         [Theory]
         [ClassData(typeof(ParserTestData))]
         public void ParserTests_ValidInpString(string value, FlowUnit expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<FlowUnitsOption>().Value);
+            => Assert.Equal(expectedValue, SetupProject(value).Database.GetOption<FlowUnitsOption>().Value);
 
         /// <summary>
         /// Testing this option if garbage data is sent to it what will happen
@@ -42,7 +42,7 @@ namespace Droplet.Core.Inp.Tests.Options
         [Theory]
         [InlineData("[OPTIONS]\nFLOW_UNITS           GARBAGEDATA\n")]
         public void ParserTests_InvalidInpString(string value)
-            => Assert.Throws<InpFileException>(() => SetupParserTest(value));
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
 
         /// <summary>
         /// Testing what happens if an empty string is passed to the reader
@@ -51,7 +51,18 @@ namespace Droplet.Core.Inp.Tests.Options
         [Theory]
         [InlineData("[OPTIONS]\nFLOW_UNITS  \n")]
         public void ParserTest_EmptyString(string value)
-            => Assert.Throws<InpFileException>(() => SetupParserTest(value));
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
+
+        /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> method as implemented for 
+        /// the <see cref="FlowUnitsOption"/> class
+        /// </summary>
+        /// <param name="value">The string that is expected</param>
+        /// <param name="units">The units value that will be turned into a string</param>
+        [Theory]
+        [ClassData(typeof(ParserTestData))]
+        public void ToInpString_ValidString_ShouldMatchExpected(string value, FlowUnit units)
+            => Assert.Equal(PruneInpString(value, OptionsHeader), new FlowUnitsOption(units).ToInpString());
 
         #endregion
 

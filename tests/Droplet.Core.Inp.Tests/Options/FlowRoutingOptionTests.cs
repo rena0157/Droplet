@@ -1,10 +1,9 @@
 ﻿using Droplet.Core.Inp.Exceptions;
-using Droplet.Core.Inp.IO;
 using Droplet.Core.Inp.Options;
-using System.Collections;
-using System.Collections.Generic;
+using Droplet.Core.Inp.Entities;
 using Xunit;
 using Xunit.Abstractions;
+using System;
 
 namespace Droplet.Core.Inp.Tests.Options
 {
@@ -28,94 +27,66 @@ namespace Droplet.Core.Inp.Tests.Options
         #region Tests
 
         /// <summary>
+        /// Flow Routing Inp String for the <see cref="FlowRouting.SteadyFlow"/> value
+        /// </summary>
+        private const string FlowRoutingValidInpStringSteady = @"[OPTIONS]
+FLOW_ROUTING         STEADY
+";
+
+        /// <summary>
+        /// <see cref="FlowRouting"/> Inp String for the <see cref="FlowRouting.DynamicWave"/> value
+        /// </summary>
+        private const string FlowRoutingValidInpStringDynamic = @"[OPTIONS]
+FLOW_ROUTING         DYNWAVE
+";
+
+        /// <summary>
+        /// <see cref="FlowRouting"/> Inp <see cref="string"/> for the <see cref="FlowRouting.KinematicWave"/> value
+        /// </summary>
+        private const string FlowRoutingValidInpStringKynwave = @"[OPTIONS]
+FLOW_ROUTING         KINWAVE
+";
+
+        /// <summary>
+        /// A string that contains garbage data for the <see cref="FlowRoutingOption"/>
+        /// </summary>
+        private const string FlowRoutingInvalidString = @"[OPTIONS]
+FLOW_ROUTING        GARBAGE DATA
+";
+
+        /// <summary>
         /// Test the parsing of the <see cref="FlowRoutingOption"/>
         /// option from an inp file
         /// </summary>
         /// <param name="value">The Inp string value</param>
         /// <param name="exectedValue">The expected value from the parser</param>
         [Theory]
-        [ClassData(typeof(ParserTest_ValidStringsData))]
-        public void ParserTests_ValidInpString(string value, FlowRouting expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database.GetOption<FlowRoutingOption>().Value);
+        [InlineData(FlowRoutingValidInpStringSteady, FlowRouting.SteadyFlow)]
+        [InlineData(FlowRoutingValidInpStringDynamic, FlowRouting.DynamicWave)]
+        [InlineData(FlowRoutingValidInpStringKynwave, FlowRouting.KinematicWave)]
+        public void ParserTests_ValidInpString_ShouldMatchExpectedValue(string value, FlowRouting expectedValue)
+            => Assert.Equal(expectedValue, SetupProject(value).Database.GetOption<FlowRoutingOption>().Value);
 
         /// <summary>
         /// Testing what happens if an invalid string is passed to the parser
         /// </summary>
         /// <param name="value">The invalid string</param>
         [Theory]
-        [ClassData(typeof(ParserTest_InvalidStringsData))]
-        public void ParserTests_InvalidInpString(string value)
-            => Assert.Throws<InpFileException>(() => SetupParserTest(value));
-
-        #endregion
-
-        #region Test Data
+        [InlineData(FlowRoutingInvalidString)]
+        public void ParserTests_InvalidInpString_ShouldThrowInpFileException(string value)
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
 
         /// <summary>
-        /// Test data for the <see cref="ParserTests_ValidInpString(string, FlowRouting)"/>
-        /// tests
+        /// Testing the <see cref="IInpEntity.ToInpString"/> method as implemented for the 
+        /// <see cref="FlowRoutingOption"/> class
         /// </summary>
-        private class ParserTest_ValidStringsData : IEnumerable<object[]>
-        {
-            /// <summary>
-            /// Gets a <see cref="string"/> that represents an inp string
-            /// and a <see cref="FlowRouting"/> option that 
-            /// should be parsed from the string.
-            /// </summary>
-            /// <returns>Returns: a <see cref="string"/> and a <see cref="FlowRouting"/> option</returns>
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                // Steady flow
-                yield return new object[]
-                {
-                    @"[OPTIONS]
-FLOW_ROUTING         STEADY
-",
-
-                    FlowRouting.SteadyFlow
-                };
-
-                // Kinematic Wave
-                yield return new object[]
-                {
-                    @"[OPTIONS]
-FLOW_ROUTING         KINWAVE
-",
-
-                    FlowRouting.KinematicWave
-                };
-
-                // Dynamic Wave
-                yield return new object[]
-                {
-                    @"[OPTIONS]
-FLOW_ROUTING         DYNWAVE
-",
-
-                    FlowRouting.DynamicWave
-                };
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
-
-        /// <summary>
-        /// Test data for the <see cref="ParserTests_InvalidInpString(string)"/> tests
-        /// </summary>
-        private class ParserTest_InvalidStringsData : IEnumerable<object[]>
-        {
-            public IEnumerator<object[]> GetEnumerator()
-            {
-                yield return new object[]
-                {
-                    @"[OPTIONS]
-FLOW_ROUTING        GARBAGE DATA
-"
-                };
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
+        /// <param name="expectedString"></param>
+        [Theory]
+        [InlineData(FlowRoutingValidInpStringSteady, FlowRouting.SteadyFlow)]
+        [InlineData(FlowRoutingValidInpStringDynamic, FlowRouting.DynamicWave)]
+        [InlineData(FlowRoutingValidInpStringKynwave, FlowRouting.KinematicWave)]
+        public void ToInpString_ValidString_ShouldMatchPassedString(string expectedString, FlowRouting value)
+            => Assert.Equal(PruneInpString(expectedString, OptionsHeader), new FlowRoutingOption(value).ToInpString());
 
         #endregion
     }

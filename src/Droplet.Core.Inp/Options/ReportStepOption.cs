@@ -1,4 +1,5 @@
 ﻿using Droplet.Core.Inp.Data;
+using System;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -7,7 +8,15 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class ReportStepOption : InpTimeSpanOption
     {
-        #region Internal Members
+        #region Constructors
+
+        /// <summary>
+        /// The default constructor for the <see cref="ReportStepOption"/> class 
+        /// that sets the value to the parameter passed <paramref name="value"/>. The name is 
+        /// set to the default inp string name.
+        /// </summary>
+        /// <param name="value"></param>
+        public ReportStepOption(TimeSpan value) : base(value) => Name = OptionName;
 
         /// <summary>
         /// Constructor that accepts an <see cref="IInpTableRow"/> 
@@ -18,6 +27,10 @@ namespace Droplet.Core.Inp.Options
         internal ReportStepOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
         }
+
+        #endregion
+
+        #region Internal Members
 
         /// <summary>
         /// The name of the option in inp files

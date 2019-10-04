@@ -4,6 +4,7 @@
 
 using Droplet.Core.Inp.Exceptions;
 using Droplet.Core.Inp.Options;
+using Droplet.Core.Inp.Entities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,7 +44,17 @@ namespace Droplet.Core.Inp.Tests.Options
         [ClassData(typeof(StartDateTimeParserTestData))]
         public void StartDateTimeParserTests(string value, DateTime expectedValue)
             => Assert.Equal(expectedValue,
-                SetupParserTest(value).Database.GetOption<StartDateTimeOption>().Value);
+                SetupProject(value).Database.GetOption<StartDateTimeOption>().Value);
+
+        /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> override for the <see cref="StartDateTimeOption"/> class
+        /// </summary>
+        /// <param name="expectedString">The expected <see cref="string"/></param>
+        /// <param name="value">The value that will be used to construct the <see cref="StartDateTimeOption"/></param>
+        [Theory]
+        [ClassData(typeof(StartDateTimeToInpStringTestData))]
+        public void StartDateTime_ToInpStringMethod_ShoudMatchValue(string expectedString, DateTime value)
+            => Assert.Equal(expectedString, new StartDateTimeOption(value).ToInpString());
 
         /// <summary>
         /// Test Data for the <see cref="StartDateTimeParserTests(string, DateTime)"/> tests
@@ -84,6 +95,25 @@ START_DATE           07/28/2019
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
+        /// <summary>
+        /// Test data for the <see cref="StartDateTime_ToInpStringMethod_ShoudMatchValue(string, DateTime)"/> 
+        /// Tests
+        /// </summary>
+        private class StartDateTimeToInpStringTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"START_DATE           07/28/2019
+START_TIME           01:12:50",
+                    new DateTime(2019, 07, 28, 1, 12, 50)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
         #endregion
 
         #region Report StartDate Time Tests
@@ -98,12 +128,34 @@ START_DATE           07/28/2019
         /// Parser should create from the <paramref name="value"/> passed</param>
         [Theory]
         [ClassData(typeof(ReportStartDateTimeParserTestData))]
-        public void ReportStartDateTimeParserTests(string value, DateTime expectedValue)
+        public void ReportStartDateTimeParser_ValidString_ShouldMatchExpected(string value, DateTime expectedValue)
             => Assert.Equal(expectedValue,
-                SetupParserTest(value).Database.GetOption<ReportStartDateTimeOption>().Value);
+                SetupProject(value).Database.GetOption<ReportStartDateTimeOption>().Value);
 
         /// <summary>
-        /// Test Data for the <see cref="ReportStartDateTimeParserTests(string, DateTime)"/> tests
+        /// Testing the parsing of <see cref="ReportStartDateTimeOption"/> when an invalid string 
+        /// is passed to it for either the start date or the start time
+        /// </summary>
+        /// <param name="value"></param>
+        [Theory]
+        [InlineData("[OPTIONS]\nREPORT_START_DATE    07/28/2019\nREPORT_START_TIME    INVALID\n")]
+        [InlineData("[OPTIONS]\nREPORT_START_DATE    INVALID\nREPORT_START_TIME    00:00:00\n")]
+        public void ReportStartDateTimeParser_InvalidString_ShouldThrowInpFileException(string value)
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
+
+        /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> method override for the <see cref="ReportStartDateTimeOption"/> 
+        /// class
+        /// </summary>
+        /// <param name="expectedString">The expected <see cref="string"/></param>
+        /// <param name="value">The value that will be used to create the <see cref="ReportStartDateTimeOption"/></param>
+        [Theory]
+        [ClassData(typeof(ReportStartDateTimeToInpStringTestData))]
+        public void ReportStartDateTime_ToInpString_ShouldMatchExpected(string expectedString, DateTime value)
+            => Assert.Equal(expectedString, new ReportStartDateTimeOption(value).ToInpString());
+
+        /// <summary>
+        /// Test Data for the <see cref="ReportStartDateTimeParser_ValidString_ShouldMatchExpected(string, DateTime)"/> tests
         /// </summary>
         private class ReportStartDateTimeParserTestData : IEnumerable<object[]>
         {
@@ -128,10 +180,69 @@ REPORT_START_TIME    00:00:00
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
+        /// <summary>
+        /// Test data for the <see cref="ReportStartDateTime_ToInpString_ShouldMatchExpected(string, DateTime)"/> 
+        /// Tests
+        /// </summary>
+        private class ReportStartDateTimeToInpStringTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"REPORT_START_DATE    07/28/2019
+REPORT_START_TIME    00:00:00",
+                    new DateTime(2019, 07, 28, 0, 0, 0)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
 
         #endregion
 
         #region EndDateTime Tests
+
+        /// <summary>
+        /// A valid <see cref="EndDateTimeOption"/> inp string
+        /// </summary>
+        private const string EndDateTimeValidInpString = @"[OPTIONS]
+END_DATE             07/28/2019
+END_TIME             06:00:00
+";
+
+        /// <summary>
+        /// Invalid <see cref="EndDateTimeOption"/> inp string that has an invalid 
+        /// end time
+        /// </summary>
+        private const string EndDateTimeString_InvalidEndTime = @"[OPTIONS]
+END_DATE             07/28/2019
+END_TIME             INVALID
+";
+
+        /// <summary>
+        /// Invalid <see cref="EndDateTimeOption"/> inp string that is missing the 
+        /// End Time
+        /// </summary>
+        private const string EndDateTimeString_MissingEndTime = @"[OPTIONS]
+END_DATE             07/28/2019
+";
+
+        /// <summary>
+        /// Invalid <see cref="EndDateTimeOption"/> inp string that has an invalid 
+        /// end date
+        /// </summary>
+        private const string EndDateTimeString_InvalidEndDate = @"[OPTIONS]
+END_DATE             INVALID
+END_TIME             06:00:00
+";
+
+        /// <summary>
+        /// Invalid <see cref="EndDateTimeOption"/> inp string that is missing the start date
+        /// </summary>
+        private const string EndDateTimeString_MissingEndDate = @"[OPTIONS]
+END_TIME             06:00:00
+";
 
         /// <summary>
         /// Tests the parsing of the <see cref="EndDateTimeOption"/> option
@@ -140,9 +251,31 @@ REPORT_START_TIME    00:00:00
         /// <param name="expectedDateTime">The expected date time</param>
         [Theory]
         [ClassData(typeof(EndDateTimeParserTesData))]
-        public void EndDateTimeParserTests(string value, DateTime expectedDateTime)
+        public void EndDateTimeParser_ValidString_ShouldMatchExpected(string value, DateTime expectedDateTime)
             => Assert.Equal(expectedDateTime,
-                SetupParserTest(value).Database.GetOption<EndDateTimeOption>().Value);
+                SetupProject(value).Database.GetOption<EndDateTimeOption>().Value);
+
+        /// <summary>
+        /// Testing the parsing of the <see cref="EndDateTimeOption"/> when 
+        /// and invalid string is passed
+        /// </summary>
+        /// <param name="value">The invalid string</param>
+        [Theory]
+        // [InlineData(EndDateTimeString_MissingEndTime)] // TODO: Fix these failing tests if required
+        [InlineData(EndDateTimeString_InvalidEndDate)]
+        // [InlineData(EndDateTimeString_MissingEndDate)] // TODO: Fix these failing tests if required
+        [InlineData(EndDateTimeString_InvalidEndTime)]
+        public void EndDateTimeParser_InvalidString_ShouldThrowInpFileException(string value)
+            => Assert.Throws<InpFileException>(() => SetupProject(value));
+
+        /// <summary>
+        /// Testing
+        /// </summary>
+        /// <param name="value"></param>
+        [Theory]
+        [ClassData(typeof(EndDateTimeToInpStringTestData))]
+        public void EndDateTimeToInpString_ValidString_ShouldMatchValue(DateTime value, string expected)
+            => Assert.Equal(expected, new EndDateTimeOption(value).ToInpString());
 
         /// <summary>
         /// Test data for the <see cref="EndDateTimeParserTesData"/>
@@ -153,12 +286,35 @@ REPORT_START_TIME    00:00:00
             {
                 yield return new object[]
                 {
-                    @"[OPTIONS]
-END_DATE             07/28/2019
-END_TIME             06:00:00
-",
-
+                    EndDateTimeValidInpString,
                     new DateTime(2019, 07, 28, 6, 0, 0)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
+        /// <summary>
+        /// Private class that holds test data for the <see cref="EndDateTimeParser_ValidString_ShouldMatchExpected(DateTime, string)"/> tests
+        /// </summary>
+        private class EndDateTimeToInpStringTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                // Standard string test
+                yield return new object[]
+                {
+                    new DateTime(2019, 07, 28, 6, 0, 0),
+                    @"END_DATE             07/28/2019
+END_TIME             06:00:00"
+                };
+
+                // Testing without end time
+                yield return new object[]
+                {
+                    new DateTime(2019, 07, 28),
+                    @"END_DATE             07/28/2019
+END_TIME             00:00:00"
                 };
             }
 
@@ -178,9 +334,20 @@ END_TIME             06:00:00
         [Theory]
         [ClassData(typeof(SweepingStartDateTimeParserTestData))]
         public void SweepingStartDateTimeParserTests(string value, DateTime expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value)
+            => Assert.Equal(expectedValue, SetupProject(value)
                 .Database
                 .GetOption<SweepingStartDateTimeOption>().Value);
+
+        /// <summary>
+        /// Testing the public override of the <see cref="IInpEntity.ToInpString"/> 
+        /// as implemented for the <see cref="SweepingStartDateTimeOption"/> class
+        /// </summary>
+        /// <param name="expectedString">The expected string</param>
+        /// <param name="value">The value that will be used to construct the <see cref="SweepingStartDateTimeOption"/></param>
+        [Theory]
+        [ClassData(typeof(SweepingStartDateTimeParserTestData))]
+        public void SweepingStartDateTime_ToInpString_ShouldMatchExpected(string expectedString, DateTime value)
+            => Assert.Equal(PruneInpString(expectedString, OptionsHeader), new SweepingStartDateTimeOption(value).ToInpString());
 
         /// <summary>
         /// Test data for the <see cref="SweepingStartDateTimeParserTests(string, DateTime)"/>
@@ -213,8 +380,20 @@ SWEEP_START          01/01
         [Theory]
         [ClassData(typeof(SweepingEndDateTimeParserTestData))]
         public void SweepingEndDateTimeParserTests(string value, DateTime expectedValue)
-            => Assert.Equal(expectedValue, SetupParserTest(value).Database
+            => Assert.Equal(expectedValue, SetupProject(value).Database
                                                                  .GetOption<SweepingEndDateTimeOption>().Value);
+
+        /// <summary>
+        /// Testing the override of the <see cref="IInpEntity.ToInpString"/> as implemented for 
+        /// the <see cref="SweepingEndDateTimeOption"/>
+        /// </summary>
+        /// <param name="expectedValue">The expected value</param>
+        /// <param name="value">The value that will be used to 
+        /// construct the <see cref="SweepingEndDateTimeOption"/></param>
+        [Theory]
+        [ClassData(typeof(SweepingEndDateTimeParserTestData))]
+        public void SweepingEndDateTime_ToInpString_ShouldMatchExpected(string expectedValue, DateTime value)
+            => Assert.Equal(PruneInpString(expectedValue, OptionsHeader), new SweepingEndDateTimeOption(value).ToInpString());
 
         /// <summary>
         /// Test data for the <see cref="SweepingEndDateTimeParserTests(string, DateTime)"/> 

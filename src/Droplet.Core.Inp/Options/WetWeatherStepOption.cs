@@ -1,4 +1,5 @@
 ﻿using Droplet.Core.Inp.Data;
+using System;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -7,6 +8,15 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class WetWeatherStepOption : InpTimeSpanOption
     {
+
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor for the <see cref="WetWeatherStepOption"/>
+        /// </summary>
+        /// <param name="value">Used to set the value for this option</param>
+        public WetWeatherStepOption(TimeSpan value) : base(value) => Name = OptionName;
+
         /// <summary>
         /// Internal Constructor that accepts an <see cref="IInpTableRow"/> 
         /// and an <see cref="IInpDatabase"/>
@@ -17,9 +27,16 @@ namespace Droplet.Core.Inp.Options
         {
         }
 
+        #endregion
+
+        #region Internal Members
+
         /// <summary>
         /// The Option Name in inp files
         /// </summary>
         internal const string OptionName = "WET_STEP";
+
+        #endregion
+
     }
 }

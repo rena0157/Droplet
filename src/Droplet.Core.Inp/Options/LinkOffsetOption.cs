@@ -1,8 +1,6 @@
 ﻿using Droplet.Core.Inp.Data;
 using Droplet.Core.Inp.Exceptions;
-using Droplet.Core.Inp.Utilities;
-using System;
-using System.Globalization;
+using Droplet.Core.Inp.Entities;
 
 namespace Droplet.Core.Inp.Options
 {
@@ -11,10 +9,11 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class LinkOffsetOption : InpOption<LinkOffset>
     {
-        /// <summary>
-        /// The option name
-        /// </summary>
-        internal const string OptionName = "LINK_OFFSETS";
+
+        #region Constructors
+
+        public LinkOffsetOption(LinkOffset linkOffset) : base(linkOffset) 
+            => Name = OptionName;
 
         /// <summary>
         /// Default Constructor
@@ -26,6 +25,29 @@ namespace Droplet.Core.Inp.Options
             // Set the value of the option
             Value = Value.FromInpString(row[1]);
         }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Public override of the <see cref="IInpEntity.ToInpString"/> method.
+        /// </summary>
+        /// <returns>Returns: an inp string that contains the <see cref="Name"/> and <see cref="Value"/> of this option</returns>
+        public override string ToInpString() 
+            => Name.PadRight(OptionStringPadding) + Value.ToInpString();
+
+        #endregion
+
+        #region Internal Members
+
+        /// <summary>
+        /// The option name
+        /// </summary>
+        internal const string OptionName = "LINK_OFFSETS";
+
+        #endregion
+
     }
 
     /// <summary>
@@ -68,10 +90,12 @@ namespace Droplet.Core.Inp.Options
         /// </summary>
         /// <param name="linkOffset">The link offset that will be converted</param>
         /// <returns>Returns: A string that is a valid inp string</returns>
-        public static string ToInpString(this LinkOffset linkOffset)
+        public static string ToInpString(this LinkOffset linkOffset) => linkOffset switch
         {
-            throw new NotImplementedException();
-        }
+            LinkOffset.DepthOffset => "DEPTH",
+            LinkOffset.ElevationOffset => "ELEVATION",
+            _ => throw InpParseException.CreateWithStandardMessage(typeof(LinkOffsetOption))
+        };
     }
 
 }

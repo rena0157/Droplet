@@ -15,6 +15,17 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class InpDateTimeOption : InpOption<DateTime>
     {
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor for the <see cref="InpDateTimeOption"/> that 
+        /// accepts a <see cref="DateTime"/> that the value will be set to.
+        /// </summary>
+        /// <param name="dateTime">The <see cref="DateTime"/> that the value will be set to</param>
+        public InpDateTimeOption(DateTime dateTime) : base(dateTime)
+        {
+        }
+
         /// <summary>
         /// Constructor that accepts a <see cref="IInpTableRow"/> and an <see cref="IInpDatabase"/>
         /// to build the object
@@ -27,6 +38,10 @@ namespace Droplet.Core.Inp.Options
             // store it in the value property
             Value = ParseRow(row);
         }
+
+        #endregion
+
+        #region Internal Members
 
         /// <summary>
         /// Parse the <see cref="IInpTableRow"/> that is passed and return it.
@@ -56,5 +71,7 @@ namespace Droplet.Core.Inp.Options
             Value = new DateTime(Value.Year, Value.Month, Value.Day, timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds);
             return this;
         }
+
+        #endregion
     }
 }

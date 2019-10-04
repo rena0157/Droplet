@@ -10,6 +10,17 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class InpDoubleOption : InpOption<double>
     {
+
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor that passes the value to the base constructor
+        /// </summary>
+        /// <param name="value">The value that is getting passed to the base constructor</param>
+        protected InpDoubleOption(double value) : base(value)
+        {
+        }
+
         /// <summary>
         /// Constructor that sets the value from the <paramref name="row"/> data
         /// and sets the database that the option belongs to
@@ -20,6 +31,10 @@ namespace Droplet.Core.Inp.Options
         {
             Value = ParseRow(row);
         }
+
+        #endregion
+
+        #region Internal Methods
 
         /// <summary>
         /// Protected internal override of the <see cref="InpOption{T}.ParseRow(IInpTableRow)"/> Method
@@ -40,5 +55,19 @@ namespace Droplet.Core.Inp.Options
             else
                 throw InpParseException.CreateWithStandardMessage(typeof(InpDoubleOption));
         }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Public Override for the ToInpString method for the <see cref="InpDoubleOption"/> classes
+        ///  and inheritors
+        /// </summary>
+        /// <returns>Returns: the name and value of the option</returns>
+        public override string ToInpString()
+            => Name.PadRight(OptionStringPadding) + Value;
+
+        #endregion
     }
 }

@@ -17,7 +17,7 @@ namespace Droplet.Core.Inp.Entities
         string Name { get; }
 
         /// <summary>
-        /// The Desciption of the entity
+        /// The Description of the entity
         /// </summary>
         string Description { get; }
 
@@ -25,5 +25,11 @@ namespace Droplet.Core.Inp.Entities
         /// The entity's tag
         /// </summary>
         string Tag { get; }
+
+        /// <summary>
+        /// Convert this entity to a string
+        /// </summary>
+        /// <returns>Returns: An inp string</returns>
+        string ToInpString();
     }
 }

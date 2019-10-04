@@ -8,6 +8,26 @@ namespace Droplet.Core.Inp.Options
     /// </summary>
     public class FlowUnitsOption : InpOption<FlowUnit>
     {
+
+        #region Constructors
+
+        /// <summary>
+        /// The default constructor for the <see cref="FlowRoutingOption"/> that accepts a <see cref="FlowUnit"/> which 
+        /// the <see cref="Value"/> for this option will be set to. The <see cref="Name"/> for this option will be set 
+        /// to the default Inp Option Name value.
+        /// </summary>
+        /// <param name="value">The value that the option will be set to</param>
+        public FlowUnitsOption(FlowUnit value) : base(value) => Name = OptionName;
+
+        /// <summary>
+        /// Default Constructor that calls to the base constructor
+        /// </summary>
+        /// <param name="row">The row that will be used to create this option</param>
+        /// <param name="database">The database that this option will belong to</param>
+        internal FlowUnitsOption(IInpTableRow row, IInpDatabase database) : base(row, database) => Value = Value.FromInpString(row[1]);
+
+        #endregion
+
         #region Constants
 
         /// <summary>
@@ -17,17 +37,14 @@ namespace Droplet.Core.Inp.Options
 
         #endregion
 
-        #region Constructors
+        #region Public Methods
 
         /// <summary>
-        /// Default Constructor that calls to the base constructor
+        /// Public Override of the <see cref="IInpEntity.ToInpString"/> method 
+        /// implemented for the <see cref="FlowUnitsOption"/>
         /// </summary>
-        /// <param name="row">The row that will be used to create this option</param>
-        /// <param name="database">The database that this option will belong to</param>
-        internal FlowUnitsOption(IInpTableRow row, IInpDatabase database) : base(row, database)
-        {
-            Value = Value.FromInpString(row[1]);
-        }
+        /// <returns>Returns: a formatted FlowUnitsOption as inp string</returns>
+        public override string ToInpString() => Name.PadRight(OptionStringPadding) + Value.ToInpString();
 
         #endregion
     }
