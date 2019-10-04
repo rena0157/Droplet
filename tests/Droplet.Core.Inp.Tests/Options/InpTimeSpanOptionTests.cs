@@ -137,11 +137,12 @@ REPORT_STEP          NOTVALID
         /// <summary>
         /// Tests for <see cref="IInpEntity.ToInpString"/> method as overridden for the <see cref="ReportStepOption"/>
         /// </summary>
-        /// <param name="value">A vaild inp string that will be used to test against</param>
+        /// <param name="expectedString">The expected string</param>
+        /// <param name="value">The value that will be used to create the inp string</param>
         [Theory]
-        [InlineData(ReportStepValidString)]
-        public void ReportStepToInpStringTest(string value)
-            => Assert.Contains(SetupProject(value).Database.GetOption<ReportStepOption>().ToInpString(), value);
+        [ClassData(typeof(ReportStepOptionParserTestData))]
+        public void ReportStepToInpStringTest(string expectedString, TimeSpan value)
+            => Assert.Equal(PruneInpString(expectedString, OptionsHeader), new ReportStepOption(value).ToInpString());
 
         /// <summary>
         /// Data class for the <see cref="ReportStepOptionParserTests_ValidString(string, TimeSpan)"/> tests
