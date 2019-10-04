@@ -5,14 +5,12 @@ using Droplet.Core.Inp.Data;
 
 namespace Droplet.Core.Inp.Options
 {
-    public class MaxTrialsOption : InpDoubleOption
+    public class MaxTrialsOption : InpIntOption
     {
 
         #region Constructors
 
-        public MaxTrialsOption(double value) : base(value)
-        {
-        }
+        public MaxTrialsOption(int value) : base(value) => Name = OptionName;
 
         /// <summary>
         /// Internal constructor that constructs this option from a <see cref="IInpTableRow"/> 
@@ -31,7 +29,7 @@ namespace Droplet.Core.Inp.Options
         /// <summary>
         /// The inp string option name
         /// </summary>
-        internal const string OptionName = "";
+        internal const string OptionName = "MAX_TRIALS";
 
         #endregion
     }
