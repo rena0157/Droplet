@@ -114,6 +114,17 @@ START_DATE           07/28/2019
             => Assert.Throws<InpFileException>(() => SetupProject(value));
 
         /// <summary>
+        /// Testing the <see cref="IInpEntity.ToInpString"/> method override for the <see cref="ReportStartDateTimeOption"/> 
+        /// class
+        /// </summary>
+        /// <param name="expectedString">The expected <see cref="string"/></param>
+        /// <param name="value">The value that will be used to create the <see cref="ReportStartDateTimeOption"/></param>
+        [Theory]
+        [ClassData(typeof(ReportStartDateTimeToInpStringTestData))]
+        public void ReportStartDateTime_ToInpString_ShouldMatchExpected(string expectedString, DateTime value)
+            => Assert.Equal(expectedString, new ReportStartDateTimeOption(value).ToInpString());
+
+        /// <summary>
         /// Test Data for the <see cref="ReportStartDateTimeParser_ValidString_ShouldMatchExpected(string, DateTime)"/> tests
         /// </summary>
         private class ReportStartDateTimeParserTestData : IEnumerable<object[]>
@@ -139,6 +150,24 @@ REPORT_START_TIME    00:00:00
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
+        /// <summary>
+        /// Test data for the <see cref="ReportStartDateTime_ToInpString_ShouldMatchExpected(string, DateTime)"/> 
+        /// Tests
+        /// </summary>
+        private class ReportStartDateTimeToInpStringTestData : IEnumerable<object[]>
+        {
+            public IEnumerator<object[]> GetEnumerator()
+            {
+                yield return new object[]
+                {
+                    @"REPORT_START_DATE    07/28/2019
+REPORT_START_TIME    00:00:00",
+                    new DateTime(2019, 07, 28, 0, 0, 0)
+                };
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        }
 
         #endregion
 
