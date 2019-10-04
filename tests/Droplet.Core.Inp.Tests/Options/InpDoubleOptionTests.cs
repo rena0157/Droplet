@@ -128,5 +128,11 @@ HEAD_TOLERANCE       INVALIDSTRING
             => Assert.Equal(PruneInpString(expected, OptionsHeader), new HeadToleranceOption(value).ToInpString());
 
         #endregion
+
+        #region Variable Step Tests
+
+
+
+        #endregion
     }
 }
