@@ -131,7 +131,34 @@ HEAD_TOLERANCE       INVALIDSTRING
 
         #region Variable Step Tests
 
+        /// <summary>
+        /// <see cref="string"/> that contains a valid <see cref="VariableStepOption"/>
+        /// </summary>
+        private const string VariableStep_ValidString = @"[OPTIONS]
+VARIABLE_STEP        0.75
+";
 
+        /// <summary>
+        /// <see cref="string"/> that contains an invalid <see cref="VariableStepOption"/>
+        /// </summary>
+        private const string VariableStep_InvalidString = @"[OPTIONS]
+VARIABLE_STEP        INVALIDSTRING
+";
+
+        [Theory]
+        [InlineData(VariableStep_ValidString, 0.75)]
+        public void VariableStepParser_ValidString_ShouldMatchValue(string inpString, double value)
+            => Assert.Equal(value, SetupProject(inpString).Database.GetOption<VariableStepOption>().Value);
+
+        [Theory]
+        [InlineData(VariableStep_InvalidString)]
+        public void VariableStepParser_InvalidString_ShouldThrowInpFileException(string inpString)
+            => Assert.Throws<InpFileException>(() => SetupProject(inpString));
+
+        [Theory]
+        [InlineData(VariableStep_ValidString, 0.75)]
+        public void VariableStepToInpString_ValidString_ShouldMatchExpected(string expectedString, double value)
+            => Assert.Equal(PruneInpString(expectedString, OptionsHeader), new VariableStepOption(value).ToInpString());
 
         #endregion
     }
