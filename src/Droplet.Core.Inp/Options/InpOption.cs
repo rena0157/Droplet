@@ -168,6 +168,8 @@ namespace Droplet.Core.Inp.Options
             // Head Tolerance option
             HeadToleranceOption.OptionName => new HeadToleranceOption(row, database),
 
+            ThreadCountOption.OptionName => new ThreadCountOption(row, database),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };
