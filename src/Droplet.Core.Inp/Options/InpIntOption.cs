@@ -56,11 +56,15 @@ namespace Droplet.Core.Inp.Options
 
         #endregion
 
+        #region Public Methods
+
         /// <summary>
         /// Public override of the <see cref="IInpEntity.ToInpString"/> method
         /// </summary>
         /// <returns>Returns: the name and the value of this option</returns>
         public override string ToInpString() 
             => Name.PadRight(OptionStringPadding) + Value;
+
+        #endregion
     }
 }

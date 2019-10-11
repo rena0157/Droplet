@@ -167,7 +167,10 @@ namespace Droplet.Core.Inp.Options
 
             // Head Tolerance option
             HeadToleranceOption.OptionName => new HeadToleranceOption(row, database),
-
+            
+            // Thread Count Option
+            ThreadCountOption.OptionName => new ThreadCountOption(row, database),
+            
             // Variable step option
             VariableStepOption.OptionName => new VariableStepOption(row, database),
 
