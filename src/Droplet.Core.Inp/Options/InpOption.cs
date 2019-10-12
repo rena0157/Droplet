@@ -171,6 +171,9 @@ namespace Droplet.Core.Inp.Options
             // Variable step option
             VariableStepOption.OptionName => new VariableStepOption(row, database),
 
+            // Forcemain Equation
+            ForcemainEquationOption.OptionName => new ForcemainEquationOption(row, database),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };
