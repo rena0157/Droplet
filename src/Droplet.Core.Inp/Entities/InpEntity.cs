@@ -1,108 +1,114 @@
-﻿// InpLib
-// InpEntity.cs
-// 
-// ============================================================
-// 
-// Created: 2019-08-11
-// Last Updated: 2019-08-11-01:04 PM
+﻿// InpEntity.cs
+// Created: 2019-09-10
 // By: Adam Renaud
-// 
-// ============================================================
 
+using Droplet.Core.Inp.Data;
+using Droplet.Core.Inp.Utilities;
 using System;
-using Droplet.Core.Inp.Parsers;
+using System.Globalization;
 
 namespace Droplet.Core.Inp.Entities
 {
     /// <summary>
-    /// Abstract class that defines an InpEntity
+    /// Base class for all entities
     /// </summary>
-    public abstract class InpEntity : IInpTableParseable
+    public class InpEntity : IInpEntity
     {
+
         #region Constructors
 
         /// <summary>
-        /// Default Constructor that will initialize the
-        /// InpEntity
+        /// Default Constructor that initializes this entity
         /// </summary>
         public InpEntity()
         {
-            SetPropertyMappings();
-            Name = "";
-            Description = "";
-            Tag = "";
+            ID = Guid.NewGuid();
+            var resources = new InpResourceManager();
+            Name = Description = Tag = resources.GetString("DefaultProperty", CultureInfo.CurrentCulture);
         }
 
-        #endregion
-
-        #region Inp Attributes
-
         /// <summary>
-        /// The name/ID of the entity
+        /// Initializes this entity from a table row and
+        /// a database.
         /// </summary>
-        public string Name { get; set; }
+        /// <param name="row">The row that will be used to initialize this entity</param>
+        /// <param name="database">The database that will be used to initialize this entity</param>
+        public InpEntity(IInpTableRow row, IInpDatabase database) : this()
+        {
+            // Check if the argument is null
+            _ = row ?? throw new ArgumentNullException(nameof(row));
+            _ = database ?? throw new ArgumentNullException(nameof(database));
 
-        /// <summary>
-        /// The Description that was given to the entity
-        /// </summary>
-        public string Description { get; set; }
+            // Check to see if the row has a name
+            // and if it does set it
+            if (row.Values.Count > 1)
+                Name = row[0];
 
-        /// <summary>
-        /// The Tag of the entity
-        /// </summary>
-        public string Tag { get; set; }
+            // Set the database for the 
+            Database = database;
+        }
 
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        /// The property mappings for inp entities
+        /// The name of the entity
         /// </summary>
-        public abstract Action<string>[] PropertyMappings { get; protected set; }
+        public virtual string Name { get; protected set; }
 
         /// <summary>
-        /// The name of the table that this entity belongs to
+        /// The description of the entity
         /// </summary>
-        public abstract string InpTableName { get; }
+        public string Description { get; protected set;}
+
+        /// <summary>
+        /// The Tag of the entity
+        /// </summary>
+        public string Tag { get; protected set; }
+
+        /// <summary>
+        /// The ID of the <see cref="IInpDatabase"/> object
+        /// </summary>
+        public Guid ID { get; protected set; }
+
+        /// <summary>
+        /// The <see cref="IInpDatabase"/> that this entity belongs to
+        /// </summary>
+        public IInpDatabase? Database {get; protected set; }
 
         #endregion
 
         #region Public Methods
 
         /// <summary>
-        /// Build this entity from an Inp Table data string
+        /// Returns the formatted Description strings as per the inp
+        /// spec. Entities that implement this class should override this method.
         /// </summary>
-        /// <param name="data">The data string</param>
-        public virtual void BuildFromTable(string[] data)
+        /// <returns>Returns: A formatted Inp String that contains the Description</returns>
+        public virtual string ToInpString() => GetInpDescriptionString();
+
+        #endregion
+
+        #region Protected Methods
+
+        /// <summary>
+        /// Get the inp Description strings and prepends the ';' operator 
+        /// to it.
+        /// </summary>
+        /// <returns>Returns: the description from the entity in the correct inp format.</returns>
+        protected string GetInpDescriptionString()
         {
-            for (var i = 0; i < data.Length && i < PropertyMappings.Length; i++)
-                PropertyMappings[i](data[i]);
+            // If there is no description return an empty string
+            if (Description == "<NULL>")
+                return string.Empty;
+
+            // Make a copy of the string
+            var descriptionCopy = new Span<char>(Description.ToCharArray()).ToString();
+
+            // Replace \n with \n;
+            return descriptionCopy.Replace(Environment.NewLine, Environment.NewLine + ";", StringComparison.Ordinal);
         }
-
-        /// <summary>
-        /// Add Entity Data
-        /// </summary>
-        /// <param name="entityData">The entity data that will be added</param>
-        public abstract void AddEntityData(InpEntityData entityData);
-
-        /// <summary>
-        /// Setting the property mappings from a passed in mappings array
-        /// </summary>
-        /// <param name="mappings">The array that will be set</param>
-        public void SetPropertyMappings(Action<string>[] mappings) => PropertyMappings = mappings;
-
-        /// <summary>
-        /// Abstract SetProperty mappings method
-        /// </summary>
-        public abstract void SetPropertyMappings();
-
-        /// <summary>
-        /// Write this entity to an inp string. That is formatted
-        /// to be added to an inp table
-        /// </summary>
-        /// <returns>Returns: A formatted InpString</returns>
-        public abstract string ToInpString();
 
         #endregion
     }
