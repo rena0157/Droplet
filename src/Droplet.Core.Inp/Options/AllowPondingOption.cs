@@ -32,7 +32,6 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that the option belongs to</param>
         internal AllowPondingOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-
         }
 
         #endregion
