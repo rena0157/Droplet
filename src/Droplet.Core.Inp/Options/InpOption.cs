@@ -177,6 +177,8 @@ namespace Droplet.Core.Inp.Options
             // Forcemain Equation
             ForcemainEquationOption.OptionName => new ForcemainEquationOption(row, database),
 
+            NormalFlowOption.OptionName => new NormalFlowOption(row, database),
+
             // TODO: Add exception here "Option Not Recognized"
             _ => new InpOption()
         };
