@@ -92,6 +92,19 @@ namespace Droplet.Core.Inp.Data
         }
 
         /// <summary>
+        /// Get all entities from the database that match the type <typeparamref name="T"/>. This method 
+        /// will return an <see cref="IEnumerable{T}"/> that can be iterated over or turned into a list.
+        /// </summary>
+        /// <typeparam name="T">The type that will be returned</typeparam>
+        /// <returns>Returns: An <see cref="IEnumerable{T}"/> where all members will match the type <typeparamref name="T"/></returns>
+        public IEnumerable<T> GetEntities<T>() where T : IInpEntity
+        {
+            foreach (var entry in _objectDictionary)
+                if (entry.Value is T e)
+                    yield return e;
+        }
+
+        /// <summary>
         /// Return an option from the database given the <see cref="InpOption"/> derived
         /// type. Note that if there are no objects that match the type of <typeparamref name="T"/>
         /// this method will return <see cref="null"/>.
