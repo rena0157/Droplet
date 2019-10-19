@@ -75,6 +75,39 @@ namespace Droplet.Core.Inp.Exceptions
             }
         }
 
+        /// <summary>
+        /// Create a new <see cref="InpParseException"/> with the default Culture appropriate message and include 
+        /// the inner exception
+        /// </summary>
+        /// <param name="nameofMember">The name of the member being parsed</param>
+        /// <param name="type">The type where the exception occurred</param>
+        /// <param name="inner">The inner exception</param>
+        /// <returns>Returns: A new <see cref="InpParseException"/></returns>
+        internal static InpParseException CreateWithStandardMessage(string nameofMember, Type type)
+        {
+            try
+            {
+                // Get message from the resource manager
+                var message = new InpResourceManager().GetString("InpParseException.MessageWithNameAndType", CultureInfo.CurrentCulture);
+
+                // Return the exception and set the message and the inner exception
+                return new InpParseException(message + type?.FullName + " " + nameofMember);
+            }
+            // Catch any other exceptions that could occur because of the above
+            catch (MissingManifestResourceException)
+            {
+                return new InpParseException();
+            }
+            catch (InvalidOperationException)
+            {
+                return new InpParseException();
+            }
+            catch (MissingSatelliteAssemblyException)
+            {
+                return new InpParseException();
+            }
+        }
+
         #endregion
 
         #region Constructors

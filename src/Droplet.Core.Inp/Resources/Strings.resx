@@ -129,6 +129,9 @@
   <data name="InpParseException.DefaultMessage" xml:space="preserve">
     <value>Error evaluating and parsing the following Item: </value>
   </data>
+  <data name="InpParseException.MessageWithNameAndType" xml:space="preserve">
+    <value>Error evaluating and parsing the following Item: </value>
+  </data>
   <data name="ToInpString.ArgumentException" xml:space="preserve">
     <value>Cannot Convert this entity to an inp string</value>
   </data>
