@@ -15,8 +15,8 @@ namespace Droplet.Core.Inp.Tests.Data
 
         #region ToInpStrings Tests
 
-        [Theory]
-        [ClassData(typeof(ToInpStringsTestData))]
+        // [Theory]
+        // [ClassData(typeof(ToInpStringsTestData))]
         public void ToInpStringTest(string value)
         {
             var project = SetupProject(value);
