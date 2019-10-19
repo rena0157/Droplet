@@ -74,6 +74,8 @@ namespace Droplet.Core.Inp.Data
         {
             InpOption.HeaderName => InpOption.CreateFromOptionName(Key, this, database),
 
+            Subcatchment.InpName => new Subcatchment(this, database),
+
             // TODO: Add exception here
             _                    => new InpEntity()
         };
