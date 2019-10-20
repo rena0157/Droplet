@@ -97,6 +97,15 @@ namespace Droplet.Core.Inp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error evaluating and parsing the following Item: .
+        /// </summary>
+        internal static string InpParseException_MessageWithNameAndType {
+            get {
+                return ResourceManager.GetString("InpParseException.MessageWithNameAndType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot Convert this entity to an inp string.
         /// </summary>
         internal static string ToInpString_ArgumentException {

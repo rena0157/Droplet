@@ -24,6 +24,13 @@ namespace Droplet.Core.Inp.Data
         IInpDbObject GetObject(Guid id);
 
         /// <summary>
+        /// Get all <see cref="IInpEntity"/> from the database as an <see cref="IEnumerable{T}"/>
+        /// </summary>
+        /// <typeparam name="T">The <see cref="IInpEntity"/> type that will be returned</typeparam>
+        /// <returns>Returns: An enumeration of all entities in the database</returns>
+        IEnumerable<T> GetEntities<T>() where T :IInpEntity;
+
+        /// <summary>
         /// Get an option of the type <typeparamref name="T"/> from the database
         /// Note that the <typeparamref name="T"/> must be a derived type of the
         /// <see cref="InpOption"/> class
@@ -55,6 +62,14 @@ namespace Droplet.Core.Inp.Data
         /// </summary>
         /// <returns>Returns the entities from the database</returns>
         IEnumerable<IInpEntity> GetAllEntities();
+
+        /// <summary>
+        /// Get an <see cref="IInpEntity"/> from its <see cref="IInpEntity.Name"/>
+        /// </summary>
+        /// <typeparam name="T">The type of the entity</typeparam>
+        /// <param name="name">The name of the entity</param>
+        /// <returns>Returns: An entity that matches the name provided</returns>
+        T? GetEntity<T>(string name) where T : class, IInpEntity;
 
         /// <summary>
         /// Get the strings from the database that can be written to

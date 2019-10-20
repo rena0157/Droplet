@@ -55,7 +55,7 @@ namespace Droplet.Core.Inp.Entities
         /// <summary>
         /// The name of the entity
         /// </summary>
-        public virtual string Name { get; protected set; }
+        public virtual string Name { get; set; }
 
         /// <summary>
         /// The description of the entity
@@ -109,6 +109,10 @@ namespace Droplet.Core.Inp.Entities
             // Replace \n with \n;
             return descriptionCopy.Replace(Environment.NewLine, Environment.NewLine + ";", StringComparison.Ordinal);
         }
+
+        #endregion
+
+        #region Internal Methods
 
         #endregion
     }
