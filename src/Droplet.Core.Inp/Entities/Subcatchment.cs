@@ -8,8 +8,11 @@ namespace Droplet.Core.Inp.Entities
     /// <summary>
     /// A subcatchment Entity
     /// </summary>
-    public class Subcatchment : InpEntity, INode, IEquatable<Subcatchment>
+    public class Subcatchment : InpEntity, INode, IEquatable<Subcatchment>, IEntityDataHost<SubArea>
     {
+
+        #region Constructors
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -24,9 +27,6 @@ namespace Droplet.Core.Inp.Entities
         /// <param name="database">The database that the subcatchment will belong to</param>
         internal Subcatchment(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
-
-            if (row.Values.Count < 8 && row.Values.Count > 9)
-                throw InpParseException.CreateWithStandardMessage(typeof(Subcatchment));
 
             RainGageName = row[1];
             OutletName = row[2];
@@ -46,6 +46,8 @@ namespace Droplet.Core.Inp.Entities
 
             if (!string.IsNullOrEmpty(row[8])) SnowPack = row[8]; 
         }
+
+        #endregion
 
         #region Public Properties
 
@@ -137,7 +139,7 @@ namespace Droplet.Core.Inp.Entities
         /// <summary>
         /// Choice of internal routing between pervious and impervious sub-areas
         /// </summary>
-        public string SubAreaRouting { get; set; } = "*";
+        public RouteToOption SubAreaRouting { get; set; }
 
         /// <summary>
         /// Percent of runoff routed between sub-areas
@@ -292,6 +294,20 @@ namespace Droplet.Core.Inp.Entities
             return hash.ToHashCode();
         }
 
+        /// <summary>
+        /// Add <see cref="SubArea"/> data to this subcatchment
+        /// </summary>
+        /// <param name="entityData"></param>
+        public void AddEntityData(SubArea entityData)
+        {
+            _ = entityData ?? throw new ArgumentNullException(nameof(entityData));
+
+            NImperv = entityData.NImperv;
+            NPerv = entityData.NPerv;
+            PercentZeroImperv = entityData.PercentZero;
+            SubAreaRouting = entityData.RouteTo;
+            PercentRouted = entityData.PercentRouted;
+        }
 
         #endregion
 
