@@ -102,9 +102,13 @@ namespace Droplet.Core.Inp.IO
                 // Get the next line from the reader
                 var line = reader.ReadLine();
 
+                // If the line is a comment continue on to the next line and ignore
+                if (IsComment(line))
+                    continue;
+
                 // If the line contains a comment append it
                 // to the comments strings builder
-                if (IsComment(line))
+                if (IsDescription(line))
                 {
                     comments.Append(line);
                     continue;
@@ -141,9 +145,18 @@ namespace Droplet.Core.Inp.IO
         /// </summary>
         /// <param name="line">The line that will be tested</param>
         /// <returns>Returns: True if the line contains a comment</returns>
-        protected virtual bool IsComment(string line)
+        protected virtual bool IsDescription(string line)
             => line == null ? false : 
             line.StartsWith(";", StringComparison.CurrentCulture) && 
             !line.Contains(";;", StringComparison.CurrentCulture);
+
+        /// <summary>
+        /// Check to see if the line is a file comment that starts with ';;'.
+        /// </summary>
+        /// <param name="line">The line that will be checked</param>
+        /// <returns>Returns: False if null and true if the line is a comment</returns>
+        protected virtual bool IsComment(string line)
+            => line == null ? false :
+            line.StartsWith(";;", StringComparison.InvariantCulture);
     }
 }
