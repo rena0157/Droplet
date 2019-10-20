@@ -64,6 +64,14 @@ namespace Droplet.Core.Inp.Data
         IEnumerable<IInpEntity> GetAllEntities();
 
         /// <summary>
+        /// Get an <see cref="IInpEntity"/> from its <see cref="IInpEntity.Name"/>
+        /// </summary>
+        /// <typeparam name="T">The type of the entity</typeparam>
+        /// <param name="name">The name of the entity</param>
+        /// <returns>Returns: An entity that matches the name provided</returns>
+        T? GetEntity<T>(string name) where T : class, IInpEntity;
+
+        /// <summary>
         /// Get the strings from the database that can be written to
         /// an inp file
         /// </summary>

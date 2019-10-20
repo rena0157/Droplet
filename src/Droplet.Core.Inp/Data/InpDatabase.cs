@@ -105,6 +105,22 @@ namespace Droplet.Core.Inp.Data
         }
 
         /// <summary>
+        /// Get an entity from the database which <see cref="IInpEntity.Name"/> matches 
+        /// the <paramref name="name"/> provided
+        /// </summary>
+        /// <typeparam name="T">The type of the entity that will be returned</typeparam>
+        /// <param name="name">The name of the entity that we are looking for</param>
+        /// <returns>Returns: An entity of the type <typeparamref name="T"/> whos name matches <paramref name="name"/></returns>
+        public T? GetEntity<T>(string name) where T : class, IInpEntity
+        {
+            foreach(var entry in _objectDictionary.Values)
+                if (entry is T entity && entity.Name == name)
+                    return entity;
+
+            return default;
+        }
+
+        /// <summary>
         /// Return an option from the database given the <see cref="InpOption"/> derived
         /// type. Note that if there are no objects that match the type of <typeparamref name="T"/>
         /// this method will return <see cref="null"/>.
@@ -226,13 +242,24 @@ namespace Droplet.Core.Inp.Data
 
         /// <summary>
         /// Remove any items from the dictionary that contain
-        /// NULL in their names
+        /// NULL in their names. Also, this method will remove all <see cref="InpEntityData"/> 
+        /// objects from the dictionary
         /// </summary>
         public void Purge()
         {
             foreach(var item in _objectDictionary.Values)
+            {
                 if (item is IInpEntity entity && entity.Name == "<NULL>")
+                {
                     _objectDictionary.Remove(entity.ID);
+                }
+                else if (item is InpEntityData entityData)
+                {
+                    _objectDictionary.Remove(entityData.ID);
+                }
+            }
+                
+                
         }
 
         #endregion
