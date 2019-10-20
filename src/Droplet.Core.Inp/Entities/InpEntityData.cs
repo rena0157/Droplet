@@ -39,7 +39,6 @@ namespace Droplet.Core.Inp.Entities
             Name = row[0];
             Database = database;
             ID = Guid.NewGuid();
-
             Description = Tag = resources.GetString("DefaultProperty", CultureInfo.CurrentCulture);
         }
 
