@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon />
+    <StartupObject>Droplet.WindowsAppC.Program</StartupObject>
+  </PropertyGroup>
+
+</Project>

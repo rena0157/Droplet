@@ -1,9 +1,0 @@
-﻿<Application x:Class="Droplet.WindowsApp.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Droplet.WindowsApp"
-             StartupUri="MainWindow.xaml">
-    <Application.Resources>
-        <ResourceDictionary Source="C:\Dev\Droplet\src\Droplet.WindowsApp\Secrets.xaml"></ResourceDictionary>
-    </Application.Resources>
-</Application>
