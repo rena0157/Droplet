@@ -18,9 +18,10 @@ namespace Droplet.WindowApp
         private readonly ILogger<App> _logger;
         private readonly IHost _host;
 
-        public IServiceProvider ServiceProvider { get; }
-
+        public IServiceProvider ServiceProvider { get; set; }
         private Task _hostTask;
+
+        private MainWindowViewModel mainViewModel;
 
         #endregion
 
@@ -47,7 +48,7 @@ namespace Droplet.WindowApp
 
             ServiceProvider = _host.Services;
             _logger = ServiceProvider.GetRequiredService<ILogger<App>>();
-            MainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            mainViewModel = ServiceProvider.GetRequiredService<MainWindowViewModel>();
         }
 
         private IHostBuilder CreateHostBuilder()
@@ -55,7 +56,8 @@ namespace Droplet.WindowApp
                    .ConfigureServices((hostContext, services) =>
                    {
                        services.AddLogging();
-                       services.AddTransient<MainWindow>();
+                       services.AddSingleton<MainWindowViewModel>();
+                       services.AddScoped<MainWindow>();
                    });
 
         #endregion
@@ -69,8 +71,6 @@ namespace Droplet.WindowApp
         /// <param name="e">The startup arguments</param>
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            _logger.LogInformation("test");
-            MainWindow.Show();
         }
 
         /// <summary>

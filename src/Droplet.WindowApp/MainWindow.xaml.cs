@@ -21,11 +21,18 @@ namespace Droplet.WindowApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        ILogger<MainWindow> _logger;
+
         public MainWindow(ILogger<MainWindow> logger)
         {
-            logger.LogInformation("Building Main Window");
             InitializeComponent();
+            _logger = logger;
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            _logger.LogInformation("Button Clicked!");
+            _logger.LogWarning("Too Manny");
+        }
     }
 }
