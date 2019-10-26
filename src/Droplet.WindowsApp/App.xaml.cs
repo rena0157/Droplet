@@ -41,7 +41,7 @@ namespace Droplet.WindowsApp
         /// </summary>
         public App()
         {
-            // Create a console
+            // Create a console and attach this process to it
             AllocConsole();
         }
 
@@ -55,6 +55,13 @@ namespace Droplet.WindowsApp
         /// <returns></returns>
         [DllImport("kernel32.dll")]
         private static extern bool AllocConsole();
+
+        /// <summary>
+        /// Detaches the calling process from its console
+        /// </summary>
+        /// <returns></returns>
+        [DllImport("kernel32.dll")]
+        private static extern bool FreeConsole();
 
         /// <summary>
         /// The default host builder application
@@ -76,7 +83,7 @@ namespace Droplet.WindowsApp
             })
             .UseConsoleLifetime((config) => 
             {
-                config.SuppressStatusMessages = true;
+                config.SuppressStatusMessages = false;
             });
 
         #endregion
