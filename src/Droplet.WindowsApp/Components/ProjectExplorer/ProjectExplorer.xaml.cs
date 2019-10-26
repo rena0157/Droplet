@@ -1,9 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,16 +11,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Droplet.WindowsApp
+namespace Droplet.WindowsApp.Components.ProjectExplorer
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ProjectExplorerView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ProjectExplorer : UserControl
     {
-        public MainWindow()
+        public ProjectExplorer()
         {
             InitializeComponent();
+            DataContext = new ProjectExplorerComponent();
         }
     }
 }
