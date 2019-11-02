@@ -12,11 +12,10 @@ namespace Droplet.WindowsApp.Components
     {
 
         #region Private Members
-
         /// <summary>
         /// The command
         /// </summary>
-        readonly Action<T> _command;
+        readonly Action<T> _command; 
 
         /// <summary>
         /// The predicate for executing the command

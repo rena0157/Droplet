@@ -11,17 +11,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Droplet.WindowsApp.Components.ProjectExplorer
+namespace Droplet.WindowsApp.Components.InpExplorer
 {
     /// <summary>
-    /// Interaction logic for ProjectExplorerView.xaml
+    /// Interaction logic for InpExplorerView.xaml
     /// </summary>
-    public partial class ProjectExplorer : UserControl
+    public partial class InpExplorerView : UserControl
     {
-        public ProjectExplorer()
+        public InpExplorerView()
         {
             InitializeComponent();
-            DataContext = new ProjectExplorerComponent();
         }
     }
 }

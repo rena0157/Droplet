@@ -1,8 +1,10 @@
-﻿using Droplet.WindowsApp.Components.MainWindow;
+﻿using Droplet.WindowsApp.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
@@ -43,13 +45,13 @@ namespace Droplet.WindowsApp
         /// <summary>
         /// Default service provider for the application
         /// </summary>
-        public IServiceProvider ServiceProvider 
+        public IServiceProvider ServiceProvider
             => AppHost.Services;
 
         /// <summary>
         /// The default configuration for the application
         /// </summary>
-        public IConfiguration Configuration 
+        public IConfiguration Configuration
             => ServiceProvider.GetRequiredService<IConfiguration>();
 
         #endregion
@@ -76,23 +78,54 @@ namespace Droplet.WindowsApp
         /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args)
             => Host.CreateDefaultBuilder(args)
-            .ConfigureHostConfiguration((configHost) =>
-            {
+                    .ConfigureHostConfiguration((configHost) =>
+                    {
 
-            })
-            .ConfigureAppConfiguration((configApp) =>
-            {
+                    })
+                    .ConfigureAppConfiguration((configApp) =>
+                    {
 
-            })
-            .ConfigureServices((context, services) =>
-            {
-                services.AddSingleton<MainWindowComponent>();
-                services.AddSingleton<MainWindow>();
-            })
-            .UseConsoleLifetime((config) =>
-            {
-                config.SuppressStatusMessages = false;
-            });
+                    })
+                    .ConfigureServices((context, services) =>
+                    {
+                        services.AddSingleton<ComponentManager>();
+
+                        // Register all component classes
+                        foreach (var component in GetAllComponents())
+                            services.AddTransient(component);
+
+                        // Register all view classes
+                        foreach(var view in GetAllViews())
+                            services.AddTransient(view);
+
+                    })
+                    .UseConsoleLifetime((config) =>
+                    {
+                        config.SuppressStatusMessages = false;
+                    });
+
+        /// <summary>
+        /// Get all components from this assembly
+        /// </summary>
+        /// <returns>Returns an <see cref="IEnumerable{T}"/> that contains all of the 
+        /// component types from this assembly</returns>
+        private static IEnumerable<Type> GetAllComponents()
+            => typeof(AppContext)
+            .Assembly
+            .GetTypes()
+            .Where(t => t.IsClass)
+            .Where(t => t.FullName.EndsWith("Component"));
+
+        /// <summary>
+        /// Get all view classes from this assembly using reflection
+        /// </summary>
+        /// <returns>Returns: an <see cref="IEnumerable{T}"/> that contains all of the 
+        /// view types from this assembly</returns>
+        private static IEnumerable<Type> GetAllViews()
+            => typeof(AppContext).Assembly
+            .GetTypes()
+            .Where(t => t.IsClass)
+            .Where(t => t.FullName.EndsWith("View"));
 
         /// <summary>
         /// Starts the host asynchronously and sets the Service provider

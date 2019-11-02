@@ -3,13 +3,8 @@
 // Created: 2019-08-09
 
 using Droplet.Core.Inp.Data;
-using Droplet.Core.Inp.Exceptions;
 using Droplet.Core.Inp.IO;
-using Droplet.Core.Inp.Utilities;
-using System;
-using System.Globalization;
 using System.IO;
-using System.Resources;
 
 namespace Droplet.Core.Inp
 {
@@ -20,7 +15,7 @@ namespace Droplet.Core.Inp
     public class InpProject : IInpProject
     {
         #region Constructors
-
+        
         /// <summary>
         /// Default Constructor that
         /// initializes all objects in the class to their

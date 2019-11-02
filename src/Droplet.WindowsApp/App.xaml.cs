@@ -1,4 +1,5 @@
-﻿using Droplet.WindowsApp.Components.MainWindow;
+﻿using Droplet.WindowsApp.Components.Shell;
+using Droplet.WindowsApp.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -70,7 +71,8 @@ namespace Droplet.WindowsApp
             foreach (var arg in e.Args)
                 _logger.LogInformation(arg);
 
-            var mainWindowComponent = Context.ServiceProvider.GetService<MainWindowComponent>();
+            var manager = Context.ServiceProvider.GetService<ComponentManager>();
+            manager.Add(Context.ServiceProvider.GetService<ShellComponent>());
         }
 
         private async void Application_Exit(object sender, ExitEventArgs e)
