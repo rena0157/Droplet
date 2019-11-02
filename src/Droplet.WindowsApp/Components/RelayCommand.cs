@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
 namespace Droplet.WindowsApp.Components
@@ -12,31 +10,31 @@ namespace Droplet.WindowsApp.Components
     {
 
         #region Private Members
+
         /// <summary>
-        /// The command
+        /// The command that will be executed
         /// </summary>
-        readonly Action<T> _command; 
+        private readonly Action<T> _command; 
 
         /// <summary>
         /// The predicate for executing the command
         /// </summary>
-        readonly Predicate<T> _canExecute;
+        private readonly Predicate<T> _canExecute;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Constructor that will pass an action that will be executed
+        /// Initializes a new instance of <see cref="RelayCommand{T}"/>
         /// </summary>
-        /// <param name="command">The command that will be executed</param>
-        public RelayCommand(Action<T> command) : this(command, p => true)
+        /// <param name="command">Delegate to execute when Execute is called on the command</param>
+        public RelayCommand(Action<T> command) : this(command, null)
         {
-
         }
 
         /// <summary>
-        /// Relay command constructor that passes the command and the predicate that 
+        /// Initializes a new instance of <see cref="RelayCommand{T}"/> with a <see cref="Predicate{T}"/> that 
         /// tests to see if the command can execute
         /// </summary>
         /// <param name="command">The command that will be executed</param>
@@ -55,7 +53,11 @@ namespace Droplet.WindowsApp.Components
         /// <summary>
         /// Occurs when changes occur that affect whether or not the command should execute.
         /// </summary>
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
 
         /// <summary>
         /// Returns true if the command can execute
@@ -63,24 +65,14 @@ namespace Droplet.WindowsApp.Components
         /// <param name="parameter">The parameter that we are testing</param>
         /// <returns>Returns: true if the command can execute</returns>
         public bool CanExecute(object parameter)
-        {
-            if (parameter is T p)
-                return _canExecute == null ? true : _canExecute(p);
-            else 
-                return false;
-        }
+            => _canExecute == null ? true : _canExecute((T)parameter);
 
         /// <summary>
         /// Executes the command. Note that the type of the parameter matters and should be checked.
         /// </summary>
         /// <param name="parameter"></param>
         public void Execute(object parameter)
-        {
-            if (parameter is T p)
-                _command(p);
-            else
-                throw new ArgumentException(nameof(parameter));
-        }
+            => _command((T)parameter);
 
         #endregion
 

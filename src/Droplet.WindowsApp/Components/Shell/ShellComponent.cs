@@ -1,8 +1,5 @@
 ﻿using Droplet.WindowsApp.Components.InpExplorer;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Input;
 
 namespace Droplet.WindowsApp.Components.Shell
@@ -17,12 +14,7 @@ namespace Droplet.WindowsApp.Components.Shell
 
         private object _mainContent;
 
-        private Visibility _visibility = Visibility.Hidden;
-
-        private void TestCommandMethod(object o)
-        {
-            TextVisibility = Visibility.Visible;
-        }
+        private ICommand _showInpExplorerCommand;
 
         #endregion
 
@@ -33,7 +25,7 @@ namespace Droplet.WindowsApp.Components.Shell
         /// </summary>
         public ShellComponent()
         {
-        }
+        } 
 
         /// <summary>
         /// Default constructor that accepts a view that will be shown
@@ -41,8 +33,33 @@ namespace Droplet.WindowsApp.Components.Shell
         /// <param name="view"></param>
         public ShellComponent(ShellView view) : base(view)
         {
+            Init();
+        }
+
+        /// <summary>
+        /// Override of the <see cref="ComponentBase{T}.Init"/> method that will initialize 
+        /// any UI Components
+        /// </summary>
+        protected override void Init()
+        {
+            // Add any property initializations here:
+            _showInpExplorerCommand = new RelayCommand<object>((o) => ShowInpExplorerCommandMethod());
+
+            // Initialize the base (DataContext etc.)
+            base.Init();
+
+            // Show the view
             View.Show();
-            TestCommand = new RelayCommand<object>(TestCommandMethod, o => true);
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        private void ShowInpExplorerCommandMethod()
+        {
+            var inpExplorer = DropletApp.Context.ServiceProvider.GetService<InpExplorerComponent>();
+            MainContent = inpExplorer.View;
         }
 
         #endregion
@@ -62,17 +79,22 @@ namespace Droplet.WindowsApp.Components.Shell
             }
         }
 
-        public Visibility TextVisibility
+        /// <summary>
+        /// The title of the component
+        /// </summary>
+        public string Title
         {
-            get => _visibility;
-            set
-            {
-                _visibility = value;
-                OnPropertyChanged();
-            }
+            get => "Shell Component";
         }
 
-        ICommand TestCommand { get; set; }
+
+        /// <summary>
+        /// The show <see cref="InpExplorerComponent"/> command
+        /// </summary>
+        public ICommand ShowInpExplorerCommand
+        {
+            get => _showInpExplorerCommand;
+        }
 
         #endregion
 

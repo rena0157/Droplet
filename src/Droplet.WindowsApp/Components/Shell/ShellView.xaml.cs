@@ -30,8 +30,6 @@ namespace Droplet.WindowsApp.Components.Shell
             InitializeComponent();
             _logger = logger;
             _logger.LogInformation("Shell View Initialized");
-
-            TestButton.Command = new RelayCommand<object>((o) => _logger.LogInformation("Button Clicked!"), o => true);
         }
     }
 }

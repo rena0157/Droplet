@@ -5,13 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Droplet.WindowsApp.Components.Shell"
         mc:Ignorable="d"
-        Title="ShellView" Height="450" Width="800"
-        d:DataContext="{d:DesignInstance Type=local:ShellComponent, IsDesignTimeCreatable=True}">
+        Title="{Binding Title}" Height="450" Width="800"
+        d:DataContext="{d:DesignInstance local:ShellComponent, IsDesignTimeCreatable=True}">
 
+    <Window.DataContext>
+        <local:ShellComponent>
+        </local:ShellComponent>
+    </Window.DataContext>
+    
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
                 <MenuItem Header="_Exit"/>
+                <MenuItem Header="InpExplorer" Command="{Binding ShowInpExplorerCommand}"/>
             </MenuItem>
             <MenuItem Header="_Edit"/>
         </Menu>
@@ -19,8 +25,7 @@
         <Grid>
             <!-- Main Content -->
             <ContentControl Content="{Binding MainContent}"/>
-            <TextBlock Text="Test" Visibility="{Binding TextVisibility}"/>
-            <Button x:Name="TestButton" Height="50" Width="100" Command="{Binding TestCommand}">Main Button</Button>
+            <TextBlock Text="{Binding Id}"/>
         </Grid>
     </DockPanel>
 

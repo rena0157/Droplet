@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace Droplet.WindowsApp.Components
 {
@@ -23,8 +24,9 @@ namespace Droplet.WindowsApp.Components
         /// <param name="element">The element for the component</param>
         public ComponentBase(FrameworkElement element)
         {
-            element.DataContext = this;
         }
+
+
 
         /// <summary>
         /// The event that is fired when a property of the component changes
@@ -65,5 +67,15 @@ namespace Droplet.WindowsApp.Components
         /// The view element for this component
         /// </summary>
         public readonly T View;
+
+        /// <summary>
+        /// Protected virtual function that initializes the component. 
+        /// This method should only be called after construction has ended. The 
+        /// base will set the data context of the object
+        /// </summary>
+        protected virtual void Init()
+        {
+            View.DataContext = this;
+        }
     }
 }
