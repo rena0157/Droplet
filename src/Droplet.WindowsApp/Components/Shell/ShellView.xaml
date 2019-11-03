@@ -5,27 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Droplet.WindowsApp.Components.Shell"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="450" Width="800"
-        d:DataContext="{d:DesignInstance local:ShellComponent, IsDesignTimeCreatable=True}">
+        Title="{Binding Title}"
+        d:DataContext="{d:DesignInstance local:ShellComponent, IsDesignTimeCreatable=True}"
+        d:DesignHeight="600" d:DesignWidth="1000">
 
+    <!--This is here in order to allow for code completion. This will create
+     a new view model that will be empty and then will be overridden from the DI container-->
     <Window.DataContext>
         <local:ShellComponent>
         </local:ShellComponent>
     </Window.DataContext>
     
+    <!--The main dock panel-->
     <DockPanel>
+        
+        <!--The header menu for the component-->
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="_Exit"/>
+                <MenuItem Header="_Exit" Command="{Binding ExitCommand}"/>
                 <MenuItem Header="InpExplorer" Command="{Binding ShowInpExplorerCommand}"/>
             </MenuItem>
             <MenuItem Header="_Edit"/>
         </Menu>
 
+        <!--Container grid for the main content-->
         <Grid>
             <!-- Main Content -->
             <ContentControl Content="{Binding MainContent}"/>
-            <TextBlock Text="{Binding Id}"/>
         </Grid>
     </DockPanel>
 

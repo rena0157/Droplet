@@ -5,15 +5,22 @@ using System.Windows.Input;
 namespace Droplet.WindowsApp.Components.Shell
 {
     /// <summary>
-    /// The main shell component
+    /// Component that is a shell window
     /// </summary>
     public class ShellComponent : ComponentBase<ShellView>
     {
 
         #region Private Members
 
+        /// <summary>
+        /// The main content backing field
+        /// </summary>
         private object _mainContent;
 
+        /// <summary>
+        /// The backing field for the <see cref="ShowInpExplorerCommand"/> 
+        /// property
+        /// </summary>
         private ICommand _showInpExplorerCommand;
 
         #endregion
@@ -56,6 +63,10 @@ namespace Droplet.WindowsApp.Components.Shell
 
         #region Command Methods
 
+        /// <summary>
+        /// The command method that will set the <see cref="MainContent"/> to 
+        /// a new instance of the <see cref="InpExplorerComponent"/>
+        /// </summary>
         private void ShowInpExplorerCommandMethod()
         {
             var inpExplorer = DropletApp.Context.ServiceProvider.GetService<InpExplorerComponent>();
@@ -67,7 +78,7 @@ namespace Droplet.WindowsApp.Components.Shell
         #region Public Properties
 
         /// <summary>
-        /// The main Content control
+        /// The main content presenter
         /// </summary>
         public object MainContent
         {
@@ -83,18 +94,20 @@ namespace Droplet.WindowsApp.Components.Shell
         /// The title of the component
         /// </summary>
         public string Title
-        {
-            get => "Shell Component";
-        }
+            => "Shell Component";
 
 
         /// <summary>
         /// The show <see cref="InpExplorerComponent"/> command
         /// </summary>
         public ICommand ShowInpExplorerCommand
-        {
-            get => _showInpExplorerCommand;
-        }
+            => _showInpExplorerCommand;
+
+        /// <summary>
+        /// Closes the main view for this component
+        /// </summary>
+        public ICommand ExitCommand
+            => new RelayCommand<object>((o) => View.Close());
 
         #endregion
 
