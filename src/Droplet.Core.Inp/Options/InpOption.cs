@@ -36,6 +36,24 @@ namespace Droplet.Core.Inp.Options
         [NotNull]
         public virtual T Value { get; set; }
 
+        /// <summary>
+        /// Gets the value for this object from the base class implementation
+        /// </summary>
+        public override object ValueObject
+        {
+            get => Value;
+            set
+            {
+                try
+                {
+                    Value = (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
+                }
+                catch
+                {
+
+                }
+            }
+        }
 
         /// <summary>
         /// Parse the Row into the Value type
@@ -80,6 +98,15 @@ namespace Droplet.Core.Inp.Options
         /// <param name="database">The database that this object will be constructed from</param>
         public InpOption(IInpTableRow row, IInpDatabase database) : base(row, database)
         {
+        }
+
+        /// <summary>
+        /// Gets the value of this object from the base class implementation
+        /// </summary>
+        public virtual object ValueObject
+        {
+            get;
+            set;
         }
 
         /// <summary>

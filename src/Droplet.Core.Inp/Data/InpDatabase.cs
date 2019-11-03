@@ -132,6 +132,13 @@ namespace Droplet.Core.Inp.Data
             return _objectDictionary.Values.FirstOrDefault(o => o is T) as T;
         }
 
+        public IEnumerable<InpOption> GetOptions()
+        {
+            foreach (var entry in _objectDictionary.Values)
+                if (entry is InpOption option)
+                    yield return option;
+        }
+
         /// <summary cref="IInpDatabase.GetOption(Type)">
         /// </summary>
         /// <exception cref="NullReferenceException">

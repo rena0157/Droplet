@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Droplet.Core.Inp.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,16 @@ namespace Droplet.WindowsApp.Components.InpExplorer
         public InpExplorerView()
         {
             InitializeComponent();
+        }
+
+        private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            var context = DataContext as InpExplorerComponent;
+            var selectedObject = e.NewValue as IInpEntity;
+
+            if (context is null || selectedObject is null) return;
+
+            context.SelectedObjectId = selectedObject.ID;
         }
     }
 }

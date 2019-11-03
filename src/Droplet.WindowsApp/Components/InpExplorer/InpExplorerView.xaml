@@ -3,10 +3,81 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             
              xmlns:local="clr-namespace:Droplet.WindowsApp.Components.InpExplorer"
+             xmlns:inpOption="clr-namespace:Droplet.Core.Inp.Options;assembly=Droplet.Core.Inp"
+             xmlns:inpEntity="clr-namespace:Droplet.Core.Inp.Entities;assembly=Droplet.Core.Inp"
+             
              mc:Ignorable="d" Background="White"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance local:InpExplorerComponent, IsDesignTimeCreatable=True}"
+             >
+
+    <!--The data context that is used for code completion-->
+    <UserControl.DataContext>
+        <local:InpExplorerComponent/>
+    </UserControl.DataContext>
+
+    <!--The main grid for the user control-->
     <Grid>
-        <TextBlock Text="Inp Explorer" FontSize="50"/>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <!--The Project Explorer-->
+        <TreeView MinWidth="200" MinHeight="400" Grid.Row="0" Grid.Column="0" 
+                  SelectedItemChanged="TreeView_SelectedItemChanged">
+
+            <TreeView.Resources>
+                <DataTemplate DataType="{x:Type inpOption:InpOption}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type inpEntity:Subcatchment}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Subcatchment "/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </TreeView.Resources>
+
+            <TreeViewItem Header="Options" ItemsSource="{Binding InpOptions}"/>
+            <TreeViewItem Header="Subcatchments" ItemsSource="{Binding Subcatchments}"/>
+
+        </TreeView>
+        
+        <!--The Data Grid for the objects in the project-->
+        <DataGrid Grid.Row="0" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding InpOptions, Mode=TwoWay}">
+            <DataGrid.Resources>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Value" Binding="{Binding ValueObject}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!--Grid for path selection-->
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Text="Inp File:" Grid.Column="0" Margin="5"/>
+            
+            <TextBox Text="{Binding FilePath}" IsReadOnly="True"
+                     Grid.Column="1" Margin="5"/>
+            
+            <Button x:Name="TestButton" Grid.Column="2" Margin="5" Padding="15 1" 
+                    Command="{Binding BrowseCommand}">Browse</Button>
+        </Grid>
     </Grid>
 </UserControl>

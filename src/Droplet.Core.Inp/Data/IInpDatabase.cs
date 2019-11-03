@@ -40,6 +40,13 @@ namespace Droplet.Core.Inp.Data
         public T? GetOption<T>() where T : InpOption;
 
         /// <summary>
+        /// Get all options from the database.
+        /// </summary>
+        /// <returns>Returns: An <see cref="IEnumerable{T}"/> that 
+        /// contains all of the options in this database</returns>
+        public IEnumerable<InpOption> GetOptions();
+
+        /// <summary>
         /// Get an option of the type <paramref name="type"/> from
         /// the database. Note that if the <paramref name="type"/> 
         /// is not a derived type from the <see cref="InpOption"/> class

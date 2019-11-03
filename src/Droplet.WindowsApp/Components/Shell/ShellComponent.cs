@@ -93,8 +93,8 @@ namespace Droplet.WindowsApp.Components.Shell
         /// <summary>
         /// The title of the component
         /// </summary>
-        public string Title
-            => "Shell Component";
+        public string Title 
+            => typeof(ShellComponent).Assembly.FullName;
 
 
         /// <summary>
