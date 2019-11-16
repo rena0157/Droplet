@@ -31,6 +31,13 @@ namespace Droplet.Core.Inp.Data
         IEnumerable<T> GetEntities<T>() where T :IInpEntity;
 
         /// <summary>
+        /// Get all <see cref="IInpEntity"/> from the database as an <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        /// <param name="type">The type of the entities that will be returned</param>
+        /// <returns>Returns: All <see cref="IInpEntity"/> that are also <paramref name="type"/></returns>
+        IEnumerable<IInpEntity> GetEntities(Type type);
+
+        /// <summary>
         /// Get an option of the type <typeparamref name="T"/> from the database
         /// Note that the <typeparamref name="T"/> must be a derived type of the
         /// <see cref="InpOption"/> class

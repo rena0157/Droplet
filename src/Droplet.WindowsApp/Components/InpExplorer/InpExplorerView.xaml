@@ -29,38 +29,35 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
+
+
+        <StackPanel Orientation="Vertical" Margin="10 0">
+
+            <TextBlock Text="Project Explorer" FontSize="15"/>
+
+            <Menu Background="Transparent">
+                <Menu.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </Menu.ItemsPanel>
+                <MenuItem Header="Options" Command="{Binding SetDataGridToInpOptions}"/>
+                <MenuItem Header="Subcatchments"/>
+            </Menu>
+
+        </StackPanel>
         
-        <!--The Project Explorer-->
-        <TreeView MinWidth="200" MinHeight="400" Grid.Row="0" Grid.Column="0" 
-                  SelectedItemChanged="TreeView_SelectedItemChanged">
 
-            <TreeView.Resources>
-                <DataTemplate DataType="{x:Type inpOption:InpOption}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Name}"/>
-                    </StackPanel>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type inpEntity:Subcatchment}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Subcatchment "/>
-                        <TextBlock Text="{Binding Name}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </TreeView.Resources>
-
-            <TreeViewItem Header="Options" ItemsSource="{Binding InpOptions}"/>
-            <TreeViewItem Header="Subcatchments" ItemsSource="{Binding Subcatchments}"/>
-
-        </TreeView>
         
         <!--The Data Grid for the objects in the project-->
-        <DataGrid Grid.Row="0" Grid.Column="1" AutoGenerateColumns="False" ItemsSource="{Binding InpOptions, Mode=TwoWay}">
+        <DataGrid Grid.Row="0" Grid.Column="1" AutoGenerateColumns="True" 
+                  ItemsSource="{Binding DataGridContext}">
+
             <DataGrid.Resources>
+                <DataTemplate x:Key="Options" DataType="{x:Type inpOption:InpOption}">
+                    
+                </DataTemplate>
             </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Value" Binding="{Binding ValueObject}"/>
-            </DataGrid.Columns>
         </DataGrid>
 
         <!--Grid for path selection-->

@@ -1,4 +1,5 @@
-﻿using Droplet.WindowsApp.Services;
+﻿using Droplet.Core.Services;
+using Droplet.WindowsApp.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,7 +15,7 @@ namespace Droplet.WindowsApp
     /// The application context that holds all application and host related 
     /// services
     /// </summary>
-    public class AppContext
+    public class AppContext : IAppContext
     {
 
         #region Constructors
@@ -80,15 +81,14 @@ namespace Droplet.WindowsApp
             => Host.CreateDefaultBuilder(args)
                     .ConfigureHostConfiguration((configHost) =>
                     {
-
                     })
                     .ConfigureAppConfiguration((configApp) =>
                     {
-
                     })
                     .ConfigureServices((context, services) =>
                     {
                         services.AddSingleton<ComponentManager>();
+                        services.AddSingleton<InpProjectsService>();
 
                         // Register all component classes
                         foreach (var component in GetAllComponents())
@@ -102,7 +102,8 @@ namespace Droplet.WindowsApp
                     .UseConsoleLifetime((config) =>
                     {
                         config.SuppressStatusMessages = false;
-                    });
+                    })
+                    .UseEnvironment("Development");
 
         /// <summary>
         /// Get all components from this assembly

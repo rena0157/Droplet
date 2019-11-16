@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Droplet.WindowsApp": {
+      "commandName": "Project"
+    }
+  }
+}

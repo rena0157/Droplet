@@ -1,13 +1,17 @@
 ﻿using Droplet.Core.Inp;
 using Droplet.Core.Inp.Entities;
 using Droplet.Core.Inp.Options;
+using Droplet.Core.Services;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Droplet.WindowsApp.Components.InpExplorer
@@ -22,9 +26,10 @@ namespace Droplet.WindowsApp.Components.InpExplorer
 
         private string _filePath;
         private ObservableCollection<InpOption> _options;
-        private InpProject _inpProject;
-        private ObservableCollection<Subcatchment> _subcatchments;
-        private Guid _selectedObjectId;
+        private InpProjectsService _inpProjectService;
+        private IInpProject _inpProject;
+        private ObservableCollection<IInpEntity> _selectedEntities;
+        private Dictionary<string, Type> _entityTypes;
 
         #endregion
 
@@ -35,6 +40,7 @@ namespace Droplet.WindowsApp.Components.InpExplorer
         /// </summary>
         public InpExplorerComponent()
         {
+            _entityTypes = new Dictionary<string, Type>();
         }
 
         /// <summary>
@@ -42,8 +48,9 @@ namespace Droplet.WindowsApp.Components.InpExplorer
         /// accepts the view component that will be shown
         /// </summary>
         /// <param name="view">The view that will be shown</param>
-        public InpExplorerComponent(InpExplorerView view) : base(view)
+        public InpExplorerComponent(InpProjectsService inpProjectsService, InpExplorerView view) : base(view)
         {
+            _inpProjectService = inpProjectsService;
             Init();
         }
 
@@ -69,14 +76,12 @@ namespace Droplet.WindowsApp.Components.InpExplorer
                 OnPropertyChanged();
                 try
                 {
-                    _inpProject = new InpProject(FilePath);
+                    OpenProject(value);
                 }
                 catch
                 {
                     return;
                 }
-                InpOptions = new ObservableCollection<InpOption>(_inpProject.Database.GetOptions());
-                Subcatchments = new ObservableCollection<Subcatchment>(_inpProject.Database.GetAllEntities<Subcatchment>());
             }
         }
 
@@ -109,41 +114,51 @@ namespace Droplet.WindowsApp.Components.InpExplorer
             else return "";
         }
 
+        private object _dataGridContext;
+
+        /// <summary>
+        /// The context that the Data grid will bind to
+        /// </summary>
+        public object DataGridContext
+        {
+            get => _dataGridContext;
+            set
+            {
+                _dataGridContext = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<InpOption> _inpOptions;
+
+        /// <summary>
+        /// The InpOptions in the inp file
+        /// </summary>
         public ObservableCollection<InpOption> InpOptions
         {
-            get => _options;
+            get => _inpOptions;
             set
             {
-                _options = value;
+                _inpOptions = value;
                 OnPropertyChanged();
             }
         }
 
-        public ObservableCollection<Subcatchment> Subcatchments
-        {
-            get => _subcatchments;
-            set
-            {
-                _subcatchments = value;
-                OnPropertyChanged();
-            }
-        }
+        public ICommand SetDataGridToInpOptions
+            => new RelayCommand<object>((o) => DataGridContext = InpOptions);
 
-        public Guid SelectedObjectId
-        {
-            get => _selectedObjectId;
-            set
-            {
-                _selectedObjectId = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(SelectedObject));
-            }
-        }
+        #endregion
 
-        public object SelectedObject
+        #region Private Methods
+
+        /// <summary>
+        /// Opens a new inp project
+        /// </summary>
+        /// <param name="pathToFile"></param>
+        private void OpenProject(string pathToFile)
         {
-            get => _inpProject?.Database == null ? new object() 
-                : _inpProject?.Database.GetObject(SelectedObjectId);
+            _inpProject = _inpProjectService.OpenProject(pathToFile);
+            InpOptions = new ObservableCollection<InpOption>(_inpProject.Database.GetOptions());
         }
 
         #endregion

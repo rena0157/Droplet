@@ -105,6 +105,18 @@ namespace Droplet.Core.Inp.Data
         }
 
         /// <summary>
+        /// Get all entities from the database that match the type: <paramref name="type"/>
+        /// </summary>
+        /// <param name="type">The type of entities that will be returned</param>
+        /// <returns>Returns: All entities that match the <see cref="IInpEntity"/> interface and <paramref name="type"/></returns>
+        public IEnumerable<IInpEntity> GetEntities(Type type)
+        {
+            foreach(var entry in _objectDictionary.Values)
+                if (entry.GetType() == type && entry is IInpEntity entity)
+                    yield return entity;
+        }
+
+        /// <summary>
         /// Get an entity from the database which <see cref="IInpEntity.Name"/> matches 
         /// the <paramref name="name"/> provided
         /// </summary>

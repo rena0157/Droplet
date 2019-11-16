@@ -10,6 +10,9 @@
 
   <ItemGroup>
     <PackageReference Include="Esri.ArcGISRuntime" Version="100.6.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
